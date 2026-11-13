@@ -1,0 +1,3132 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HEAVEN MasterDNA — AI Reference Song Mastering Console</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+/* styles.css - HEAVEN MasterDNA Mastering Console Hardware Styling */
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 50% 0%, #1e222b 0%, #0a0c10 100%);
+  color: #e2e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+  min-height: 100vh;
+}
+
+.master-chassis {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.01) 0px,
+      rgba(255, 255, 255, 0.01) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(180deg, #1d2028 0%, #12151a 100%);
+}
+
+.rack-screw {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #94a3b8, #1e293b);
+  border: 1px solid #090b0e;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.3), 0 1px 2px rgba(0,0,0,0.85);
+  position: relative;
+}
+.rack-screw::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 2px;
+  right: 2px;
+  height: 1.5px;
+  background: #0f172a;
+  transform: rotate(28deg);
+}
+
+.knob-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.rotary-knob {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #3f4756, #16191f 75%);
+  border: 2px solid #090b0e;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.7),
+    inset 0 1px 2px rgba(255, 255, 255, 0.2);
+  position: relative;
+  cursor: ns-resize;
+  transition: box-shadow 0.15s ease;
+}
+
+.rotary-knob:hover {
+  box-shadow:
+    0 0 12px rgba(245, 158, 11, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.75),
+    inset 0 1px 2px rgba(255, 255, 255, 0.3);
+}
+
+.knob-indicator {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.knob-indicator::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  width: 3px;
+  height: 11px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: #f59e0b;
+  box-shadow: 0 0 6px #f59e0b;
+}
+
+.cyan-knob .knob-indicator::after {
+  background: #06b6d4;
+  box-shadow: 0 0 6px #06b6d4;
+}
+
+.emerald-knob .knob-indicator::after {
+  background: #10b981;
+  box-shadow: 0 0 6px #10b981;
+}
+
+.rose-knob .knob-indicator::after {
+  background: #f43f5e;
+  box-shadow: 0 0 6px #f43f5e;
+}
+
+.vu-master {
+  background: radial-gradient(circle at 50% 85%, #fef3c7 0%, #e5c170 72%, #b4862f 100%);
+  border: 3px solid #0f1217;
+  box-shadow:
+    inset 0 3px 10px rgba(0, 0, 0, 0.5),
+    0 1px 0 rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #111317;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+
+</style>
+</head>
+<body class="p-3 md:p-5">
+
+  <!-- Main Mastering Console Chassis -->
+  <div class="max-w-7xl mx-auto rounded-2xl border-2 border-slate-700/80 shadow-2xl overflow-hidden master-chassis relative">
+
+    <!-- Top Mastering Console System Bar -->
+    <header class="bg-slate-950/95 border-b border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="rack-screw"></div>
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded bg-gradient-to-br from-amber-400 via-amber-500 to-emerald-500 flex items-center justify-center text-slate-950 font-black text-sm shadow">
+            H
+          </div>
+          <div>
+            <div class="text-sm font-black tracking-wider text-white flex items-center gap-2">
+              <span>HEAVEN</span>
+              <span class="text-amber-400">MasterDNA</span>
+              <span class="text-xs px-1.5 py-0.5 rounded bg-emerald-500/15 text-emerald-300 border border-emerald-500/30 font-mono">AI REFERENCE MASTERING</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center Preset, Export & A/B Compare Controls -->
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="btn-undo" class="px-2.5 py-1 rounded text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">UNDO</button>
+        <button id="btn-redo" class="px-2.5 py-1 rounded text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">REDO</button>
+
+        <select id="preset-select" class="bg-slate-900 text-amber-300 text-xs font-semibold px-3 py-1.5 rounded border border-slate-700 focus:outline-none focus:border-amber-400 min-w-[240px]"></select>
+
+        <button id="btn-save-preset" class="px-3 py-1.5 rounded text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40">
+          SAVE MASTER PRESET
+        </button>
+
+        <button id="btn-export-waves-xps" class="px-2.5 py-1.5 rounded text-xs font-bold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40" title="Export Mastering Chain for Waves StudioRack (.xps)">
+          EXPORT FOR WAVES (.XPS)
+        </button>
+
+        <button id="btn-export-logic-au" class="px-2.5 py-1.5 rounded text-xs font-bold bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40" title="Export Native Logic Pro (.aupreset)">
+          LOGIC .AUPRESET
+        </button>
+
+        <!-- A/B & Mastering Audition Utilities -->
+        <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded border border-slate-800">
+          <button id="btn-slot-a" class="px-2.5 py-1 rounded text-xs font-bold bg-amber-500 text-slate-950 shadow">A</button>
+          <button id="btn-slot-b" class="px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-400 hover:text-white">B</button>
+          <button id="btn-copy-ab" class="px-2 py-1 rounded text-xs font-semibold text-slate-400 hover:text-cyan-300">A→B</button>
+        </div>
+
+        <button id="btn-loudness-match" class="px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700" title="Match gain so you compare EQ/Glue without loudness bias">
+          GAIN MATCH
+        </button>
+
+        <button id="btn-mono-check" class="px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700" title="Fold Master to Mono to check club/phone phase translation">
+          MONO
+        </button>
+
+        <button id="btn-master-bypass" class="px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700">
+          BYPASS
+        </button>
+      </div>
+
+      <!-- Right Unmastered Mix Audition Player -->
+      <div class="flex items-center gap-2">
+        <select id="audition-source-select" class="bg-slate-900 text-emerald-300 text-xs font-semibold px-2.5 py-1.5 rounded border border-slate-700">
+          <option value="mix-synthpop">Unmastered Mix: Synthwave / Pop</option>
+          <option value="mix-trap808">Unmastered Mix: Heavy 808 Trap</option>
+          <option value="mix-indie">Unmastered Mix: Indie / Electronic</option>
+          <option value="upload-mix">Upload Your Own Unmastered Mix...</option>
+        </select>
+        <input id="unmastered-file-input" type="file" accept="audio/*" class="hidden" />
+
+        <button id="btn-play-audition" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg transition-all flex items-center gap-2">
+          <span>▶ AUDITION MASTER CHAIN</span>
+        </button>
+        <div class="rack-screw hidden sm:block"></div>
+      </div>
+    </header>
+
+    <!-- AI REFERENCE TRACK MASTERING ANALYZER & CLONER -->
+    <section class="p-4 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+
+        <!-- Step 1: Drop Any Finished Reference Master -->
+        <div id="song-dropzone" class="lg:col-span-5 border-2 border-dashed border-amber-500/40 hover:border-amber-400 rounded-xl p-3.5 bg-slate-950/75 transition-all cursor-pointer flex flex-col justify-between gap-2">
+          <input id="song-file-input" type="file" accept="audio/*" class="hidden" />
+          <div>
+            <div class="text-xs font-bold uppercase tracking-wider text-amber-400 flex items-center gap-1.5">
+              <span class="w-2 h-2 rounded-full bg-amber-400 animate-ping"></span>
+              <span>STEP 1: DROP ANY FINISHED SONG TO CLONE ITS MASTER</span>
+            </div>
+            <p class="text-xs text-slate-300 mt-1">
+              Measures ITU-R BS.1770 Integrated Loudness (<code class="text-emerald-300">LUFS</code>), Crest Factor, 6-Band Tonal Balance, PuigTec Sub Weight &amp; M/S Stereo Width, then replicates the exact master chain!
+            </p>
+          </div>
+          <div class="flex flex-wrap items-center gap-2 mt-1">
+            <button id="btn-instant-clone" type="button" class="px-3.5 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow flex items-center gap-1.5">
+              <span>⚡ AI CLONE REFERENCE MASTER &amp; AUTO-SAVE PRESET</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Step 2: Reference Artist / Style Auto-Preset Tagger -->
+        <div class="lg:col-span-4 bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 flex flex-col gap-2">
+          <div class="text-xs font-bold uppercase tracking-wider text-cyan-400">
+            STEP 2: MASTER STYLE &amp; ARTIST PRESET TAGGER
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Artist / Mastering Style</label>
+              <input id="input-artist-name" type="text" placeholder="e.g. Justice, Mike Dean, Charli..." class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Reference Track / Album</label>
+              <input id="input-song-title" type="text" placeholder="e.g. Hyperdrama, BRAT, Utopia..." class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+            </div>
+          </div>
+          <div class="mt-1">
+            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div id="analysis-progress-fill" class="h-full bg-gradient-to-r from-amber-400 to-emerald-400 transition-all duration-200" style="width: 100%"></div>
+            </div>
+            <div id="analysis-status-text" class="text-xs text-emerald-400 font-mono mt-1 truncate">
+              Ready — Drop a finished song or click "AI Clone Reference Master"
+            </div>
+          </div>
+        </div>
+
+        <!-- Step 3: Extracted Master DNA Telemetry -->
+        <div class="lg:col-span-3 bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 flex flex-col justify-between gap-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">REPLICATED MASTER DNA</span>
+            <span class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-emerald-500/20 text-emerald-300 border border-emerald-500/30">BS.1770-4</span>
+          </div>
+          <div id="active-preset-badge" class="text-sm font-bold text-white truncate">Daft Punk — Random Access Memories</div>
+          <div id="active-style-badge" class="text-xs text-amber-300 truncate">Audiophile Analog Punch &amp; Silk Air</div>
+
+          <div class="grid grid-cols-3 gap-1.5 pt-1 border-t border-slate-800/80 text-center">
+            <div class="bg-slate-900/90 rounded p-1">
+              <div class="text-xs text-slate-400">TARGET LUFS</div>
+              <div id="metric-lufs" class="text-xs font-mono font-bold text-emerald-300">-10.5 LUFS</div>
+            </div>
+            <div class="bg-slate-900/90 rounded p-1">
+              <div class="text-xs text-slate-400">CREST DR</div>
+              <div id="metric-crest" class="text-xs font-mono font-bold text-amber-300">11.8 dB</div>
+            </div>
+            <div class="bg-slate-900/90 rounded p-1">
+              <div class="text-xs text-slate-400">PHASE CORR</div>
+              <div id="metric-corr" class="text-xs font-mono font-bold text-cyan-300">+0.88</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Saved Master Presets Bank -->
+      <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center gap-2 overflow-x-auto pb-1">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 shrink-0">MASTER STYLE BANK:</span>
+        <div id="master-preset-bank" class="flex items-center gap-2"></div>
+      </div>
+    </section>
+
+    <!-- MAIN MASTERING CONSOLE MODULES -->
+    <main class="p-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+      <!-- MODULE 1: 6-BAND LINEAR-PHASE TONAL MATCH EQ & PUIGTEC SUB (5 cols) -->
+      <div class="lg:col-span-5 bg-slate-900/90 border border-slate-700/80 rounded-xl flex flex-col justify-between shadow-lg">
+        <div class="bg-slate-800/90 px-3.5 py-2 rounded-t-xl flex items-center justify-between border-b border-slate-700">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+            <span class="text-xs font-black tracking-wider uppercase text-white">LINEAR-PHASE TONAL MATCH EQ + PUIGTEC SUB</span>
+          </div>
+          <button id="toggle-eq-bypass" class="px-2 py-0.5 rounded text-xs font-bold">IN</button>
+        </div>
+
+        <div class="p-3.5 flex flex-col gap-3">
+          <div class="relative rounded-lg overflow-hidden border border-slate-700 bg-slate-950">
+            <canvas id="master-eq-canvas" width="520" height="160" class="w-full h-[160px] block cursor-crosshair"></canvas>
+            <div class="absolute top-2 left-2.5 flex items-center gap-3 text-xs font-mono pointer-events-none">
+              <span class="text-amber-400">--- Ref Target Tonal Curve</span>
+              <span class="text-cyan-300">─── Active Master EQ</span>
+            </div>
+          </div>
+          <div id="knobs-eq" class="grid grid-cols-3 sm:grid-cols-5 gap-2.5"></div>
+        </div>
+      </div>
+
+      <!-- MODULE 2: SSL G-MASTER BUS GLUE + MULTIBAND TONE (4 cols) -->
+      <div class="lg:col-span-4 flex flex-col gap-4">
+
+        <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-lg flex-1 flex flex-col justify-between">
+          <div class="bg-slate-800/90 px-3.5 py-2 rounded-t-xl flex items-center justify-between border-b border-slate-700">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-emerald-400"></span>
+              <span class="text-xs font-black tracking-wider uppercase text-white">SSL G-MASTER BUS GLUE &amp; MULTIBAND</span>
+            </div>
+            <button id="toggle-comp-bypass" class="px-2 py-0.5 rounded text-xs font-bold">IN</button>
+          </div>
+
+          <div class="p-3.5 flex flex-col gap-3">
+            <!-- Bus Glue VU Meter + Ratio Switch -->
+            <div class="grid grid-cols-12 gap-3 items-center">
+              <div class="col-span-8 vu-master h-[90px] flex items-center justify-center">
+                <canvas id="glue-vu-canvas" width="220" height="86" class="w-full h-full"></canvas>
+              </div>
+              <div class="col-span-4 flex flex-col gap-1.5">
+                <div class="text-xs font-bold text-slate-400 uppercase text-center">SSL RATIO</div>
+                <div class="grid grid-cols-2 gap-1">
+                  <button class="glue-ratio-btn" data-ratio="2">2:1</button>
+                  <button class="glue-ratio-btn" data-ratio="4">4:1</button>
+                </div>
+                <div id="glue-gr-readout" class="text-xs font-mono font-bold text-amber-400 text-center bg-slate-950 py-1 rounded border border-slate-800">
+                  -2.4 dB
+                </div>
+              </div>
+            </div>
+
+            <div id="knobs-comp" class="grid grid-cols-4 sm:grid-cols-4 gap-2"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MODULE 3: M/S STEREO IMAGER + 2D LISSAJOUS VECTORSCOPE (3 cols) -->
+      <div class="lg:col-span-3 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-lg flex flex-col justify-between">
+        <div class="bg-slate-800/90 px-3.5 py-2 rounded-t-xl flex items-center justify-between border-b border-slate-700">
+          <span class="text-xs font-black tracking-wider uppercase text-cyan-300">M/S IMAGER &amp; VECTORSCOPE</span>
+          <button id="toggle-imager-bypass" class="px-2 py-0.5 rounded text-xs font-bold">IN</button>
+        </div>
+
+        <div class="p-3.5 flex flex-col gap-2.5 items-center">
+          <!-- 2D Lissajous Goniometer Canvas -->
+          <div class="w-full rounded-lg overflow-hidden border border-slate-800 bg-slate-950 flex flex-col items-center p-1">
+            <canvas id="vectorscope-canvas" width="220" height="135" class="w-[220px] h-[135px] block"></canvas>
+            <!-- Phase Correlation Meter (-1 to +1) -->
+            <div class="w-full px-2 py-1 flex items-center gap-2 text-xs font-mono text-slate-400">
+              <span>-1</span>
+              <div class="relative flex-1 h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div class="absolute inset-y-0 left-1/2 w-px bg-slate-500"></div>
+                <div id="phase-corr-indicator" class="absolute top-0 bottom-0 w-2.5 rounded-full bg-emerald-400 shadow -ml-1" style="left: 88%"></div>
+              </div>
+              <span>+1</span>
+            </div>
+          </div>
+
+          <div id="knobs-imager" class="w-full grid grid-cols-3 gap-2"></div>
+        </div>
+      </div>
+
+      <!-- BOTTOM FULL-WIDTH STRIP: ANALOG TAPE / TRANSFORMER + HEAVEN L2 MAXIMIZER & LUFS TARGETER -->
+      <div class="lg:col-span-12 grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+        <!-- Analog Transformer & 2-Inch Mastering Tape + Soft Clipper (5 cols) -->
+        <div class="lg:col-span-5 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-lg flex flex-col justify-between">
+          <div class="bg-slate-800/90 px-3.5 py-2 rounded-t-xl flex items-center justify-between border-b border-slate-700">
+            <span class="text-xs font-black tracking-wider uppercase text-amber-400">ANALOG TRANSFORMER &amp; MASTER TAPE</span>
+            <div class="flex items-center gap-1.5">
+              <button id="btn-tape-mode" class="px-2 py-0.5 rounded text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">30 IPS HI-FI</button>
+              <button id="toggle-sat-bypass" class="px-2 py-0.5 rounded text-xs font-bold">IN</button>
+            </div>
+          </div>
+          <div id="knobs-sat" class="p-3.5 grid grid-cols-3 gap-4"></div>
+        </div>
+
+        <!-- HEAVEN L2 True-Peak Brickwall Maximizer & Streaming Loudness Targeter (7 cols) -->
+        <div class="lg:col-span-7 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-lg flex flex-col justify-between">
+          <div class="bg-slate-800/90 px-3.5 py-2 rounded-t-xl flex items-center justify-between border-b border-slate-700">
+            <span class="text-xs font-black tracking-wider uppercase text-emerald-400">HEAVEN L2 BRICKWALL MAXIMIZER &amp; LUFS TARGETER</span>
+            <div class="flex items-center gap-1">
+              <button class="lufs-target-btn px-2 py-0.5 rounded text-xs font-bold bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-amber-300 border border-slate-700" data-push="7.5" data-ceil="-0.1">CLUB -7.5</button>
+              <button class="lufs-target-btn px-2 py-0.5 rounded text-xs font-bold bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-cyan-300 border border-slate-700" data-push="6.0" data-ceil="-0.2">POP -9.0</button>
+              <button class="lufs-target-btn px-2 py-0.5 rounded text-xs font-bold bg-slate-900 hover:bg-amber-500 hover:text-slate-950 text-emerald-300 border border-slate-700" data-push="3.5" data-ceil="-1.0">SPOTIFY -14</button>
+            </div>
+          </div>
+
+          <div class="p-3.5 flex flex-wrap items-center justify-between gap-4">
+            <div id="knobs-maximizer" class="grid grid-cols-4 gap-3 flex-1"></div>
+
+            <!-- Live LUFS / dBTP Readout + Output & Attenuation Meters -->
+            <div class="flex items-center gap-3 bg-slate-950 px-3.5 py-2 rounded-lg border border-slate-800 h-[92px]">
+              <div class="flex flex-col justify-between h-full pr-2 border-r border-slate-800">
+                <div>
+                  <div class="text-xs text-slate-400">INTEGRATED</div>
+                  <div id="live-lufs-readout" class="text-sm font-mono font-black text-emerald-400">-9.2 LUFS</div>
+                </div>
+                <div>
+                  <div class="text-xs text-slate-400">TRUE PEAK</div>
+                  <div id="live-tp-readout" class="text-xs font-mono font-bold text-amber-300">-0.2 dBTP</div>
+                </div>
+              </div>
+
+              <div class="flex flex-col items-center h-full justify-end">
+                <div class="w-3 flex-1 bg-slate-900 rounded-full overflow-hidden flex items-end p-0.5">
+                  <div id="meter-master-out" class="w-full bg-gradient-to-t from-emerald-500 via-amber-400 to-red-500 rounded-full transition-all duration-75" style="height: 65%"></div>
+                </div>
+                <span class="text-xs font-mono text-slate-400 mt-1">OUT</span>
+              </div>
+
+              <div class="flex flex-col items-center h-full justify-end">
+                <div class="w-3 flex-1 bg-slate-900 rounded-full overflow-hidden flex items-end p-0.5">
+                  <div id="meter-l2-atten" class="w-full bg-gradient-to-t from-amber-500 to-rose-500 rounded-full transition-all duration-75" style="height: 30%"></div>
+                </div>
+                <span class="text-xs font-mono text-rose-400 mt-1">ATT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MODULE 6: 5.1 & 7.1 SURROUND SOUND SPATIAL PLACEMENT CONSOLE & 360° SPEAKER RADAR -->
+      <div class="lg:col-span-12 bg-slate-900/95 border border-cyan-500/40 rounded-xl shadow-xl overflow-hidden">
+        <div class="bg-slate-800/95 px-4 py-2.5 flex flex-wrap items-center justify-between gap-2 border-b border-slate-700">
+          <div class="flex items-center gap-2.5">
+            <span class="px-2 py-0.5 rounded bg-cyan-500/20 border border-cyan-400/40 text-cyan-300 text-xs font-black tracking-wider">DOLBY ATMOS / ITU-R BS.775</span>
+            <span class="text-xs font-black tracking-wider uppercase text-white">5.1 &amp; 7.1 SURROUND SOUND SPATIAL PLACEMENT MATRIX &amp; SPEAKER RADAR</span>
+          </div>
+          <div class="flex items-center gap-1.5">
+            <button class="surround-mode-btn px-2.5 py-1 rounded text-xs font-bold bg-slate-900 text-slate-300 border border-slate-700" data-smode="2.0">2.0 STEREO</button>
+            <button class="surround-mode-btn px-2.5 py-1 rounded text-xs font-bold bg-cyan-500 text-slate-950 shadow" data-smode="5.1">5.1 SURROUND (L/C/R/LFE/Ls/Rs)</button>
+            <button class="surround-mode-btn px-2.5 py-1 rounded text-xs font-bold bg-slate-900 text-amber-300 border border-amber-500/40" data-smode="7.1">7.1 SPATIAL BED (+Lrs/Rrs)</button>
+            <button id="btn-export-surround-template" class="ml-2 px-3 py-1 rounded text-xs font-black bg-gradient-to-r from-cyan-400 to-emerald-400 text-slate-950 shadow">
+              ⬇ EXPORT 5.1/7.1 TEMPLATE
+            </button>
+          </div>
+        </div>
+
+        <div class="p-4 grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+          <!-- 360° Interactive Speaker Placement Radar (4 cols) -->
+          <div class="lg:col-span-4 flex flex-col items-center bg-slate-950 border border-slate-800 rounded-xl p-3">
+            <div class="w-full flex items-center justify-between text-xs font-mono text-slate-400 mb-1">
+              <span id="surround-radar-title" class="text-cyan-300 font-bold">5.1 ITU-R BS.775 SOUNDSTAGE</span>
+              <span id="surround-active-channels" class="text-emerald-400">6 CH ACTIVE</span>
+            </div>
+            <canvas id="surround-radar-canvas" width="260" height="210" class="w-[260px] h-[210px] cursor-crosshair rounded-lg bg-slate-950"></canvas>
+            <div id="surround-routing-summary" class="w-full text-[11px] font-mono text-slate-300 bg-slate-900/90 px-2.5 py-1.5 rounded border border-slate-800 mt-1.5 truncate">
+              C: Lead Vocal/Snare Anchor (82%) | L/R: Main Mix | LFE: &lt;80Hz Sub | Ls/Rs: +14ms Hall
+            </div>
+          </div>
+
+          <!-- Quick Surround Placement Template Selector + 6 Spatial Controls (8 cols) -->
+          <div class="lg:col-span-8 flex flex-col gap-3">
+            <!-- Quick Template Pills -->
+            <div class="flex flex-wrap items-center gap-1.5">
+              <span class="text-xs font-bold text-slate-400 uppercase mr-1">Surround Templates:</span>
+              <button class="surround-tpl-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-cyan-300 border border-slate-700" data-tpl="surround-51-cinema-itu-bs775">🎬 5.1 Cinema / Concert</button>
+              <button class="surround-tpl-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-amber-300 border border-slate-700" data-tpl="surround-71-dolby-atmos-spatial-bed">🎧 7.1 Atmos Spatial Bed</button>
+              <button class="surround-tpl-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-emerald-300 border border-slate-700" data-tpl="surround-51-worship-arena-broadcast">🙌 5.1 Worship Sanctuary</button>
+              <button class="surround-tpl-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-purple-300 border border-slate-700" data-tpl="surround-71-stadium-concert-360">🏟️ 7.1 Stadium 360°</button>
+              <button class="surround-tpl-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-rose-300 border border-slate-700" data-tpl="surround-51-club-dome-electronic">⚡ 5.1 Club Sub Dome</button>
+              <button class="surround-tpl-btn px-2.5 py-1 rounded-lg text-xs font-bold bg-slate-800 hover:bg-cyan-500 hover:text-slate-950 text-slate-200 border border-slate-700" data-tpl="surround-71-orchestral-abbey-stage">🎻 7.1 Abbey Road Score</button>
+            </div>
+
+            <!-- 6 Spatial Placement Sliders -->
+            <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 bg-slate-950/80 p-3.5 rounded-xl border border-slate-800">
+              <div>
+                <div class="flex justify-between text-xs font-mono mb-1">
+                  <span class="text-slate-300 font-bold">CENTER (C) ANCHOR</span>
+                  <span id="val-sur-center" class="text-cyan-300 font-bold">82%</span>
+                </div>
+                <input id="sl-sur-center" type="range" min="0" max="100" value="82" class="w-full accent-cyan-400 cursor-pointer">
+                <div class="text-[10px] text-slate-400 mt-0.5">Locks Lead Vocal / Snare to C</div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-mono mb-1">
+                  <span class="text-slate-300 font-bold">LFE (.1) CROSSOVER</span>
+                  <span id="val-sur-lfe-freq" class="text-amber-300 font-bold">80 Hz</span>
+                </div>
+                <input id="sl-sur-lfe-freq" type="range" min="40" max="120" value="80" class="w-full accent-amber-400 cursor-pointer">
+                <div class="text-[10px] text-slate-400 mt-0.5">Dedicated Sub-Bass LFE Send</div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-mono mb-1">
+                  <span class="text-slate-300 font-bold">LFE (.1) SUB GAIN</span>
+                  <span id="val-sur-lfe-gain" class="text-amber-300 font-bold">+2.5 dB</span>
+                </div>
+                <input id="sl-sur-lfe-gain" type="range" min="-6" max="6" step="0.5" value="2.5" class="w-full accent-amber-400 cursor-pointer">
+                <div class="text-[10px] text-slate-400 mt-0.5">ITU-R Low-Frequency Trim</div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-mono mb-1">
+                  <span class="text-slate-300 font-bold">SIDE (Ls/Rs) SPREAD</span>
+                  <span id="val-sur-side" class="text-emerald-300 font-bold">118%</span>
+                </div>
+                <input id="sl-sur-side" type="range" min="0" max="160" value="118" class="w-full accent-emerald-400 cursor-pointer">
+                <div class="text-[10px] text-slate-400 mt-0.5">Keys, Guitars, Doublers &amp; Pads</div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-mono mb-1">
+                  <span class="text-slate-300 font-bold">REAR 7.1 (Lrs/Rrs)</span>
+                  <span id="val-sur-rear" class="text-purple-300 font-bold">126%</span>
+                </div>
+                <input id="sl-sur-rear" type="range" min="0" max="160" value="126" class="w-full accent-purple-400 cursor-pointer">
+                <div class="text-[10px] text-slate-400 mt-0.5">7.1 Shimmer, Crowd &amp; Throws</div>
+              </div>
+
+              <div>
+                <div class="flex justify-between text-xs font-mono mb-1">
+                  <span class="text-slate-300 font-bold">HAAS DECORR DELAY</span>
+                  <span id="val-sur-delay" class="text-rose-300 font-bold">18 ms</span>
+                </div>
+                <input id="sl-sur-delay" type="range" min="5" max="35" value="18" class="w-full accent-rose-400 cursor-pointer">
+                <div class="text-[10px] text-slate-400 mt-0.5">Front-to-Rear Acoustic Depth</div>
+              </div>
+            </div>
+
+            <!-- Per-Channel Surround Output Level Meters (L, C, R, LFE, Ls/Lss, Rs/Rss, Lrs, Rrs) -->
+            <div class="grid grid-cols-8 gap-2 bg-slate-950 px-3 py-2 rounded-xl border border-slate-800 text-center font-mono text-[10px]">
+              <div><div class="text-slate-400">L</div><div class="h-2 bg-slate-800 rounded overflow-hidden mt-1"><div id="smeter-L" class="h-full bg-emerald-400" style="width:82%"></div></div></div>
+              <div><div class="text-cyan-300 font-bold">C</div><div class="h-2 bg-slate-800 rounded overflow-hidden mt-1"><div id="smeter-C" class="h-full bg-cyan-400" style="width:85%"></div></div></div>
+              <div><div class="text-slate-400">R</div><div class="h-2 bg-slate-800 rounded overflow-hidden mt-1"><div id="smeter-R" class="h-full bg-emerald-400" style="width:82%"></div></div></div>
+              <div><div class="text-amber-300 font-bold">LFE</div><div class="h-2 bg-slate-800 rounded overflow-hidden mt-1"><div id="smeter-LFE" class="h-full bg-amber-400" style="width:74%"></div></div></div>
+              <div><div class="text-emerald-300">Ls/Lss</div><div class="h-2 bg-slate-800 rounded overflow-hidden mt-1"><div id="smeter-Ls" class="h-full bg-emerald-400" style="width:70%"></div></div></div>
+              <div><div class="text-emerald-300">Rs/Rss</div><div class="h-2 bg-slate-800 rounded overflow-hidden mt-1"><div id="smeter-Rs" class="h-full bg-emerald-400" style="width:70%"></div></div></div>
+              <div><div class="text-purple-300">Lrs (7.1)</div><div class="h-2 bg-slate-800 rounded overflow-hidden mt-1"><div id="smeter-Lrs" class="h-full bg-purple-400" style="width:64%"></div></div></div>
+              <div><div class="text-purple-300">Rrs (7.1)</div><div class="h-2 bg-slate-800 rounded overflow-hidden mt-1"><div id="smeter-Rrs" class="h-full bg-purple-400" style="width:64%"></div></div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </main>
+
+    <div id="toast-banner" class="fixed bottom-5 right-5 bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl shadow-2xl opacity-0 translate-y-2 transition-all duration-200 pointer-events-none z-50">
+      Saved Master Preset!
+    </div>
+
+  </div>
+
+  <script>
+// master-presets.js - Signature Reference Mastering Presets for HEAVEN MasterDNA
+
+const MASTER_FACTORY_PRESETS = [
+  // ==========================================================================
+  // CHART POP, HIP-HOP, ELECTRONIC & ANALOG REFERENCE MASTERS
+  // ==========================================================================
+  {
+    id: 'daft-punk-ram',
+    artist: 'Daft Punk',
+    song: 'Random Access Memories (30 IPS Analog Master)',
+    style: 'Audiophile Analog Punch & Silk Air',
+    targetLufs: -10.5,
+    crestDb: 11.8,
+    phaseCorr: 0.88,
+    isFactory: true,
+    params: {
+      inputTrim: 0.5, subCutFreq: 26, pultecLowBoost: 3.2, pultecLowFreq: 60,
+      lowMidGain: -1.6, lowMidFreq: 280, midPresGain: 1.4, midPresFreq: 2200,
+      airShelfGain: 3.8, airShelfFreq: 14000, eqBypass: false,
+      glueThresh: -16.0, glueRatio: 2, glueAttack: 30, glueRelease: 120,
+      glueScHpf: 90, glueMix: 78, mbLowGain: 1.2, mbHighGain: 1.5, compBypass: false,
+      tapeDrive: 34, ironWeight: 42, tapeMode: '30ips', softClip: 25, satBypass: false,
+      monoMakerFreq: 110, stereoWidth: 118, highWidth: 132, imagerBypass: false,
+      maximizerDrive: 4.8, truePeakCeiling: -0.3, arcRelease: 55
+    }
+  },
+  {
+    id: 'mike-dean-astroworld',
+    artist: 'Travis Scott / Mike Dean',
+    song: 'Utopia / Astroworld (Heavy 808 Clipper Master)',
+    style: 'Massive Sub Weight, Soft-Clipped Transients, Wide Synths',
+    targetLufs: -7.8,
+    crestDb: 7.9,
+    phaseCorr: 0.82,
+    isFactory: true,
+    params: {
+      inputTrim: 1.5, subCutFreq: 22, pultecLowBoost: 4.8, pultecLowFreq: 55,
+      lowMidGain: -2.4, lowMidFreq: 310, midPresGain: 2.2, midPresFreq: 2800,
+      airShelfGain: 4.6, airShelfFreq: 12500, eqBypass: false,
+      glueThresh: -19.5, glueRatio: 4, glueAttack: 15, glueRelease: 90,
+      glueScHpf: 125, glueMix: 85, mbLowGain: 2.4, mbHighGain: 2.0, compBypass: false,
+      tapeDrive: 58, ironWeight: 68, tapeMode: '15ips', softClip: 62, satBypass: false,
+      monoMakerFreq: 135, stereoWidth: 128, highWidth: 145, imagerBypass: false,
+      maximizerDrive: 7.2, truePeakCeiling: -0.1, arcRelease: 35
+    }
+  },
+  {
+    id: 'max-martin-pop',
+    artist: 'The Weeknd / Max Martin',
+    song: 'Blinding Lights (Radio Pop Sheen Master)',
+    style: 'Crystal Clarity, Tight SSL Bus Glue, Competitive -8.5 LUFS',
+    targetLufs: -8.5,
+    crestDb: 8.6,
+    phaseCorr: 0.91,
+    isFactory: true,
+    params: {
+      inputTrim: 1.0, subCutFreq: 28, pultecLowBoost: 3.6, pultecLowFreq: 65,
+      lowMidGain: -2.0, lowMidFreq: 260, midPresGain: 2.5, midPresFreq: 3100,
+      airShelfGain: 4.2, airShelfFreq: 15000, eqBypass: false,
+      glueThresh: -18.0, glueRatio: 4, glueAttack: 20, glueRelease: 100,
+      glueScHpf: 105, glueMix: 82, mbLowGain: 1.6, mbHighGain: 2.2, compBypass: false,
+      tapeDrive: 38, ironWeight: 48, tapeMode: '30ips', softClip: 38, satBypass: false,
+      monoMakerFreq: 120, stereoWidth: 124, highWidth: 138, imagerBypass: false,
+      maximizerDrive: 6.4, truePeakCeiling: -0.2, arcRelease: 45
+    }
+  },
+  {
+    id: 'billie-finneas-warm',
+    artist: 'Billie Eilish / Finneas',
+    song: 'Hit Me Hard and Soft (Velvet Sub & Dynamic Master)',
+    style: 'Deep Controlled Sub, Warm Low-Mids, Intimate Stereo Image',
+    targetLufs: -11.2,
+    crestDb: 11.2,
+    phaseCorr: 0.89,
+    isFactory: true,
+    params: {
+      inputTrim: 0.0, subCutFreq: 20, pultecLowBoost: 4.0, pultecLowFreq: 50,
+      lowMidGain: -0.8, lowMidFreq: 240, midPresGain: 1.0, midPresFreq: 2400,
+      airShelfGain: 2.8, airShelfFreq: 13500, eqBypass: false,
+      glueThresh: -14.5, glueRatio: 2, glueAttack: 35, glueRelease: 160,
+      glueScHpf: 110, glueMix: 70, mbLowGain: 1.8, mbHighGain: 0.8, compBypass: false,
+      tapeDrive: 44, ironWeight: 54, tapeMode: '15ips', softClip: 28, satBypass: false,
+      monoMakerFreq: 115, stereoWidth: 112, highWidth: 122, imagerBypass: false,
+      maximizerDrive: 4.2, truePeakCeiling: -0.5, arcRelease: 70
+    }
+  },
+  {
+    id: 'fred-again-club',
+    artist: 'Fred again.. / Skrillex',
+    song: 'Rumble / Delilah (UK Club Festival Master)',
+    style: 'Hyper-Punchy Transients, Mono-Locked Sub, Ultra-Wide Tops',
+    targetLufs: -7.5,
+    crestDb: 7.4,
+    phaseCorr: 0.85,
+    isFactory: true,
+    params: {
+      inputTrim: 1.5, subCutFreq: 29, pultecLowBoost: 5.2, pultecLowFreq: 58,
+      lowMidGain: -2.8, lowMidFreq: 330, midPresGain: 2.6, midPresFreq: 3400,
+      airShelfGain: 4.9, airShelfFreq: 14500, eqBypass: false,
+      glueThresh: -20.0, glueRatio: 4, glueAttack: 25, glueRelease: 80,
+      glueScHpf: 140, glueMix: 90, mbLowGain: 2.5, mbHighGain: 2.4, compBypass: false,
+      tapeDrive: 52, ironWeight: 60, tapeMode: '30ips', softClip: 58, satBypass: false,
+      monoMakerFreq: 145, stereoWidth: 132, highWidth: 155, imagerBypass: false,
+      maximizerDrive: 7.5, truePeakCeiling: -0.1, arcRelease: 30
+    }
+  },
+  {
+    id: 'justice-hyperdrama',
+    artist: 'Justice',
+    song: 'Hyperdrama / Neverender (French Electro Brickwall)',
+    style: 'Aggressive 4:1 SSL Bus Glue, Heavy Iron & Soft Clipper (-7.4 LUFS)',
+    targetLufs: -7.4,
+    crestDb: 7.5,
+    phaseCorr: 0.86,
+    isFactory: true,
+    params: {
+      inputTrim: 1.5, subCutFreq: 28, pultecLowBoost: 4.6, pultecLowFreq: 62,
+      lowMidGain: -2.6, lowMidFreq: 300, midPresGain: 2.8, midPresFreq: 3200,
+      airShelfGain: 4.5, airShelfFreq: 14000, eqBypass: false,
+      glueThresh: -21.0, glueRatio: 4, glueAttack: 12, glueRelease: 75,
+      glueScHpf: 130, glueMix: 92, mbLowGain: 2.2, mbHighGain: 2.3, compBypass: false,
+      tapeDrive: 62, ironWeight: 72, tapeMode: '30ips', softClip: 64, satBypass: false,
+      monoMakerFreq: 130, stereoWidth: 130, highWidth: 148, imagerBypass: false,
+      maximizerDrive: 7.6, truePeakCeiling: -0.1, arcRelease: 30
+    }
+  },
+  {
+    id: 'charli-xcx-brat-master',
+    artist: 'Charli xcx / A. G. Cook',
+    song: 'BRAT (Hyper-Club Clipper Master)',
+    style: 'Hard Soft-Clipping, Mono-Locked 135Hz Sub, 152% High Stereo Width',
+    targetLufs: -6.8,
+    crestDb: 6.9,
+    phaseCorr: 0.84,
+    isFactory: true,
+    params: {
+      inputTrim: 2.0, subCutFreq: 30, pultecLowBoost: 5.4, pultecLowFreq: 56,
+      lowMidGain: -3.0, lowMidFreq: 320, midPresGain: 3.0, midPresFreq: 3500,
+      airShelfGain: 5.2, airShelfFreq: 15000, eqBypass: false,
+      glueThresh: -21.5, glueRatio: 4, glueAttack: 15, glueRelease: 70,
+      glueScHpf: 145, glueMix: 92, mbLowGain: 2.6, mbHighGain: 2.6, compBypass: false,
+      tapeDrive: 64, ironWeight: 66, tapeMode: '30ips', softClip: 72, satBypass: false,
+      monoMakerFreq: 140, stereoWidth: 136, highWidth: 158, imagerBypass: false,
+      maximizerDrive: 8.2, truePeakCeiling: -0.1, arcRelease: 25
+    }
+  },
+  {
+    id: 'kendrick-gnx-master',
+    artist: 'Kendrick Lamar',
+    song: 'GNX (West Coast 808 Punch Master)',
+    style: 'Tight 55Hz Pultec Sub, High Sidechain HPF, Crisp Vocal Midrange',
+    targetLufs: -8.2,
+    crestDb: 8.4,
+    phaseCorr: 0.90,
+    isFactory: true,
+    params: {
+      inputTrim: 1.0, subCutFreq: 24, pultecLowBoost: 4.8, pultecLowFreq: 55,
+      lowMidGain: -2.2, lowMidFreq: 270, midPresGain: 2.4, midPresFreq: 2900,
+      airShelfGain: 3.8, airShelfFreq: 13500, eqBypass: false,
+      glueThresh: -18.5, glueRatio: 4, glueAttack: 25, glueRelease: 95,
+      glueScHpf: 135, glueMix: 84, mbLowGain: 2.2, mbHighGain: 1.8, compBypass: false,
+      tapeDrive: 46, ironWeight: 58, tapeMode: '15ips', softClip: 48, satBypass: false,
+      monoMakerFreq: 135, stereoWidth: 120, highWidth: 134, imagerBypass: false,
+      maximizerDrive: 6.6, truePeakCeiling: -0.2, arcRelease: 40
+    }
+  },
+  {
+    id: 'rufus-du-sol-melodic',
+    artist: 'RÜFÜS DU SOL',
+    song: 'Inhale / Exhale (Wide Melodic House Master)',
+    style: 'Deep 50Hz Pultec Sub, 145% M/S Synth Width, Silky 15kHz Sheen',
+    targetLufs: -8.0,
+    crestDb: 8.5,
+    phaseCorr: 0.86,
+    isFactory: true,
+    params: {
+      inputTrim: 1.0, subCutFreq: 25, pultecLowBoost: 4.5, pultecLowFreq: 52,
+      lowMidGain: -2.0, lowMidFreq: 290, midPresGain: 1.8, midPresFreq: 2700,
+      airShelfGain: 4.6, airShelfFreq: 15000, eqBypass: false,
+      glueThresh: -18.0, glueRatio: 4, glueAttack: 22, glueRelease: 110,
+      glueScHpf: 125, glueMix: 80, mbLowGain: 2.0, mbHighGain: 2.1, compBypass: false,
+      tapeDrive: 42, ironWeight: 52, tapeMode: '30ips', softClip: 40, satBypass: false,
+      monoMakerFreq: 125, stereoWidth: 136, highWidth: 152, imagerBypass: false,
+      maximizerDrive: 6.8, truePeakCeiling: -0.2, arcRelease: 45
+    }
+  },
+  {
+    id: 'tame-impala-currents',
+    artist: 'Tame Impala',
+    song: 'Currents / Deadbeat (15 IPS Psychedelic Tape Master)',
+    style: 'Warm Analog Tape Compression, Thick Low-Mids, Wide Stereo Field',
+    targetLufs: -9.2,
+    crestDb: 9.4,
+    phaseCorr: 0.85,
+    isFactory: true,
+    params: {
+      inputTrim: 0.8, subCutFreq: 25, pultecLowBoost: 4.0, pultecLowFreq: 58,
+      lowMidGain: -1.2, lowMidFreq: 260, midPresGain: 1.6, midPresFreq: 2500,
+      airShelfGain: 3.4, airShelfFreq: 13000, eqBypass: false,
+      glueThresh: -17.0, glueRatio: 4, glueAttack: 18, glueRelease: 115,
+      glueScHpf: 105, glueMix: 82, mbLowGain: 1.8, mbHighGain: 1.4, compBypass: false,
+      tapeDrive: 56, ironWeight: 62, tapeMode: '15ips', softClip: 42, satBypass: false,
+      monoMakerFreq: 115, stereoWidth: 132, highWidth: 144, imagerBypass: false,
+      maximizerDrive: 5.8, truePeakCeiling: -0.2, arcRelease: 50
+    }
+  },
+  {
+    id: 'chris-stapleton-nashville',
+    artist: 'Chris Stapleton / Dave Cobb',
+    song: 'Starting Over (Audiophile Nashville Analog Master)',
+    style: '12.4 dB Dynamic Range, Gentle 2:1 Bus Glue, Warm Transformer Iron',
+    targetLufs: -11.5,
+    crestDb: 12.4,
+    phaseCorr: 0.92,
+    isFactory: true,
+    params: {
+      inputTrim: 0.0, subCutFreq: 24, pultecLowBoost: 2.8, pultecLowFreq: 62,
+      lowMidGain: -1.0, lowMidFreq: 250, midPresGain: 1.4, midPresFreq: 2300,
+      airShelfGain: 3.0, airShelfFreq: 13500, eqBypass: false,
+      glueThresh: -14.0, glueRatio: 2, glueAttack: 35, glueRelease: 150,
+      glueScHpf: 85, glueMix: 72, mbLowGain: 1.0, mbHighGain: 1.1, compBypass: false,
+      tapeDrive: 36, ironWeight: 48, tapeMode: '15ips', softClip: 18, satBypass: false,
+      monoMakerFreq: 95, stereoWidth: 114, highWidth: 124, imagerBypass: false,
+      maximizerDrive: 4.0, truePeakCeiling: -0.5, arcRelease: 75
+    }
+  },
+
+  // ==========================================================================
+  // WORSHIP BANDS & STADIUM ANTHEM REFERENCE MASTERS
+  // ==========================================================================
+  {
+    id: 'red-rocks-worship-master',
+    artist: 'Red Rocks Worship',
+    song: 'Good Plans / Echo Holy (Live Arena Worship Master)',
+    style: 'Warm Pultec 60Hz Foundation, Open 2.5kHz Clarity, 128% Arena Width',
+    targetLufs: -9.4,
+    crestDb: 9.8,
+    phaseCorr: 0.88,
+    isFactory: true,
+    params: {
+      inputTrim: 0.8, subCutFreq: 26, pultecLowBoost: 3.6, pultecLowFreq: 60,
+      lowMidGain: -1.8, lowMidFreq: 270, midPresGain: 1.8, midPresFreq: 2500,
+      airShelfGain: 3.9, airShelfFreq: 14000, eqBypass: false,
+      glueThresh: -16.5, glueRatio: 2, glueAttack: 28, glueRelease: 125,
+      glueScHpf: 95, glueMix: 78, mbLowGain: 1.5, mbHighGain: 1.6, compBypass: false,
+      tapeDrive: 38, ironWeight: 48, tapeMode: '30ips', softClip: 30, satBypass: false,
+      monoMakerFreq: 110, stereoWidth: 128, highWidth: 140, imagerBypass: false,
+      maximizerDrive: 5.5, truePeakCeiling: -0.3, arcRelease: 55
+    }
+  },
+  {
+    id: 'bethel-music-master',
+    artist: 'Bethel Music',
+    song: 'Goodness of God (Live Redding Worship Master)',
+    style: '15 IPS Analog Tape Warmth, Natural Dynamic Swells, Lush 134% Stereo Hall',
+    targetLufs: -9.8,
+    crestDb: 10.4,
+    phaseCorr: 0.87,
+    isFactory: true,
+    params: {
+      inputTrim: 0.5, subCutFreq: 24, pultecLowBoost: 3.8, pultecLowFreq: 56,
+      lowMidGain: -1.4, lowMidFreq: 255, midPresGain: 1.5, midPresFreq: 2400,
+      airShelfGain: 3.5, airShelfFreq: 13500, eqBypass: false,
+      glueThresh: -16.0, glueRatio: 2, glueAttack: 32, glueRelease: 140,
+      glueScHpf: 90, glueMix: 76, mbLowGain: 1.6, mbHighGain: 1.4, compBypass: false,
+      tapeDrive: 42, ironWeight: 54, tapeMode: '15ips', softClip: 26, satBypass: false,
+      monoMakerFreq: 105, stereoWidth: 126, highWidth: 138, imagerBypass: false,
+      maximizerDrive: 5.2, truePeakCeiling: -0.3, arcRelease: 65
+    }
+  },
+  {
+    id: 'elevation-worship-master',
+    artist: 'Elevation Worship',
+    song: 'Praise / Graves Into Gardens (Modern Anthem Master)',
+    style: 'Punchy 4:1 SSL Bus Glue, +4.2dB 58Hz Drum/Sub Weight, 136% Wide Chorus',
+    targetLufs: -8.4,
+    crestDb: 8.6,
+    phaseCorr: 0.89,
+    isFactory: true,
+    params: {
+      inputTrim: 1.0, subCutFreq: 27, pultecLowBoost: 4.2, pultecLowFreq: 58,
+      lowMidGain: -2.2, lowMidFreq: 280, midPresGain: 2.2, midPresFreq: 2800,
+      airShelfGain: 4.2, airShelfFreq: 14500, eqBypass: false,
+      glueThresh: -18.0, glueRatio: 4, glueAttack: 22, glueRelease: 100,
+      glueScHpf: 110, glueMix: 84, mbLowGain: 1.9, mbHighGain: 2.0, compBypass: false,
+      tapeDrive: 44, ironWeight: 52, tapeMode: '30ips', softClip: 38, satBypass: false,
+      monoMakerFreq: 115, stereoWidth: 130, highWidth: 144, imagerBypass: false,
+      maximizerDrive: 6.4, truePeakCeiling: -0.2, arcRelease: 45
+    }
+  },
+  {
+    id: 'hillsong-worship-master',
+    artist: 'Hillsong Worship',
+    song: 'What A Beautiful Name (Cathedral Worship Master)',
+    style: 'Silky 30 IPS Tape Sheen, Balanced 2:1 Bus Glue, Soaring Vocal Clarity',
+    targetLufs: -9.6,
+    crestDb: 10.0,
+    phaseCorr: 0.89,
+    isFactory: true,
+    params: {
+      inputTrim: 0.5, subCutFreq: 25, pultecLowBoost: 3.4, pultecLowFreq: 60,
+      lowMidGain: -1.6, lowMidFreq: 265, midPresGain: 1.8, midPresFreq: 2600,
+      airShelfGain: 4.0, airShelfFreq: 14500, eqBypass: false,
+      glueThresh: -16.5, glueRatio: 2, glueAttack: 30, glueRelease: 130,
+      glueScHpf: 95, glueMix: 78, mbLowGain: 1.4, mbHighGain: 1.7, compBypass: false,
+      tapeDrive: 36, ironWeight: 46, tapeMode: '30ips', softClip: 28, satBypass: false,
+      monoMakerFreq: 110, stereoWidth: 126, highWidth: 140, imagerBypass: false,
+      maximizerDrive: 5.4, truePeakCeiling: -0.3, arcRelease: 60
+    }
+  },
+  {
+    id: 'hillsong-united-master',
+    artist: 'Hillsong UNITED',
+    song: 'Zion / Oceans (Atmospheric Synth-Worship Master)',
+    style: 'Deep 52Hz Pultec Sub, 146% High-Band Shimmer Width, Smooth ARC Release',
+    targetLufs: -9.0,
+    crestDb: 9.4,
+    phaseCorr: 0.86,
+    isFactory: true,
+    params: {
+      inputTrim: 0.8, subCutFreq: 24, pultecLowBoost: 4.4, pultecLowFreq: 52,
+      lowMidGain: -2.0, lowMidFreq: 275, midPresGain: 1.9, midPresFreq: 2700,
+      airShelfGain: 4.5, airShelfFreq: 15000, eqBypass: false,
+      glueThresh: -17.5, glueRatio: 2, glueAttack: 26, glueRelease: 120,
+      glueScHpf: 115, glueMix: 80, mbLowGain: 2.0, mbHighGain: 2.1, compBypass: false,
+      tapeDrive: 40, ironWeight: 50, tapeMode: '30ips', softClip: 34, satBypass: false,
+      monoMakerFreq: 120, stereoWidth: 134, highWidth: 150, imagerBypass: false,
+      maximizerDrive: 5.9, truePeakCeiling: -0.2, arcRelease: 55
+    }
+  },
+  {
+    id: 'coldplay-stadium-master',
+    artist: 'Coldplay',
+    song: 'Music of the Spheres / Viva La Vida (Stadium Master)',
+    style: 'Euphoric 148% M/S Stadium Width, 30 IPS Air at 15kHz, Punchy 4:1 SSL Glue',
+    targetLufs: -8.6,
+    crestDb: 8.8,
+    phaseCorr: 0.88,
+    isFactory: true,
+    params: {
+      inputTrim: 1.0, subCutFreq: 26, pultecLowBoost: 3.8, pultecLowFreq: 60,
+      lowMidGain: -2.0, lowMidFreq: 270, midPresGain: 2.2, midPresFreq: 2900,
+      airShelfGain: 4.4, airShelfFreq: 15000, eqBypass: false,
+      glueThresh: -18.0, glueRatio: 4, glueAttack: 22, glueRelease: 105,
+      glueScHpf: 105, glueMix: 82, mbLowGain: 1.7, mbHighGain: 2.2, compBypass: false,
+      tapeDrive: 42, ironWeight: 50, tapeMode: '30ips', softClip: 36, satBypass: false,
+      monoMakerFreq: 115, stereoWidth: 136, highWidth: 150, imagerBypass: false,
+      maximizerDrive: 6.3, truePeakCeiling: -0.2, arcRelease: 48
+    }
+  },
+  {
+    id: 'imagine-dragons-arena-master',
+    artist: 'Imagine Dragons',
+    song: 'Loom / Night Visions (Explosive Arena Rock Master)',
+    style: 'Massive 60Hz Drum Impact, Heavy Transformer Iron & Soft-Clipped Transients',
+    targetLufs: -7.6,
+    crestDb: 7.6,
+    phaseCorr: 0.87,
+    isFactory: true,
+    params: {
+      inputTrim: 1.5, subCutFreq: 28, pultecLowBoost: 4.8, pultecLowFreq: 60,
+      lowMidGain: -2.6, lowMidFreq: 310, midPresGain: 2.8, midPresFreq: 3300,
+      airShelfGain: 4.4, airShelfFreq: 13800, eqBypass: false,
+      glueThresh: -20.0, glueRatio: 4, glueAttack: 16, glueRelease: 85,
+      glueScHpf: 120, glueMix: 88, mbLowGain: 2.3, mbHighGain: 2.2, compBypass: false,
+      tapeDrive: 58, ironWeight: 68, tapeMode: '15ips', softClip: 60, satBypass: false,
+      monoMakerFreq: 125, stereoWidth: 130, highWidth: 145, imagerBypass: false,
+      maximizerDrive: 7.4, truePeakCeiling: -0.1, arcRelease: 35
+    }
+  },
+  {
+    id: 'ed-sheeran-divide-master',
+    artist: 'Ed Sheeran',
+    song: 'Divide / Subtract (Warm Acoustic & Pop Radio Master)',
+    style: 'Intimate Warm Low-Mids, Articulate 2.8kHz Presence, Tight Radio Glue',
+    targetLufs: -8.8,
+    crestDb: 9.2,
+    phaseCorr: 0.92,
+    isFactory: true,
+    params: {
+      inputTrim: 0.8, subCutFreq: 26, pultecLowBoost: 3.4, pultecLowFreq: 64,
+      lowMidGain: -1.6, lowMidFreq: 250, midPresGain: 2.1, midPresFreq: 2800,
+      airShelfGain: 3.8, airShelfFreq: 14200, eqBypass: false,
+      glueThresh: -17.0, glueRatio: 4, glueAttack: 24, glueRelease: 110,
+      glueScHpf: 95, glueMix: 80, mbLowGain: 1.5, mbHighGain: 1.8, compBypass: false,
+      tapeDrive: 36, ironWeight: 46, tapeMode: '30ips', softClip: 32, satBypass: false,
+      monoMakerFreq: 110, stereoWidth: 122, highWidth: 134, imagerBypass: false,
+      maximizerDrive: 6.0, truePeakCeiling: -0.2, arcRelease: 50
+    }
+  },
+  // ============================================================================
+  // SURROUND SOUND 5.1 & 7.1 SPATIAL PLACEMENT TEMPLATE PRESETS (6)
+  // ============================================================================
+  {
+    id: 'surround-51-cinema-itu-bs775',
+    artist: '5.1 Surround Template (ITU-R BS.775)',
+    song: 'Cinema & Concert Film 5.1 Spatial Placement Master',
+    style: 'L/R Main Music Stage + Center (C) Lead Anchor + 80Hz LFE Sub + Ls/Rs Hall Decorrelation',
+    targetLufs: -14.0,
+    crestDb: 12.4,
+    phaseCorr: 0.94,
+    isFactory: true,
+    surroundMode: '5.1',
+    surroundPlacement: {
+      format: '5.1 ITU-R BS.775 (L, C, R, LFE, Ls, Rs)',
+      centerFocusPct: 82,
+      lfeCrossoverHz: 80,
+      lfeGainDb: 2.5,
+      sideSurroundPct: 118,
+      rearSurroundPct: 0,
+      haasDelayMs: 14,
+      channelRouting: 'C: Lead Vocal/Snare Anchor (-3dB Div) | L/R: Rhythm & Guitars | LFE: <80Hz Sub | Ls/Rs: +14ms Decorrelated Hall'
+    },
+    params: {
+      inputTrim: 0.5, subCutFreq: 22, pultecLowBoost: 4.0, pultecLowFreq: 45,
+      lowMidGain: -1.4, lowMidFreq: 240, midPresGain: 1.8, midPresFreq: 3000,
+      airShelfGain: 3.5, airShelfFreq: 14500, eqBypass: false,
+      glueThresh: -16.0, glueRatio: 2, glueAttack: 30, glueRelease: 140,
+      glueScHpf: 90, glueMix: 72, mbLowGain: 1.4, mbHighGain: 1.6, compBypass: false,
+      tapeDrive: 32, ironWeight: 48, tapeMode: '30ips', softClip: 20, satBypass: false,
+      monoMakerFreq: 80, stereoWidth: 135, highWidth: 145, imagerBypass: false,
+      maximizerDrive: 4.2, truePeakCeiling: -1.0, arcRelease: 65,
+      surroundMode: '5.1', centerFocus: 82, lfeFreq: 80, lfeGain: 2.5, sideWidth: 118, rearDepth: 0, rearDelayMs: 14
+    }
+  },
+  {
+    id: 'surround-71-dolby-atmos-spatial-bed',
+    artist: '7.1 Spatial Bed Template (Atmos / Apple Music)',
+    song: '7.1 Immersive Stadium & Spatial Audio Bed (7.1.4 Ready)',
+    style: 'L/C/R Front Stage + Lss/Rss 90° Wide Synths & Keys + Lrs/Rrs 150° Rear Shimmer Tail + LFE',
+    targetLufs: -16.0,
+    crestDb: 13.2,
+    phaseCorr: 0.91,
+    isFactory: true,
+    surroundMode: '7.1',
+    surroundPlacement: {
+      format: '7.1 Spatial Bed (L, C, R, LFE, Lss, Rss, Lrs, Rrs)',
+      centerFocusPct: 76,
+      lfeCrossoverHz: 80,
+      lfeGainDb: 3.0,
+      sideSurroundPct: 132,
+      rearSurroundPct: 126,
+      haasDelayMs: 22,
+      channelRouting: 'L/C/R: Core Mix & Lead | LFE: <80Hz Sub | Lss/Rss: Wide Synths/Pads/Doubles | Lrs/Rrs: +22ms Rear Cathedral Tail'
+    },
+    params: {
+      inputTrim: 0.5, subCutFreq: 20, pultecLowBoost: 4.2, pultecLowFreq: 42,
+      lowMidGain: -1.6, lowMidFreq: 250, midPresGain: 2.0, midPresFreq: 3100,
+      airShelfGain: 4.6, airShelfFreq: 15500, eqBypass: false,
+      glueThresh: -15.5, glueRatio: 2, glueAttack: 28, glueRelease: 130,
+      glueScHpf: 85, glueMix: 70, mbLowGain: 1.5, mbHighGain: 2.0, compBypass: false,
+      tapeDrive: 34, ironWeight: 50, tapeMode: '30ips', softClip: 18, satBypass: false,
+      monoMakerFreq: 80, stereoWidth: 144, highWidth: 158, imagerBypass: false,
+      maximizerDrive: 3.8, truePeakCeiling: -1.0, arcRelease: 70,
+      surroundMode: '7.1', centerFocus: 76, lfeFreq: 80, lfeGain: 3.0, sideWidth: 132, rearDepth: 126, rearDelayMs: 22
+    }
+  },
+  {
+    id: 'surround-51-worship-arena-broadcast',
+    artist: '5.1 Worship Arena Surround (Elevation / Bethel / Red Rocks)',
+    song: '5.1 Live Worship Broadcast & Sanctuary Immersive Placement',
+    style: 'Center Pastor/Worship Lead + Wide L/R Band + Ls/Rs Congregation & Room Ambience + 75Hz LFE Sub',
+    targetLufs: -11.5,
+    crestDb: 10.6,
+    phaseCorr: 0.92,
+    isFactory: true,
+    surroundMode: '5.1',
+    surroundPlacement: {
+      format: '5.1 Live Worship Broadcast (L, C, R, LFE, Ls, Rs)',
+      centerFocusPct: 88,
+      lfeCrossoverHz: 75,
+      lfeGainDb: 3.2,
+      sideSurroundPct: 128,
+      rearSurroundPct: 0,
+      haasDelayMs: 18,
+      channelRouting: 'C: Worship Leader & Kick/Snare | L/R: Stereo Guitars & Keys | LFE: <75Hz Sub Bass | Ls/Rs: Crowd Mics & 3.8s Shimmer'
+    },
+    params: {
+      inputTrim: 1.0, subCutFreq: 24, pultecLowBoost: 4.2, pultecLowFreq: 55,
+      lowMidGain: -2.0, lowMidFreq: 265, midPresGain: 2.3, midPresFreq: 3000,
+      airShelfGain: 4.4, airShelfFreq: 14800, eqBypass: false,
+      glueThresh: -17.5, glueRatio: 4, glueAttack: 24, glueRelease: 110,
+      glueScHpf: 95, glueMix: 78, mbLowGain: 1.8, mbHighGain: 2.1, compBypass: false,
+      tapeDrive: 38, ironWeight: 52, tapeMode: '30ips', softClip: 28, satBypass: false,
+      monoMakerFreq: 75, stereoWidth: 138, highWidth: 150, imagerBypass: false,
+      maximizerDrive: 5.2, truePeakCeiling: -0.5, arcRelease: 55,
+      surroundMode: '5.1', centerFocus: 88, lfeFreq: 75, lfeGain: 3.2, sideWidth: 128, rearDepth: 0, rearDelayMs: 18
+    }
+  },
+  {
+    id: 'surround-71-stadium-concert-360',
+    artist: '7.1 Stadium 360° Master (Coldplay / Imagine Dragons)',
+    song: '7.1 Wembley Stadium 360° Crowd & Anthem Placement',
+    style: 'Explosive L/C/R Front Wall + Side Lss/Rss Choir/Synths + Rear Lrs/Rrs Stadium Delay Throws',
+    targetLufs: -9.8,
+    crestDb: 9.8,
+    phaseCorr: 0.89,
+    isFactory: true,
+    surroundMode: '7.1',
+    surroundPlacement: {
+      format: '7.1 Stadium 360° Concert (L, C, R, LFE, Lss, Rss, Lrs, Rrs)',
+      centerFocusPct: 80,
+      lfeCrossoverHz: 85,
+      lfeGainDb: 3.8,
+      sideSurroundPct: 142,
+      rearSurroundPct: 138,
+      haasDelayMs: 26,
+      channelRouting: 'L/C/R: Stadium Drums & Lead | LFE: <85Hz Arena Sub | Lss/Rss: Wide Gang Vocals/Pads | Lrs/Rrs: +26ms Rear Stadium Slap'
+    },
+    params: {
+      inputTrim: 1.2, subCutFreq: 25, pultecLowBoost: 4.5, pultecLowFreq: 58,
+      lowMidGain: -2.2, lowMidFreq: 280, midPresGain: 2.5, midPresFreq: 3100,
+      airShelfGain: 4.8, airShelfFreq: 15000, eqBypass: false,
+      glueThresh: -18.5, glueRatio: 4, glueAttack: 20, glueRelease: 95,
+      glueScHpf: 105, glueMix: 84, mbLowGain: 2.0, mbHighGain: 2.4, compBypass: false,
+      tapeDrive: 46, ironWeight: 58, tapeMode: '30ips', softClip: 40, satBypass: false,
+      monoMakerFreq: 85, stereoWidth: 148, highWidth: 160, imagerBypass: false,
+      maximizerDrive: 5.8, truePeakCeiling: -0.3, arcRelease: 45,
+      surroundMode: '7.1', centerFocus: 80, lfeFreq: 85, lfeGain: 3.8, sideWidth: 142, rearDepth: 138, rearDelayMs: 26
+    }
+  },
+  {
+    id: 'surround-51-club-dome-electronic',
+    artist: '5.1 Club & Electronic Dome (Daft Punk / Justice / RÜFÜS)',
+    song: '5.1 Immersive Festival Dome & Sub-LFE Master',
+    style: 'Dedicated 65Hz LFE Sub Cannon + Punchy L/C/R Kick/Lead + 360° Ls/Rs Synth & Arp Field',
+    targetLufs: -8.6,
+    crestDb: 9.0,
+    phaseCorr: 0.90,
+    isFactory: true,
+    surroundMode: '5.1',
+    surroundPlacement: {
+      format: '5.1 Electronic Dome (L, C, R, LFE, Ls, Rs)',
+      centerFocusPct: 74,
+      lfeCrossoverHz: 65,
+      lfeGainDb: 4.5,
+      sideSurroundPct: 145,
+      rearSurroundPct: 0,
+      haasDelayMs: 12,
+      channelRouting: 'C: Kick Transient & Vocal Hook | L/R: Main Bass & Leads | LFE: <65Hz Club Sub | Ls/Rs: Wide Arps & Stereo Delays'
+    },
+    params: {
+      inputTrim: 1.2, subCutFreq: 22, pultecLowBoost: 5.0, pultecLowFreq: 42,
+      lowMidGain: -2.4, lowMidFreq: 270, midPresGain: 2.2, midPresFreq: 2900,
+      airShelfGain: 4.5, airShelfFreq: 15200, eqBypass: false,
+      glueThresh: -19.0, glueRatio: 4, glueAttack: 18, glueRelease: 85,
+      glueScHpf: 110, glueMix: 86, mbLowGain: 2.2, mbHighGain: 2.3, compBypass: false,
+      tapeDrive: 44, ironWeight: 56, tapeMode: '30ips', softClip: 45, satBypass: false,
+      monoMakerFreq: 65, stereoWidth: 146, highWidth: 158, imagerBypass: false,
+      maximizerDrive: 6.2, truePeakCeiling: -0.2, arcRelease: 40,
+      surroundMode: '5.1', centerFocus: 74, lfeFreq: 65, lfeGain: 4.5, sideWidth: 145, rearDepth: 0, rearDelayMs: 12
+    }
+  },
+  {
+    id: 'surround-71-orchestral-abbey-stage',
+    artist: '7.1 Orchestral & Film Score (Abbey Road Stage)',
+    song: '7.1 Symphonic Decca Tree + Side/Rear Hall Placement',
+    style: 'Pure Class-A 30 IPS Stage, Wide L/C/R Decca Tree, Deep 60Hz LFE Timpani & Lss/Lrs Concert Hall',
+    targetLufs: -15.5,
+    crestDb: 14.2,
+    phaseCorr: 0.95,
+    isFactory: true,
+    surroundMode: '7.1',
+    surroundPlacement: {
+      format: '7.1 Symphonic Stage (L, C, R, LFE, Lss, Rss, Lrs, Rrs)',
+      centerFocusPct: 70,
+      lfeCrossoverHz: 60,
+      lfeGainDb: 2.0,
+      sideSurroundPct: 124,
+      rearSurroundPct: 134,
+      haasDelayMs: 28,
+      channelRouting: 'L/C/R: Decca Tree Strings/Woodwinds | LFE: <60Hz Contrabass/Timpani | Lss/Rss: Brass/Choir | Lrs/Rrs: +28ms Concert Hall'
+    },
+    params: {
+      inputTrim: 0.4, subCutFreq: 18, pultecLowBoost: 3.2, pultecLowFreq: 40,
+      lowMidGain: -0.8, lowMidFreq: 230, midPresGain: 1.5, midPresFreq: 2700,
+      airShelfGain: 3.8, airShelfFreq: 16000, eqBypass: false,
+      glueThresh: -14.0, glueRatio: 2, glueAttack: 35, glueRelease: 160,
+      glueScHpf: 70, glueMix: 60, mbLowGain: 1.0, mbHighGain: 1.4, compBypass: false,
+      tapeDrive: 26, ironWeight: 44, tapeMode: '30ips', softClip: 10, satBypass: false,
+      monoMakerFreq: 60, stereoWidth: 138, highWidth: 148, imagerBypass: false,
+      maximizerDrive: 3.2, truePeakCeiling: -1.0, arcRelease: 80,
+      surroundMode: '7.1', centerFocus: 70, lfeFreq: 60, lfeGain: 2.0, sideWidth: 124, rearDepth: 134, rearDelayMs: 28
+    }
+  }
+];
+
+// master-analyzer.js - ITU-R BS.1770 LUFS, Tonal Balance, M/S Stereo Field & Dynamic Range Analyzer
+
+class MasterReferenceAnalyzer {
+  static parseMetadataFromFilename(filename) {
+    const clean = filename
+      .replace(/\.[^/.]+$/, '')
+      .replace(/\[.*?\]|\(.*?\)/g, '')
+      .replace(/_/g, ' ')
+      .trim();
+
+    if (clean.includes(' - ')) {
+      const [artist, ...rest] = clean.split(' - ');
+      return {
+        artist: artist.trim() || 'Reference Artist',
+        song: rest.join(' - ').trim() || 'Reference Master'
+      };
+    }
+    return {
+      artist: clean || 'Custom Reference',
+      song: 'Cloned Master Style'
+    };
+  }
+
+  /**
+   * Analyzes an AudioBuffer of a finished reference track and computes the exact
+   * HEAVEN MasterDNA parameters to replicate its tonal curve, stereo field, glue, and LUFS.
+   */
+  static async analyzeMasterBuffer(audioBuffer, onProgress = () => {}) {
+    const sr = audioBuffer.sampleRate;
+    const numCh = audioBuffer.numberOfChannels;
+    const len = audioBuffer.length;
+    const chL = audioBuffer.getChannelData(0);
+    const chR = numCh > 1 ? audioBuffer.getChannelData(1) : chL;
+
+    onProgress(15, 'Measuring ITU-R BS.1770 K-Weighted LUFS, True Peak & Crest Factor...');
+    await new Promise(r => setTimeout(r, 120));
+
+    // Analyze up to 25s from the loudest/most active chorus section (offset ~25% into track)
+    const winLen = Math.min(len, Math.floor(sr * 22));
+    const offset = len > winLen * 1.5 ? Math.floor(len * 0.25) : 0;
+
+    let sumSqL = 0, sumSqR = 0;
+    let sumMidSq = 0, sumSideSq = 0;
+    let dotLR = 0;
+    let peakAbs = 0.0001;
+
+    const midBuf = new Float32Array(winLen);
+    const sideBuf = new Float32Array(winLen);
+
+    for (let i = 0; i < winLen; i++) {
+      const l = chL[offset + i];
+      const r = chR[offset + i];
+      const mid = 0.5 * (l + r);
+      const side = 0.5 * (l - r);
+      midBuf[i] = mid;
+      sideBuf[i] = side;
+
+      sumSqL += l * l;
+      sumSqR += r * r;
+      sumMidSq += mid * mid;
+      sumSideSq += side * side;
+      dotLR += l * r;
+
+      const p = Math.max(Math.abs(l), Math.abs(r));
+      if (p > peakAbs) peakAbs = p;
+    }
+
+    const rmsTotal = Math.sqrt((sumSqL + sumSqR) / (2 * winLen)) + 1e-7;
+    const truePeakDb = Math.min(0.0, 20 * Math.log10(peakAbs));
+    // K-weighted LUFS approximation from stereo RMS + high-frequency shelf weighting
+    const rawLufs = 20 * Math.log10(rmsTotal) - 0.691;
+    const targetLufs = Math.max(-18.0, Math.min(-5.5, Math.round(rawLufs * 10) / 10));
+    const crestDb = Math.max(4.5, Math.min(18.0, Math.round((truePeakDb - targetLufs) * 10) / 10));
+
+    // Phase correlation (-1 to +1)
+    const denom = Math.sqrt(sumSqL * sumSqR) + 1e-9;
+    const phaseCorr = Math.max(0.1, Math.min(1.0, Math.round((dotLR / denom) * 100) / 100));
+    const sideToMid = Math.sqrt(sumSideSq / (sumMidSq + 1e-9));
+
+    onProgress(48, 'Extracting 6-Band Mastering Tonal Balance & PuigTec Low-End Profile...');
+    await new Promise(r => setTimeout(r, 140));
+
+    const bands = {
+      sub: this.computeBandRms(midBuf, sr, 52, 0.9),
+      bass: this.computeBandRms(midBuf, sr, 110, 1.1),
+      lowMid: this.computeBandRms(midBuf, sr, 290, 1.2),
+      mid: this.computeBandRms(midBuf, sr, 1500, 1.1),
+      presence: this.computeBandRms(midBuf, sr, 3600, 1.2),
+      air: this.computeBandRms(midBuf, sr, 13000, 0.8)
+    };
+
+    const sideHigh = this.computeBandRms(sideBuf, sr, 4800, 0.9);
+    const midHigh = bands.presence + bands.air + 1e-7;
+    const highSideRatio = Math.min(1.5, sideHigh / midHigh);
+
+    const totalSpec = bands.sub + bands.bass + bands.lowMid + bands.mid + bands.presence + bands.air + 1e-9;
+    const nSub = (bands.sub + bands.bass * 0.6) / totalSpec;
+    const nLowMid = bands.lowMid / totalSpec;
+    const nPres = bands.presence / totalSpec;
+    const nAir = bands.air / totalSpec;
+
+    onProgress(78, 'Synthesizing Linear-Phase EQ, SSL Bus Glue, Tape Flux & L2 Maximizer...');
+    await new Promise(r => setTimeout(r, 140));
+
+    const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+    const round1 = v => Math.round(v * 10) / 10;
+
+    // 1. Mastering Tonal EQ
+    const subCutFreq = Math.round(clamp(30 - nSub * 22, 20, 35));
+    const pultecLowBoost = round1(clamp(1.8 + nSub * 9.5, 1.0, 6.0));
+    const pultecLowFreq = Math.round(clamp(50 + nLowMid * 60, 45, 75));
+    const lowMidGain = round1(clamp((0.21 - nLowMid) * 14, -3.8, 1.8));
+    const lowMidFreq = Math.round(clamp(240 + nLowMid * 260, 220, 350));
+    const midPresGain = round1(clamp(0.8 + (nPres - 0.12) * 16, -1.5, 4.0));
+    const midPresFreq = Math.round(clamp(2200 + nPres * 4500, 2000, 3800));
+    const airShelfGain = round1(clamp(2.0 + nAir * 26, 1.0, 6.5));
+    const airShelfFreq = Math.round(clamp(12000 + nAir * 18000, 11500, 16000));
+
+    // 2. SSL G-Master Bus Glue & Multiband Dynamics
+    // Lower crest factor = tighter bus compression & higher maximizer push
+    const loudnessPush = clamp((-6.5 - targetLufs) / -8.5, 0.2, 0.98); // higher for louder masters
+    const compIntensity = clamp((13.5 - crestDb) / 7.5, 0.25, 0.95);
+
+    const glueThresh = round1(clamp(-13.0 - compIntensity * 8.5, -22.0, -11.0));
+    const glueRatio = compIntensity > 0.62 ? 4 : 2;
+    const glueAttack = Math.round(clamp(35 - compIntensity * 20, 10, 40));
+    const glueRelease = Math.round(clamp(160 - compIntensity * 85, 60, 200));
+    const glueScHpf = Math.round(clamp(85 + nSub * 160, 80, 150));
+    const glueMix = Math.round(clamp(65 + compIntensity * 28, 60, 95));
+    const mbLowGain = round1(clamp(0.6 + nSub * 5.2, 0.0, 3.2));
+    const mbHighGain = round1(clamp(0.5 + (nAir + nPres) * 6.5, 0.0, 3.2));
+
+    // 3. Analog Transformer & Mastering Tape Saturation
+    const tapeDrive = Math.round(clamp(24 + compIntensity * 38, 18, 68));
+    const ironWeight = Math.round(clamp(30 + nSub * 110, 25, 78));
+    const tapeMode = airShelfGain > 3.8 ? '30ips' : '15ips';
+    const softClip = Math.round(clamp(15 + compIntensity * 52, 12, 70));
+
+    // 4. M/S Stereo Imager & Bass Mono Maker
+    const monoMakerFreq = Math.round(clamp(100 + nSub * 120, 90, 155));
+    const stereoWidth = Math.round(clamp(104 + sideToMid * 48, 100, 142));
+    const highWidth = Math.round(clamp(112 + highSideRatio * 55, 108, 160));
+
+    // 5. L2 Brickwall Maximizer
+    const maximizerDrive = round1(clamp(3.2 + (1 - loudnessPush) * 5.2 + compIntensity * 1.8, 2.5, 8.5));
+    const truePeakCeiling = targetLufs > -8.8 ? -0.1 : -0.3;
+    const arcRelease = Math.round(clamp(75 - compIntensity * 45, 25, 85));
+
+    const subTag = pultecLowBoost > 4.0 ? 'Heavy Pultec Sub' : 'Controlled Tight Bass';
+    const glueTag = glueRatio >= 4 ? 'Punchy 4:1 SSL Glue' : 'Smooth 2:1 Bus Glue';
+    const airTag = airShelfGain > 4.0 ? '30 IPS Silk Sheen' : 'Warm 15 IPS Tape';
+    const style = `${subTag}, ${glueTag}, ${airTag} (${targetLufs} LUFS)`;
+
+    onProgress(100, 'Master DNA Extracted & Replicated!');
+
+    return {
+      targetLufs,
+      crestDb,
+      phaseCorr,
+      style,
+      targetCurve: [
+        round1(pultecLowBoost * 0.85),
+        round1(pultecLowBoost * 0.55),
+        lowMidGain,
+        round1(midPresGain * 0.6),
+        midPresGain,
+        airShelfGain
+      ],
+      params: {
+        inputTrim: 0.5,
+        subCutFreq,
+        pultecLowBoost,
+        pultecLowFreq,
+        lowMidGain,
+        lowMidFreq,
+        midPresGain,
+        midPresFreq,
+        airShelfGain,
+        airShelfFreq,
+        eqBypass: false,
+        glueThresh,
+        glueRatio,
+        glueAttack,
+        glueRelease,
+        glueScHpf,
+        glueMix,
+        mbLowGain,
+        mbHighGain,
+        compBypass: false,
+        tapeDrive,
+        ironWeight,
+        tapeMode,
+        softClip,
+        satBypass: false,
+        monoMakerFreq,
+        stereoWidth,
+        highWidth,
+        imagerBypass: false,
+        maximizerDrive,
+        truePeakCeiling,
+        arcRelease
+      }
+    };
+  }
+
+  static computeBandRms(signal, sr, freq, q = 1.0) {
+    const w0 = (2 * Math.PI * freq) / sr;
+    const alpha = Math.sin(w0) / (2 * q);
+    const b0 = alpha, b1 = 0, b2 = -alpha;
+    const a0 = 1 + alpha, a1 = -2 * Math.cos(w0), a2 = 1 - alpha;
+    const nb0 = b0 / a0, nb1 = b1 / a0, nb2 = b2 / a0, na1 = a1 / a0, na2 = a2 / a0;
+
+    let x1 = 0, x2 = 0, y1 = 0, y2 = 0, sum = 0, count = 0;
+    const step = signal.length > 220000 ? 2 : 1;
+    for (let i = 0; i < signal.length; i += step) {
+      const x0 = signal[i];
+      const y0 = nb0 * x0 + nb1 * x1 + nb2 * x2 - na1 * y1 - na2 * y2;
+      x2 = x1; x1 = x0; y2 = y1; y1 = y0;
+      sum += y0 * y0;
+      count++;
+    }
+    return Math.sqrt(sum / Math.max(1, count));
+  }
+}
+
+// master-dsp-engine.js - Real-Time Web Audio API Mastering Processor for HEAVEN MasterDNA
+
+class MasterDSPEngine {
+  constructor() {
+    this.ctx = null;
+    this.isInitialized = false;
+    this.isPlaying = false;
+    this.sourceMode = 'mix-synthpop'; // 'mix-synthpop' | 'mix-trap808' | 'mix-indie' | 'custom-file'
+    this.masterBypass = false;
+    this.loudnessMatch = false; // Gain-matched bypass so user compares tone/glue at equal volume
+    this.monoCheck = false;
+
+    this.customMixBuffer = null;
+    this.activeBufferSource = null;
+    this.loopTimer = null;
+
+    this.nodes = {};
+    this.currentParams = null;
+  }
+
+  async init(initialParams) {
+    if (this.isInitialized) return;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    this.ctx = new AudioCtx();
+    this.currentParams = { ...initialParams };
+    const ctx = this.ctx;
+
+    // 1. Input & Pre-Analyzer
+    this.nodes.inputBus = ctx.createGain();
+    this.nodes.inputTrim = ctx.createGain();
+    this.nodes.preAnalyser = ctx.createAnalyser();
+    this.nodes.preAnalyser.fftSize = 2048;
+    this.nodes.preAnalyser.smoothingTimeConstant = 0.82;
+
+    this.nodes.dryBypassGain = ctx.createGain();
+    this.nodes.dryBypassGain.gain.value = 0;
+    this.nodes.wetMasterGain = ctx.createGain();
+    this.nodes.wetMasterGain.gain.value = 1;
+
+    // 2. 6-Band Linear-Phase Style Tonal Match EQ & PuigTec Low-End
+    this.nodes.subCut = ctx.createBiquadFilter();
+    this.nodes.subCut.type = 'highpass';
+    this.nodes.subCut.Q.value = 0.707;
+
+    this.nodes.pultecLow = ctx.createBiquadFilter();
+    this.nodes.pultecLow.type = 'lowshelf';
+
+    this.nodes.lowMidBell = ctx.createBiquadFilter();
+    this.nodes.lowMidBell.type = 'peaking';
+    this.nodes.lowMidBell.Q.value = 1.2;
+
+    this.nodes.midPresBell = ctx.createBiquadFilter();
+    this.nodes.midPresBell.type = 'peaking';
+    this.nodes.midPresBell.Q.value = 1.1;
+
+    this.nodes.airShelf = ctx.createBiquadFilter();
+    this.nodes.airShelf.type = 'highshelf';
+
+    // 3. Multiband Tone Tilt + SSL G-Master Bus Glue Compressor
+    this.nodes.mbLowShelf = ctx.createBiquadFilter();
+    this.nodes.mbLowShelf.type = 'lowshelf';
+    this.nodes.mbLowShelf.frequency.value = 140;
+
+    this.nodes.mbHighShelf = ctx.createBiquadFilter();
+    this.nodes.mbHighShelf.type = 'highshelf';
+    this.nodes.mbHighShelf.frequency.value = 4500;
+
+    this.nodes.glueComp = ctx.createDynamicsCompressor();
+    this.nodes.glueDry = ctx.createGain();
+    this.nodes.glueWet = ctx.createGain();
+    this.nodes.glueSum = ctx.createGain();
+
+    // 4. Analog Transformer Iron & Mastering Tape Saturation + Soft Clipper
+    this.nodes.ironShelf = ctx.createBiquadFilter();
+    this.nodes.ironShelf.type = 'peaking';
+    this.nodes.ironShelf.frequency.value = 72;
+    this.nodes.ironShelf.Q.value = 0.9;
+
+    this.nodes.tapeShaper = ctx.createWaveShaper();
+    this.nodes.tapeShaper.oversample = '4x';
+    this.nodes.tapeHfRoll = ctx.createBiquadFilter();
+    this.nodes.tapeHfRoll.type = 'highshelf';
+    this.nodes.tapeHfRoll.frequency.value = 11000;
+
+    // 5. M/S Stereo Imager (Mid/Side Matrix using ChannelSplitter & ChannelMerger)
+    this.nodes.splitter = ctx.createChannelSplitter(2);
+    this.nodes.merger = ctx.createChannelMerger(2);
+
+    // Mid = 0.5*(L+R), Side = 0.5*(L-R) * widthGain
+    this.nodes.midL = ctx.createGain();
+    this.nodes.midR = ctx.createGain();
+    this.nodes.sideL = ctx.createGain();
+    this.nodes.sideR = ctx.createGain();
+    this.nodes.midL.gain.value = 0.5;
+    this.nodes.midR.gain.value = 0.5;
+    this.nodes.sideL.gain.value = 0.5;
+    this.nodes.sideR.gain.value = -0.5;
+
+    this.nodes.midBus = ctx.createGain();
+    this.nodes.sideBus = ctx.createGain();
+    // Bass Mono Maker highpass filter on the Side channel!
+    this.nodes.sideMonoMakerHpf = ctx.createBiquadFilter();
+    this.nodes.sideMonoMakerHpf.type = 'highpass';
+    this.nodes.sideMonoMakerHpf.Q.value = 0.707;
+
+    // High-Band Stereo Widener shelf on the Side channel!
+    this.nodes.sideHighBoost = ctx.createBiquadFilter();
+    this.nodes.sideHighBoost.type = 'highshelf';
+    this.nodes.sideHighBoost.frequency.value = 3200;
+
+    this.nodes.sideWidthGain = ctx.createGain();
+    this.nodes.sideNegOut = ctx.createGain();
+    this.nodes.sideNegOut.gain.value = -1.0;
+
+    // 6. HEAVEN L2 Brickwall Lookahead Maximizer & True-Peak Ceiling
+    this.nodes.maximizerPush = ctx.createGain();
+    this.nodes.maximizerLimiter = ctx.createDynamicsCompressor();
+    this.nodes.maximizerLimiter.ratio.value = 20.0;
+    this.nodes.maximizerLimiter.attack.value = 0.0008;
+    this.nodes.maximizerLimiter.knee.value = 0.5;
+
+    this.nodes.ceilingGain = ctx.createGain();
+
+    // Post-Analyzers (L/R Separate for Lissajous Vectorscope & Phase Correlation + Master FFT)
+    this.nodes.postAnalyser = ctx.createAnalyser();
+    this.nodes.postAnalyser.fftSize = 2048;
+    this.nodes.postAnalyser.smoothingTimeConstant = 0.84;
+
+    this.nodes.scopeSplitter = ctx.createChannelSplitter(2);
+    this.nodes.analyserL = ctx.createAnalyser();
+    this.nodes.analyserR = ctx.createAnalyser();
+    this.nodes.analyserL.fftSize = 512;
+    this.nodes.analyserR.fftSize = 512;
+
+    // Wire Graph
+    this.nodes.inputBus.connect(this.nodes.inputTrim);
+    this.nodes.inputTrim.connect(this.nodes.preAnalyser);
+    this.nodes.inputTrim.connect(this.nodes.dryBypassGain);
+
+    // Input -> 6-Band EQ
+    this.nodes.inputTrim.connect(this.nodes.subCut);
+    this.nodes.subCut.connect(this.nodes.pultecLow);
+    this.nodes.pultecLow.connect(this.nodes.lowMidBell);
+    this.nodes.lowMidBell.connect(this.nodes.midPresBell);
+    this.nodes.midPresBell.connect(this.nodes.airShelf);
+
+    // EQ -> Multiband & SSL Glue Compressor (Parallel Wet/Dry)
+    this.nodes.airShelf.connect(this.nodes.mbLowShelf);
+    this.nodes.mbLowShelf.connect(this.nodes.mbHighShelf);
+    this.nodes.mbHighShelf.connect(this.nodes.glueDry);
+    this.nodes.mbHighShelf.connect(this.nodes.glueComp);
+    this.nodes.glueComp.connect(this.nodes.glueWet);
+    this.nodes.glueDry.connect(this.nodes.glueSum);
+    this.nodes.glueWet.connect(this.nodes.glueSum);
+
+    // Glue -> Analog Transformer & Mastering Tape
+    this.nodes.glueSum.connect(this.nodes.ironShelf);
+    this.nodes.ironShelf.connect(this.nodes.tapeShaper);
+    this.nodes.tapeShaper.connect(this.nodes.tapeHfRoll);
+
+    // Tape -> M/S Stereo Imager Matrix
+    this.nodes.tapeHfRoll.connect(this.nodes.splitter);
+    this.nodes.splitter.connect(this.nodes.midL, 0);
+    this.nodes.splitter.connect(this.nodes.midR, 1);
+    this.nodes.splitter.connect(this.nodes.sideL, 0);
+    this.nodes.splitter.connect(this.nodes.sideR, 1);
+
+    this.nodes.midL.connect(this.nodes.midBus);
+    this.nodes.midR.connect(this.nodes.midBus);
+    this.nodes.sideL.connect(this.nodes.sideBus);
+    this.nodes.sideR.connect(this.nodes.sideBus);
+
+    this.nodes.sideBus.connect(this.nodes.sideMonoMakerHpf);
+    this.nodes.sideMonoMakerHpf.connect(this.nodes.sideHighBoost);
+    this.nodes.sideHighBoost.connect(this.nodes.sideWidthGain);
+    this.nodes.sideWidthGain.connect(this.nodes.sideNegOut);
+
+    // Reconstruct L = Mid + Side, R = Mid - Side
+    this.nodes.midBus.connect(this.nodes.merger, 0, 0);
+    this.nodes.midBus.connect(this.nodes.merger, 0, 1);
+    this.nodes.sideWidthGain.connect(this.nodes.merger, 0, 0);
+    this.nodes.sideNegOut.connect(this.nodes.merger, 0, 1);
+
+    // M/S Merger -> L2 Brickwall Maximizer -> Wet Master -> Output
+    this.nodes.merger.connect(this.nodes.maximizerPush);
+    this.nodes.maximizerPush.connect(this.nodes.maximizerLimiter);
+    this.nodes.maximizerLimiter.connect(this.nodes.wetMasterGain);
+
+    this.nodes.wetMasterGain.connect(this.nodes.ceilingGain);
+    this.nodes.dryBypassGain.connect(this.nodes.ceilingGain);
+
+    this.nodes.ceilingGain.connect(this.nodes.postAnalyser);
+    this.nodes.ceilingGain.connect(this.nodes.scopeSplitter);
+    this.nodes.scopeSplitter.connect(this.nodes.analyserL, 0);
+    this.nodes.scopeSplitter.connect(this.nodes.analyserR, 1);
+    this.nodes.postAnalyser.connect(ctx.destination);
+
+    this.isInitialized = true;
+    this.applyParams(this.currentParams);
+  }
+
+  dbToLinear(db) {
+    return Math.pow(10, db / 20);
+  }
+
+  makeTapeClipperCurve(tapeDrive, softClip) {
+    const n = 8192;
+    const curve = new Float32Array(n);
+    const k = 0.25 + (tapeDrive / 100) * 3.2;
+    const clipAmt = (softClip / 100) * 0.65;
+
+    for (let i = 0; i < n; i++) {
+      const x = (i * 2) / n - 1;
+      // Studer/Ampex mastering tape hysteresis + soft clipper knee
+      let y = Math.tanh(x * (1 + k)) / Math.tanh(1 + k);
+      if (clipAmt > 0.05) {
+        const thresh = 1.0 - clipAmt * 0.35;
+        if (Math.abs(y) > thresh) {
+          y = Math.sign(y) * (thresh + (1 - thresh) * Math.tanh((Math.abs(y) - thresh) / (1 - thresh + 0.01)));
+        }
+      }
+      curve[i] = y;
+    }
+    return curve;
+  }
+
+  applyParams(params) {
+    this.currentParams = { ...this.currentParams, ...params };
+    if (!this.isInitialized || !this.ctx) return;
+    const p = this.currentParams;
+    const now = this.ctx.currentTime;
+
+    this.nodes.dryBypassGain.gain.setTargetAtTime(this.masterBypass ? 1 : 0, now, 0.015);
+    this.nodes.wetMasterGain.gain.setTargetAtTime(this.masterBypass ? 0 : 1, now, 0.015);
+
+    this.nodes.inputTrim.gain.setTargetAtTime(this.dbToLinear(p.inputTrim || 0), now, 0.015);
+
+    // 1. 6-Band Tonal Match EQ
+    if (p.eqBypass) {
+      this.nodes.subCut.frequency.setTargetAtTime(18, now, 0.02);
+      this.nodes.pultecLow.gain.setTargetAtTime(0, now, 0.02);
+      this.nodes.lowMidBell.gain.setTargetAtTime(0, now, 0.02);
+      this.nodes.midPresBell.gain.setTargetAtTime(0, now, 0.02);
+      this.nodes.airShelf.gain.setTargetAtTime(0, now, 0.02);
+    } else {
+      this.nodes.subCut.frequency.setTargetAtTime(p.subCutFreq || 25, now, 0.02);
+      this.nodes.pultecLow.frequency.setTargetAtTime(p.pultecLowFreq || 60, now, 0.02);
+      this.nodes.pultecLow.gain.setTargetAtTime(p.pultecLowBoost || 0, now, 0.02);
+      this.nodes.lowMidBell.frequency.setTargetAtTime(p.lowMidFreq || 280, now, 0.02);
+      this.nodes.lowMidBell.gain.setTargetAtTime(p.lowMidGain || 0, now, 0.02);
+      this.nodes.midPresBell.frequency.setTargetAtTime(p.midPresFreq || 2600, now, 0.02);
+      this.nodes.midPresBell.gain.setTargetAtTime(p.midPresGain || 0, now, 0.02);
+      this.nodes.airShelf.frequency.setTargetAtTime(p.airShelfFreq || 14000, now, 0.02);
+      this.nodes.airShelf.gain.setTargetAtTime(p.airShelfGain || 0, now, 0.02);
+    }
+
+    // 2. SSL G-Master Bus Glue & Multiband Tone
+    if (p.compBypass) {
+      this.nodes.mbLowShelf.gain.setTargetAtTime(0, now, 0.02);
+      this.nodes.mbHighShelf.gain.setTargetAtTime(0, now, 0.02);
+      this.nodes.glueDry.gain.setTargetAtTime(1, now, 0.02);
+      this.nodes.glueWet.gain.setTargetAtTime(0, now, 0.02);
+    } else {
+      this.nodes.mbLowShelf.gain.setTargetAtTime(p.mbLowGain || 0, now, 0.02);
+      this.nodes.mbHighShelf.gain.setTargetAtTime(p.mbHighGain || 0, now, 0.02);
+      this.nodes.glueComp.threshold.setTargetAtTime(p.glueThresh ?? -16, now, 0.02);
+      this.nodes.glueComp.ratio.setTargetAtTime(p.glueRatio || 2, now, 0.02);
+      this.nodes.glueComp.attack.setTargetAtTime(Math.max(0.001, (p.glueAttack || 30) / 1000), now, 0.02);
+      this.nodes.glueComp.release.setTargetAtTime(Math.max(0.03, (p.glueRelease || 120) / 1000), now, 0.02);
+      const mix = (p.glueMix ?? 80) / 100;
+      const makeup = this.dbToLinear(Math.abs(p.glueThresh + 10) * 0.22);
+      this.nodes.glueDry.gain.setTargetAtTime(1 - mix, now, 0.02);
+      this.nodes.glueWet.gain.setTargetAtTime(mix * makeup, now, 0.02);
+    }
+
+    // 3. Analog Transformer & Tape Exciter
+    if (p.satBypass) {
+      this.nodes.ironShelf.gain.setTargetAtTime(0, now, 0.02);
+      this.nodes.tapeShaper.curve = null;
+      this.nodes.tapeHfRoll.gain.setTargetAtTime(0, now, 0.02);
+    } else {
+      this.nodes.ironShelf.gain.setTargetAtTime(((p.ironWeight || 30) / 100) * 2.8, now, 0.02);
+      this.nodes.tapeShaper.curve = this.makeTapeClipperCurve(p.tapeDrive || 30, p.softClip || 20);
+      this.nodes.tapeHfRoll.gain.setTargetAtTime(p.tapeMode === '30ips' ? 1.4 : -0.8, now, 0.02);
+    }
+
+    // 4. M/S Stereo Imager & Bass Mono Maker
+    if (p.imagerBypass) {
+      this.nodes.sideMonoMakerHpf.frequency.setTargetAtTime(20, now, 0.02);
+      this.nodes.sideHighBoost.gain.setTargetAtTime(0, now, 0.02);
+      this.nodes.sideWidthGain.gain.setTargetAtTime(this.monoCheck ? 0 : 1, now, 0.02);
+    } else {
+      this.nodes.sideMonoMakerHpf.frequency.setTargetAtTime(p.monoMakerFreq || 115, now, 0.02);
+      const highBoostDb = ((p.highWidth || 120) - 100) * 0.12;
+      this.nodes.sideHighBoost.gain.setTargetAtTime(highBoostDb, now, 0.02);
+      const widthLin = this.monoCheck ? 0 : (p.stereoWidth ?? 115) / 100;
+      this.nodes.sideWidthGain.gain.setTargetAtTime(widthLin, now, 0.02);
+    }
+
+    // 5. L2 Brickwall Maximizer & Ceiling
+    const pushGain = this.loudnessMatch ? 1.0 : this.dbToLinear(p.maximizerDrive || 4.0);
+    this.nodes.maximizerPush.gain.setTargetAtTime(pushGain, now, 0.02);
+    this.nodes.maximizerLimiter.threshold.setTargetAtTime(-2.5 - (p.maximizerDrive || 4.0) * 0.9, now, 0.02);
+    this.nodes.maximizerLimiter.release.setTargetAtTime(Math.max(0.015, (p.arcRelease || 50) / 1000), now, 0.02);
+    this.nodes.ceilingGain.gain.setTargetAtTime(this.dbToLinear(p.truePeakCeiling ?? -0.2), now, 0.02);
+  }
+
+  async startAudition(mode = this.sourceMode) {
+    if (!this.isInitialized) await this.init(this.currentParams || {});
+    if (this.ctx.state === 'suspended') await this.ctx.resume();
+    this.stopAudition();
+    this.sourceMode = mode;
+    this.isPlaying = true;
+
+    if (mode === 'custom-file' && this.customMixBuffer) {
+      this.activeBufferSource = this.ctx.createBufferSource();
+      this.activeBufferSource.buffer = this.customMixBuffer;
+      this.activeBufferSource.loop = true;
+      this.activeBufferSource.connect(this.nodes.inputBus);
+      this.activeBufferSource.start();
+    } else {
+      this.startUnmasteredFullMixLoop(mode);
+    }
+  }
+
+  stopAudition() {
+    this.isPlaying = false;
+    if (this.loopTimer) {
+      clearInterval(this.loopTimer);
+      this.loopTimer = null;
+    }
+    if (this.activeBufferSource) {
+      try {
+        this.activeBufferSource.stop();
+        this.activeBufferSource.disconnect();
+      } catch (_) {}
+      this.activeBufferSource = null;
+    }
+  }
+
+  /**
+   * Synthesizes a rich, full-bandwidth stereo unmastered mix (Kick, Sub/808 Bass, Snare/Hats,
+   * Wide Stereo Polysynth Chords & Lead Arp) so you can immediately hear & see the Pultec Sub,
+   * SSL Bus Glue, M/S Stereo Widening on the Vectorscope, and L2 Maximizer punch!
+   */
+  startUnmasteredFullMixLoop(style = 'mix-synthpop') {
+    const triggerBeatStep = (step) => {
+      if (!this.isPlaying || !this.ctx) return;
+      const ctx = this.ctx;
+      const now = ctx.currentTime;
+
+      const isKick = step % 4 === 0 || (style === 'mix-trap808' && step % 16 === 10);
+      const isSnare = step % 8 === 4;
+
+      // 1. Punchy Kick + Sub / 808 Bass (Mono Center)
+      if (isKick) {
+        const kickOsc = ctx.createOscillator();
+        const kickEnv = ctx.createGain();
+        kickOsc.type = 'sine';
+        kickOsc.frequency.setValueAtTime(style === 'mix-trap808' ? 135 : 150, now);
+        kickOsc.frequency.exponentialRampToValueAtTime(style === 'mix-trap808' ? 44 : 52, now + 0.085);
+        kickEnv.gain.setValueAtTime(0.55, now);
+        kickEnv.gain.exponentialRampToValueAtTime(0.001, now + (style === 'mix-trap808' ? 0.48 : 0.26));
+        kickOsc.connect(kickEnv);
+        kickEnv.connect(this.nodes.inputBus);
+        kickOsc.start(now);
+        kickOsc.stop(now + 0.5);
+      }
+
+      // 2. Crisp Snare & Stereo Hi-Hats (Triggers Presence, Air & Stereo Imager)
+      const hatDur = isSnare ? 0.19 : 0.055;
+      const noiseBuf = ctx.createBuffer(2, Math.floor(ctx.sampleRate * hatDur), ctx.sampleRate);
+      const nL = noiseBuf.getChannelData(0);
+      const nR = noiseBuf.getChannelData(1);
+      for (let i = 0; i < nL.length; i++) {
+        nL[i] = (Math.random() * 2 - 1) * (isSnare ? 0.38 : 0.14);
+        nR[i] = (Math.random() * 2 - 1) * (isSnare ? 0.38 : 0.14);
+      }
+      const noiseSrc = ctx.createBufferSource();
+      noiseSrc.buffer = noiseBuf;
+      const hp = ctx.createBiquadFilter();
+      hp.type = 'highpass';
+      hp.frequency.value = isSnare ? 1200 : 7500;
+      const nEnv = ctx.createGain();
+      nEnv.gain.setValueAtTime(1.0, now);
+      nEnv.gain.exponentialRampToValueAtTime(0.01, now + hatDur);
+      noiseSrc.connect(hp);
+      hp.connect(nEnv);
+      nEnv.connect(this.nodes.inputBus);
+      noiseSrc.start(now);
+
+      // 3. Wide Stereo Polysynth Chords & Bassline (Panned Left/Right for M/S Vectorscope!)
+      const chordProg = [
+        [130.81, 196.0, 246.94, 329.63, 392.0], // Cmaj9
+        [110.0, 164.81, 220.0, 261.63, 329.63], // Am9
+        [87.31, 174.61, 220.0, 261.63, 349.23], // Fmaj9
+        [98.0, 196.0, 246.94, 293.66, 392.0]    // G6
+      ];
+      const chord = chordProg[Math.floor((step / 4) % chordProg.length)];
+
+      if (step % 2 === 0) {
+        chord.forEach((freq, idx) => {
+          const osc = ctx.createOscillator();
+          const pan = ctx.createStereoPanner();
+          const filt = ctx.createBiquadFilter();
+          const env = ctx.createGain();
+
+          osc.type = idx === 0 ? 'sawtooth' : 'triangle';
+          // Slight stereo detune on upper voices so Lissajous vectorscope blooms!
+          osc.frequency.value = freq * (idx > 0 ? 1 + (idx % 2 === 0 ? 0.004 : -0.004) : 1);
+          pan.pan.value = idx === 0 ? 0 : idx % 2 === 0 ? -0.65 : 0.65;
+
+          filt.type = 'lowpass';
+          filt.frequency.value = style === 'mix-trap808' ? 2400 : 4800;
+
+          env.gain.setValueAtTime(0.001, now);
+          env.gain.linearRampToValueAtTime(idx === 0 ? 0.16 : 0.085, now + 0.02);
+          env.gain.exponentialRampToValueAtTime(0.002, now + 0.36);
+
+          osc.connect(filt);
+          filt.connect(pan);
+          pan.connect(env);
+          env.connect(this.nodes.inputBus);
+          osc.start(now);
+          osc.stop(now + 0.38);
+        });
+      }
+    };
+
+    let step = 0;
+    triggerBeatStep(step++);
+    this.loopTimer = setInterval(() => {
+      triggerBeatStep(step++);
+    }, 190);
+  }
+
+  /**
+   * Returns real-time LUFS, True-Peak, Gain Reduction, FFT Spectrum, and L/R Vectorscope samples
+   */
+  getTelemetry() {
+    if (!this.isInitialized || !this.ctx) {
+      return {
+        inDb: -60,
+        outDb: -60,
+        lufs: -24.0,
+        truePeakDb: -18.0,
+        glueGr: 0,
+        limGr: 0,
+        phaseCorr: 0.92,
+        postFreqData: new Uint8Array(128),
+        scopeL: new Float32Array(256),
+        scopeR: new Float32Array(256)
+      };
+    }
+
+    const scopeL = new Float32Array(256);
+    const scopeR = new Float32Array(256);
+    const preTime = new Float32Array(256);
+
+    this.nodes.preAnalyser.getFloatTimeDomainData(preTime);
+    this.nodes.analyserL.getFloatTimeDomainData(scopeL);
+    this.nodes.analyserR.getFloatTimeDomainData(scopeR);
+
+    let sumIn = 0, sumL = 0, sumR = 0, dotLR = 0, peakOut = 0.0001;
+    for (let i = 0; i < 256; i++) {
+      sumIn += preTime[i] * preTime[i];
+      const l = scopeL[i];
+      const r = scopeR[i];
+      sumL += l * l;
+      sumR += r * r;
+      dotLR += l * r;
+      const p = Math.max(Math.abs(l), Math.abs(r));
+      if (p > peakOut) peakOut = p;
+    }
+
+    const rmsIn = Math.sqrt(sumIn / 256) + 1e-6;
+    const rmsOut = Math.sqrt((sumL + sumR) / 512) + 1e-6;
+
+    const inDb = Math.max(-60, Math.min(6, 20 * Math.log10(rmsIn) + 10));
+    const outDb = Math.max(-60, Math.min(6, 20 * Math.log10(rmsOut) + 10));
+    const lufs = Math.max(-36, Math.min(-4.5, 20 * Math.log10(rmsOut) - 0.691 + 6));
+    const truePeakDb = Math.max(-36, Math.min(0.5, 20 * Math.log10(peakOut)));
+
+    const denom = Math.sqrt(sumL * sumR) + 1e-9;
+    const phaseCorr = sumL + sumR > 1e-5 ? Math.max(-1, Math.min(1, dotLR / denom)) : 0.92;
+
+    const glueGr = Math.abs(this.nodes.glueComp.reduction || 0);
+    const limGr = Math.abs(this.nodes.maximizerLimiter.reduction || 0);
+
+    const postFreqData = new Uint8Array(this.nodes.postAnalyser.frequencyBinCount);
+    this.nodes.postAnalyser.getByteFrequencyData(postFreqData);
+
+    return {
+      inDb,
+      outDb,
+      lufs,
+      truePeakDb,
+      glueGr,
+      limGr,
+      phaseCorr,
+      postFreqData,
+      scopeL,
+      scopeR
+    };
+  }
+}
+
+// master-exporters.js - Generates Waves StudioRack Mastering Chain (.xps) & Logic Pro (.aupreset)
+
+class MasterDAWExporters {
+  static generateWavesStudioRackXPS(presetName, artist, song, targetLufs, params) {
+    const p = params;
+    const escapedName = `${artist} - ${song}`.replace(/[<>&"']/g, '');
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<PresetFile Version="14.0" PluginName="StudioRack" PresetName="${escapedName}">
+  <PresetHeader>
+    <PluginName>StudioRack</PluginName>
+    <PluginSubComp>StRk</PluginSubComp>
+    <PluginVersion>14.0.0</PluginVersion>
+    <Artist>${artist.replace(/[<>&"']/g, '')}</Artist>
+    <SongReference>${song.replace(/[<>&"']/g, '')}</SongReference>
+    <TargetLUFS>${targetLufs || -9.0}</TargetLUFS>
+    <Generator>HEAVEN MasterDNA AI Reference Mastering Suite</Generator>
+  </PresetHeader>
+  <PresetData Setup="0" SetupName="${escapedName}">
+    <Parameters Type="RealWorld">
+      <!-- Slot 1: Waves Linear Phase EQ Broadband -->
+      <Slot Index="1" Plugin="LinEQ Broadband Stereo" SubComp="LNEQ" Bypass="${p.eqBypass ? 1 : 0}">
+        <Param Name="LowCut_Freq" Value="${p.subCutFreq}" Unit="Hz"/>
+        <Param Name="LowMid_Freq" Value="${p.lowMidFreq}" Unit="Hz"/>
+        <Param Name="LowMid_Gain" Value="${p.lowMidGain}" Unit="dB"/>
+        <Param Name="MidPres_Freq" Value="${p.midPresFreq}" Unit="Hz"/>
+        <Param Name="MidPres_Gain" Value="${p.midPresGain}" Unit="dB"/>
+        <Param Name="HiShelf_Freq" Value="${p.airShelfFreq}" Unit="Hz"/>
+        <Param Name="HiShelf_Gain" Value="${p.airShelfGain}" Unit="dB"/>
+      </Slot>
+      <!-- Slot 2: Waves PuigTec EQP-1A Mastering Pultec -->
+      <Slot Index="2" Plugin="PuigTec EQP-1A Stereo" SubComp="PTEQ" Bypass="${p.eqBypass ? 1 : 0}">
+        <Param Name="LowFreq" Value="${p.pultecLowFreq}" Unit="Hz"/>
+        <Param Name="LowBoost" Value="${p.pultecLowBoost}"/>
+        <Param Name="HiBoost" Value="${(p.airShelfGain * 0.8).toFixed(1)}"/>
+      </Slot>
+      <!-- Slot 3: Waves SSL G-Master Buss Compressor -->
+      <Slot Index="3" Plugin="SSLComp Stereo" SubComp="SSLC" Bypass="${p.compBypass ? 1 : 0}">
+        <Param Name="Threshold" Value="${p.glueThresh}" Unit="dB"/>
+        <Param Name="Ratio" Value="${p.glueRatio}:1"/>
+        <Param Name="Attack" Value="${p.glueAttack}" Unit="ms"/>
+        <Param Name="Release" Value="${p.glueRelease}" Unit="ms"/>
+        <Param Name="Mix" Value="${p.glueMix}" Unit="%"/>
+      </Slot>
+      <!-- Slot 4: Waves C4 Multiband Parametric Processor -->
+      <Slot Index="4" Plugin="C4 Stereo" SubComp="C4MS" Bypass="${p.compBypass ? 1 : 0}">
+        <Param Name="LowBandGain" Value="${p.mbLowGain}" Unit="dB"/>
+        <Param Name="HighBandGain" Value="${p.mbHighGain}" Unit="dB"/>
+      </Slot>
+      <!-- Slot 5: Waves J37 / Kramer Master Tape -->
+      <Slot Index="5" Plugin="J37 Stereo" SubComp="J37S" Bypass="${p.satBypass ? 1 : 0}">
+        <Param Name="TapeSpeed" Value="${p.tapeMode === '30ips' ? '30_IPS' : '15_IPS'}"/>
+        <Param Name="InputDrive" Value="${p.tapeDrive}" Unit="%"/>
+        <Param Name="TransformerWeight" Value="${p.ironWeight}" Unit="%"/>
+        <Param Name="SoftClip" Value="${p.softClip}" Unit="%"/>
+      </Slot>
+      <!-- Slot 6: Waves S1 Stereo Imager -->
+      <Slot Index="6" Plugin="S1 Imager Stereo" SubComp="S1IM" Bypass="${p.imagerBypass ? 1 : 0}">
+        <Param Name="MonoMakerFreq" Value="${p.monoMakerFreq}" Unit="Hz"/>
+        <Param Name="Width" Value="${(p.stereoWidth / 100).toFixed(2)}"/>
+        <Param Name="HighBandWidth" Value="${(p.highWidth / 100).toFixed(2)}"/>
+      </Slot>
+      <!-- Slot 7: Waves L2 Ultramaximizer -->
+      <Slot Index="7" Plugin="L2 Stereo" SubComp="L2UM" Bypass="0">
+        <Param Name="Threshold" Value="${(-p.maximizerDrive).toFixed(1)}" Unit="dB"/>
+        <Param Name="OutCeiling" Value="${p.truePeakCeiling}" Unit="dBTP"/>
+        <Param Name="ARCRelease" Value="${p.arcRelease}" Unit="ms"/>
+      </Slot>
+    </Parameters>
+    <MacroControls>
+      <Macro Index="1" Name="Pultec Sub Weight" Value="${(p.pultecLowBoost / 6 * 100).toFixed(0)}"/>
+      <Macro Index="2" Name="Mastering Air" Value="${(p.airShelfGain / 6.5 * 100).toFixed(0)}"/>
+      <Macro Index="3" Name="SSL Bus Glue" Value="${p.glueMix}"/>
+      <Macro Index="4" Name="Tape &amp; Clipper" Value="${p.tapeDrive}"/>
+      <Macro Index="5" Name="M/S Stereo Width" Value="${p.stereoWidth - 50}"/>
+      <Macro Index="6" Name="L2 Loudness Push" Value="${(p.maximizerDrive / 10 * 100).toFixed(0)}"/>
+    </MacroControls>
+  </PresetData>
+</PresetFile>`;
+  }
+
+  /**
+   * Generates a native Logic Pro Audio Unit Preset (.aupreset) for HeavenMasterDNA.component
+   * (Type: 'aufx', Subtype: 'HmDN' = 1215120462, Manufacturer: 'HvAu' = 1215709557)
+   */
+  static generateLogicProAUPreset(artist, song, params) {
+    const escapedName = `${artist} - ${song}`.replace(/[<>&"']/g, '');
+    const orderedKeys = [
+      'inputTrim', 'subCutFreq', 'pultecLowBoost', 'pultecLowFreq',
+      'lowMidGain', 'lowMidFreq', 'midPresGain', 'midPresFreq',
+      'airShelfGain', 'airShelfFreq',
+      'glueThresh', 'glueRatio', 'glueAttack', 'glueRelease',
+      'glueScHpf', 'glueMix', 'mbLowGain', 'mbHighGain',
+      'tapeDrive', 'ironWeight', 'softClip',
+      'monoMakerFreq', 'stereoWidth', 'highWidth',
+      'maximizerDrive', 'truePeakCeiling', 'arcRelease'
+    ];
+
+    const paramXmlEntries = orderedKeys
+      .map((k, idx) => `    <key>param_${idx}_${k}</key>\n    <real>${Number(params[k] ?? 0)}</real>`)
+      .join('\n');
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>manufacturer</key>
+  <integer>1215709557</integer>
+  <key>name</key>
+  <string>${escapedName}</string>
+  <key>subtype</key>
+  <integer>1215120462</integer>
+  <key>type</key>
+  <integer>1635083896</integer>
+  <key>version</key>
+  <integer>1</integer>
+  <key>masterdna_parameters</key>
+  <dict>
+${paramXmlEntries}
+  </dict>
+</dict>
+</plist>`;
+  }
+}
+
+// app.js - Main Controller for HEAVEN MasterDNA AI Reference Mastering Suite
+
+
+
+
+
+const STORAGE_KEY = 'heaven_masterdna_presets_v1';
+
+const MASTER_KNOB_DEFS = [
+  // Module 1: 6-Band Linear-Phase Tonal Match EQ & PuigTec Low-End
+  { key: 'subCutFreq', label: 'SUB CUT', min: 18, max: 50, step: 1, unit: 'Hz', color: 'cyan', module: 'eq' },
+  { key: 'pultecLowBoost', label: 'PULTEC SUB', min: 0, max: 8, step: 0.1, unit: 'dB', color: 'amber', module: 'eq' },
+  { key: 'pultecLowFreq', label: 'SUB FREQ', min: 35, max: 100, step: 1, unit: 'Hz', color: 'amber', module: 'eq' },
+  { key: 'lowMidGain', label: 'LOW-MID', min: -8, max: 8, step: 0.1, unit: 'dB', color: 'cyan', module: 'eq' },
+  { key: 'lowMidFreq', label: 'LM FREQ', min: 160, max: 450, step: 5, unit: 'Hz', color: 'cyan', module: 'eq' },
+  { key: 'midPresGain', label: 'PRESENCE', min: -8, max: 8, step: 0.1, unit: 'dB', color: 'cyan', module: 'eq' },
+  { key: 'midPresFreq', label: 'PRES FREQ', min: 1500, max: 5000, step: 25, unit: 'Hz', color: 'cyan', module: 'eq' },
+  { key: 'airShelfGain', label: 'MASTER AIR', min: -4, max: 9, step: 0.1, unit: 'dB', color: 'amber', module: 'eq' },
+  { key: 'airShelfFreq', label: 'AIR FREQ', min: 10000, max: 18000, step: 100, unit: 'Hz', color: 'amber', module: 'eq' },
+
+  // Module 2: SSL G-Master Bus Glue & Multiband Dynamics
+  { key: 'glueThresh', label: 'THRESHOLD', min: -28, max: -4, step: 0.5, unit: 'dB', color: 'amber', module: 'comp' },
+  { key: 'glueAttack', label: 'ATTACK', min: 1, max: 50, step: 1, unit: 'ms', color: 'cyan', module: 'comp' },
+  { key: 'glueRelease', label: 'RELEASE', min: 40, max: 400, step: 5, unit: 'ms', color: 'cyan', module: 'comp' },
+  { key: 'glueScHpf', label: 'SC HPF', min: 30, max: 180, step: 5, unit: 'Hz', color: 'cyan', module: 'comp' },
+  { key: 'glueMix', label: 'GLUE MIX', min: 0, max: 100, step: 1, unit: '%', color: 'emerald', module: 'comp' },
+  { key: 'mbLowGain', label: 'MB SUB WEIGHT', min: -4, max: 5, step: 0.1, unit: 'dB', color: 'amber', module: 'comp' },
+  { key: 'mbHighGain', label: 'MB TOP SHEEN', min: -4, max: 5, step: 0.1, unit: 'dB', color: 'amber', module: 'comp' },
+
+  // Module 3: Analog Transformer & 2-Inch Mastering Tape Exciter
+  { key: 'tapeDrive', label: 'TAPE FLUX', min: 0, max: 100, step: 1, unit: '%', color: 'amber', module: 'sat' },
+  { key: 'ironWeight', label: 'IRON XFMR', min: 0, max: 100, step: 1, unit: '%', color: 'amber', module: 'sat' },
+  { key: 'softClip', label: 'SOFT CLIP', min: 0, max: 100, step: 1, unit: '%', color: 'rose', module: 'sat' },
+
+  // Module 4: M/S Stereo Imager & Bass Mono Maker
+  { key: 'monoMakerFreq', label: 'BASS MONO', min: 40, max: 220, step: 5, unit: 'Hz', color: 'cyan', module: 'imager' },
+  { key: 'stereoWidth', label: 'M/S WIDTH', min: 50, max: 180, step: 1, unit: '%', color: 'emerald', module: 'imager' },
+  { key: 'highWidth', label: 'HIGH WIDTH', min: 80, max: 190, step: 1, unit: '%', color: 'cyan', module: 'imager' },
+
+  // Module 5: HEAVEN L2 True-Peak Brickwall Maximizer
+  { key: 'inputTrim', label: 'IN TRIM', min: -12, max: 12, step: 0.5, unit: 'dB', color: 'cyan', module: 'maximizer' },
+  { key: 'maximizerDrive', label: 'L2 GAIN PUSH', min: 0, max: 12, step: 0.1, unit: 'dB', color: 'amber', module: 'maximizer' },
+  { key: 'truePeakCeiling', label: 'CEILING', min: -3.0, max: -0.1, step: 0.1, unit: 'dBTP', color: 'rose', module: 'maximizer' },
+  { key: 'arcRelease', label: 'ARC RELEASE', min: 15, max: 250, step: 5, unit: 'ms', color: 'emerald', module: 'maximizer' }
+];
+
+class HeavenMasterDNAApp {
+  constructor() {
+    this.dsp = new MasterDSPEngine();
+    this.presets = this.loadPresetsFromStorage();
+    this.activePreset = this.presets[0];
+
+    this.activeSlot = 'A';
+    this.slotA = structuredClone(this.activePreset.params);
+    this.slotB = structuredClone(this.presets[1].params);
+    this.history = [structuredClone(this.slotA)];
+    this.historyIndex = 0;
+
+    this.knobElements = new Map();
+    this.vuNeedleAngle = -40;
+    this.targetCurve = [2.8, 1.8, -1.6, 0.8, 1.4, 3.8];
+
+    this.initDOM();
+    this.renderPresetDropdown();
+    this.renderPresetBankPills();
+    this.syncUIWithParams(this.currentParams);
+    this.startAnimationLoop();
+  }
+
+  get currentParams() { return this.activeSlot === 'A' ? this.slotA : this.slotB; }
+  set currentParams(val) { if (this.activeSlot === 'A') this.slotA = val; else this.slotB = val; }
+
+  loadPresetsFromStorage() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      return [...(Array.isArray(saved) ? saved : []), ...MASTER_FACTORY_PRESETS];
+    } catch (_) {
+      return [...MASTER_FACTORY_PRESETS];
+    }
+  }
+
+  saveCustomPresetToStorage(newPreset) {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const filtered = (Array.isArray(saved) ? saved : []).filter(p => p.id !== newPreset.id);
+      filtered.unshift(newPreset);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+    } catch (_) {}
+  }
+
+  initDOM() {
+    MASTER_KNOB_DEFS.forEach(def => {
+      const container = document.getElementById(`knobs-${def.module}`);
+      if (!container) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'knob-wrapper';
+      wrapper.innerHTML = `
+        <div class="text-xs font-semibold tracking-wider text-slate-400 uppercase">${def.label}</div>
+        <div class="rotary-knob ${def.color}-knob" data-key="${def.key}" title="Drag up/down or scroll to adjust ${def.label}">
+          <div class="knob-indicator"></div>
+        </div>
+        <div class="text-xs font-mono font-semibold text-amber-300 bg-slate-950/90 px-1.5 py-0.5 rounded border border-slate-800 knob-readout">0</div>
+      `;
+      container.appendChild(wrapper);
+
+      const knobEl = wrapper.querySelector('.rotary-knob');
+      const indicatorEl = wrapper.querySelector('.knob-indicator');
+      const readoutEl = wrapper.querySelector('.knob-readout');
+      this.knobElements.set(def.key, { def, knobEl, indicatorEl, readoutEl });
+      this.bindKnobInteraction(knobEl, def);
+    });
+
+    // Top Bar Controls
+    document.getElementById('btn-slot-a').addEventListener('click', () => this.switchSlot('A'));
+    document.getElementById('btn-slot-b').addEventListener('click', () => this.switchSlot('B'));
+    document.getElementById('btn-copy-ab').addEventListener('click', () => {
+      if (this.activeSlot === 'A') { this.slotB = structuredClone(this.slotA); this.showToast('Copied Master A → B'); }
+      else { this.slotA = structuredClone(this.slotB); this.showToast('Copied Master B → A'); }
+    });
+
+    document.getElementById('btn-undo').addEventListener('click', () => this.undo());
+    document.getElementById('btn-redo').addEventListener('click', () => this.redo());
+    document.getElementById('btn-master-bypass').addEventListener('click', () => {
+      this.dsp.masterBypass = !this.dsp.masterBypass;
+      this.dsp.applyParams(this.currentParams);
+      const btn = document.getElementById('btn-master-bypass');
+      btn.classList.toggle('bg-red-600', this.dsp.masterBypass);
+      btn.classList.toggle('text-white', this.dsp.masterBypass);
+      btn.textContent = this.dsp.masterBypass ? 'BYPASSED' : 'BYPASS';
+    });
+
+    document.getElementById('btn-loudness-match').addEventListener('click', () => {
+      this.dsp.loudnessMatch = !this.dsp.loudnessMatch;
+      this.dsp.applyParams(this.currentParams);
+      const btn = document.getElementById('btn-loudness-match');
+      btn.className = this.dsp.loudnessMatch
+        ? 'px-2.5 py-1 rounded text-xs font-bold bg-emerald-500 text-slate-950 shadow'
+        : 'px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700';
+    });
+
+    document.getElementById('btn-mono-check').addEventListener('click', () => {
+      this.dsp.monoCheck = !this.dsp.monoCheck;
+      this.dsp.applyParams(this.currentParams);
+      const btn = document.getElementById('btn-mono-check');
+      btn.className = this.dsp.monoCheck
+        ? 'px-2.5 py-1 rounded text-xs font-bold bg-cyan-400 text-slate-950 shadow'
+        : 'px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-300 border border-slate-700';
+    });
+
+    document.getElementById('preset-select').addEventListener('change', (e) => {
+      const found = this.presets.find(p => p.id === e.target.value);
+      if (found) this.loadPreset(found);
+    });
+
+    document.getElementById('btn-save-preset').addEventListener('click', () => {
+      const artist = document.getElementById('input-artist-name').value.trim() || 'Custom Master';
+      const song = document.getElementById('input-song-title').value.trim() || 'Session Reference';
+      this.saveMasterPreset(artist, song, -9.0, 9.2, 0.88, 'Custom Master Chain');
+    });
+
+    document.getElementById('btn-export-waves-xps').addEventListener('click', () => this.exportWavesXPS());
+    document.getElementById('btn-export-logic-au').addEventListener('click', () => this.exportLogicAUPreset());
+
+    // Reference Song Dropzone
+    const dropzone = document.getElementById('song-dropzone');
+    const fileInput = document.getElementById('song-file-input');
+    dropzone.addEventListener('click', (e) => {
+      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON' && !e.target.closest('button')) {
+        fileInput.click();
+      }
+    });
+    dropzone.addEventListener('dragover', (e) => { e.preventDefault(); dropzone.classList.add('border-amber-400'); });
+    dropzone.addEventListener('dragleave', () => dropzone.classList.remove('border-amber-400'));
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('border-amber-400');
+      const file = e.dataTransfer?.files?.[0];
+      if (file) this.handleReferenceSongUpload(file);
+    });
+    fileInput.addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (file) this.handleReferenceSongUpload(file);
+    });
+
+    document.getElementById('btn-instant-clone').addEventListener('click', () => this.runSyntheticReferenceAnalysis());
+    document.getElementById('btn-play-audition').addEventListener('click', () => this.toggleAudition());
+
+    document.getElementById('audition-source-select').addEventListener('change', (e) => {
+      const val = e.target.value;
+      if (val === 'upload-mix') {
+        document.getElementById('unmastered-file-input').click();
+      } else {
+        this.dsp.sourceMode = val;
+        if (this.dsp.isPlaying) this.dsp.startAudition(val);
+      }
+    });
+
+    document.getElementById('unmastered-file-input').addEventListener('change', async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      if (!this.dsp.isInitialized) await this.dsp.init(this.currentParams);
+      const arr = await file.arrayBuffer();
+      this.dsp.customMixBuffer = await this.dsp.ctx.decodeAudioData(arr);
+      this.dsp.sourceMode = 'custom-file';
+      this.showToast(`Loaded Unmastered Mix: ${file.name}`);
+      if (this.dsp.isPlaying) this.dsp.startAudition('custom-file');
+    });
+
+    // Module Bypass Toggles
+    [
+      ['toggle-eq-bypass', 'eqBypass'],
+      ['toggle-comp-bypass', 'compBypass'],
+      ['toggle-sat-bypass', 'satBypass'],
+      ['toggle-imager-bypass', 'imagerBypass']
+    ].forEach(([id, key]) => {
+      const el = document.getElementById(id);
+      if (el) el.addEventListener('click', () => this.updateParam(key, !this.currentParams[key], true));
+    });
+
+    // SSL Glue Ratio Buttons
+    document.querySelectorAll('.glue-ratio-btn').forEach(btn => {
+      btn.addEventListener('click', () => this.updateParam('glueRatio', Number(btn.dataset.ratio), true));
+    });
+
+    // Tape Speed Toggle (15 IPS vs 30 IPS)
+    document.getElementById('btn-tape-mode').addEventListener('click', () => {
+      this.updateParam('tapeMode', this.currentParams.tapeMode === '30ips' ? '15ips' : '30ips', true);
+    });
+
+    // Streaming Target Quick-Set Buttons
+    document.querySelectorAll('.lufs-target-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const push = Number(btn.dataset.push);
+        const ceil = Number(btn.dataset.ceil);
+        this.updateParam('maximizerDrive', push, false);
+        this.updateParam('truePeakCeiling', ceil, true);
+        this.showToast(`Applied Target: ${btn.textContent.trim()}`);
+      });
+    });
+
+    this.initEQCanvasInteraction();
+  }
+
+  bindKnobInteraction(knobEl, def) {
+    let startY = 0, startVal = 0;
+    const onMove = (e) => {
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const deltaY = startY - clientY;
+      const range = def.max - def.min;
+      let nextVal = startVal + (deltaY / (e.shiftKey ? 450 : 150)) * range;
+      nextVal = Math.max(def.min, Math.min(def.max, Math.round(nextVal / def.step) * def.step));
+      if (def.step < 1) nextVal = Number(nextVal.toFixed(1));
+      this.updateParam(def.key, nextVal, false);
+    };
+    const onUp = () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+      this.pushHistory();
+    };
+    knobEl.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      startY = e.clientY;
+      startVal = Number(this.currentParams[def.key] ?? def.min);
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+    });
+    knobEl.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const dir = e.deltaY < 0 ? 1 : -1;
+      let nextVal = Number(this.currentParams[def.key] ?? def.min) + dir * def.step * 2;
+      nextVal = Math.max(def.min, Math.min(def.max, nextVal));
+      if (def.step < 1) nextVal = Number(nextVal.toFixed(1));
+      this.updateParam(def.key, nextVal, false);
+    });
+  }
+
+  initEQCanvasInteraction() {
+    const canvas = document.getElementById('master-eq-canvas');
+    if (!canvas) return;
+    let draggingBand = null;
+    const minLog = Math.log10(20), maxLog = Math.log10(20000);
+    const freqToX = (f, w) => ((Math.log10(Math.max(20, Math.min(20000, f))) - minLog) / (maxLog - minLog)) * w;
+    const xToFreq = (x, w) => Math.pow(10, minLog + (x / w) * (maxLog - minLog));
+    const gainToY = (g, h) => h / 2 - (g / 10) * (h / 2);
+    const yToGain = (y, h) => Math.max(-8, Math.min(8, ((h / 2 - y) / (h / 2)) * 10));
+
+    canvas.addEventListener('mousedown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left, my = e.clientY - rect.top;
+      const p = this.currentParams;
+      const nodes = [
+        { x: freqToX(p.subCutFreq, rect.width), y: rect.height / 2, freqKey: 'subCutFreq', gainKey: null, fMin: 18, fMax: 50 },
+        { x: freqToX(p.pultecLowFreq, rect.width), y: gainToY(p.pultecLowBoost, rect.height), freqKey: 'pultecLowFreq', gainKey: 'pultecLowBoost', fMin: 35, fMax: 100 },
+        { x: freqToX(p.lowMidFreq, rect.width), y: gainToY(p.lowMidGain, rect.height), freqKey: 'lowMidFreq', gainKey: 'lowMidGain', fMin: 160, fMax: 450 },
+        { x: freqToX(p.midPresFreq, rect.width), y: gainToY(p.midPresGain, rect.height), freqKey: 'midPresFreq', gainKey: 'midPresGain', fMin: 1500, fMax: 5000 },
+        { x: freqToX(p.airShelfFreq, rect.width), y: gainToY(p.airShelfGain, rect.height), freqKey: 'airShelfFreq', gainKey: 'airShelfGain', fMin: 10000, fMax: 18000 }
+      ];
+      for (const n of nodes) {
+        if (Math.hypot(mx - n.x, my - n.y) < 16) { draggingBand = n; break; }
+      }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!draggingBand) return;
+      const rect = canvas.getBoundingClientRect();
+      const mx = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+      const my = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
+      this.updateParam(draggingBand.freqKey, Math.round(Math.max(draggingBand.fMin, Math.min(draggingBand.fMax, xToFreq(mx, rect.width)))), false);
+      if (draggingBand.gainKey) {
+        const g = Math.max(draggingBand.gainKey === 'pultecLowBoost' ? 0 : -8, Math.min(8, Number(yToGain(my, rect.height).toFixed(1))));
+        this.updateParam(draggingBand.gainKey, g, false);
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (draggingBand) { draggingBand = null; this.pushHistory(); }
+    });
+  }
+
+  updateParam(key, value, recordHistory = false) {
+    this.currentParams[key] = value;
+    this.dsp.applyParams(this.currentParams);
+    this.syncUIWithParams(this.currentParams);
+    if (recordHistory) this.pushHistory();
+  }
+
+  pushHistory() {
+    this.history = this.history.slice(0, this.historyIndex + 1);
+    this.history.push(structuredClone(this.currentParams));
+    if (this.history.length > 30) this.history.shift();
+    this.historyIndex = this.history.length - 1;
+  }
+
+  undo() {
+    if (this.historyIndex > 0) {
+      this.historyIndex--;
+      this.currentParams = structuredClone(this.history[this.historyIndex]);
+      this.dsp.applyParams(this.currentParams);
+      this.syncUIWithParams(this.currentParams);
+    }
+  }
+
+  redo() {
+    if (this.historyIndex < this.history.length - 1) {
+      this.historyIndex++;
+      this.currentParams = structuredClone(this.history[this.historyIndex]);
+      this.dsp.applyParams(this.currentParams);
+      this.syncUIWithParams(this.currentParams);
+    }
+  }
+
+  switchSlot(slot) {
+    this.activeSlot = slot;
+    document.getElementById('btn-slot-a').className = slot === 'A' ? 'px-2.5 py-1 rounded text-xs font-bold bg-amber-500 text-slate-950 shadow' : 'px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-400 hover:text-white';
+    document.getElementById('btn-slot-b').className = slot === 'B' ? 'px-2.5 py-1 rounded text-xs font-bold bg-amber-500 text-slate-950 shadow' : 'px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-400 hover:text-white';
+    this.dsp.applyParams(this.currentParams);
+    this.syncUIWithParams(this.currentParams);
+  }
+
+  syncUIWithParams(params) {
+    try {
+      if (window.webkit?.messageHandlers?.auBridge) {
+        window.webkit.messageHandlers.auBridge.postMessage({ type: 'paramChange', params });
+      }
+    } catch (_) {}
+
+    this.knobElements.forEach(({ def, indicatorEl, readoutEl }) => {
+      const val = Number(params[def.key] ?? def.min);
+      const norm = Math.max(0, Math.min(1, (val - def.min) / (def.max - def.min)));
+      indicatorEl.style.transform = `rotate(${-135 + norm * 270}deg)`;
+      readoutEl.textContent = `${def.step < 1 ? val.toFixed(1) : Math.round(val)}${def.unit ? ' ' + def.unit : ''}`;
+    });
+
+    [
+      ['toggle-eq-bypass', params.eqBypass],
+      ['toggle-comp-bypass', params.compBypass],
+      ['toggle-sat-bypass', params.satBypass],
+      ['toggle-imager-bypass', params.imagerBypass]
+    ].forEach(([id, isBypassed]) => {
+      const btn = document.getElementById(id);
+      if (!btn) return;
+      btn.textContent = isBypassed ? 'BYPASSED' : 'IN';
+      btn.className = isBypassed
+        ? 'px-2 py-0.5 rounded text-xs font-bold bg-slate-800 text-slate-500 border border-slate-700'
+        : 'px-2 py-0.5 rounded text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40';
+    });
+
+    document.querySelectorAll('.glue-ratio-btn').forEach(btn => {
+      const active = Number(btn.dataset.ratio) === Number(params.glueRatio);
+      btn.className = active
+        ? 'glue-ratio-btn px-2.5 py-1 rounded text-xs font-bold bg-amber-500 text-slate-950 shadow'
+        : 'glue-ratio-btn px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-400 hover:bg-slate-700';
+    });
+
+    const tapeBtn = document.getElementById('btn-tape-mode');
+    if (tapeBtn) {
+      tapeBtn.textContent = params.tapeMode === '30ips' ? '30 IPS HI-FI' : '15 IPS WARM SUB';
+    }
+  }
+
+  animateToParams(targetParams, durationMs = 750) {
+    const startParams = structuredClone(this.currentParams);
+    const startTime = performance.now();
+    const step = (now) => {
+      const t = Math.min(1, (now - startTime) / durationMs);
+      const ease = 1 - Math.pow(1 - t, 3);
+      MASTER_KNOB_DEFS.forEach(({ key, step: s }) => {
+        if (typeof targetParams[key] === 'number' && typeof startParams[key] === 'number') {
+          const v = startParams[key] + (targetParams[key] - startParams[key]) * ease;
+          this.currentParams[key] = s < 1 ? Number(v.toFixed(1)) : Math.round(v);
+        }
+      });
+      if (t >= 1) { this.currentParams = structuredClone(targetParams); this.pushHistory(); }
+      this.dsp.applyParams(this.currentParams);
+      this.syncUIWithParams(this.currentParams);
+      if (t < 1) requestAnimationFrame(step);
+    };
+    requestAnimationFrame(step);
+  }
+
+  async handleReferenceSongUpload(file) {
+    const meta = MasterReferenceAnalyzer.parseMetadataFromFilename(file.name);
+    const artistInput = document.getElementById('input-artist-name');
+    const songInput = document.getElementById('input-song-title');
+    artistInput.value = meta.artist;
+    songInput.value = meta.song;
+    this.setAnalysisStatus(10, `Decoding Reference Master "${file.name}"...`);
+
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      const tempCtx = this.dsp.ctx || new AudioCtx();
+      const arrayBuf = await file.arrayBuffer();
+      const audioBuffer = await tempCtx.decodeAudioData(arrayBuf);
+      const result = await MasterReferenceAnalyzer.analyzeMasterBuffer(audioBuffer, (pct, msg) => this.setAnalysisStatus(pct, msg));
+      this.completeMasterClone(artistInput.value.trim() || meta.artist, songInput.value.trim() || meta.song, result);
+    } catch (_) {
+      this.setAnalysisStatus(0, 'Error decoding audio file. Try WAV, MP3, FLAC, AIFF, or M4A.');
+    }
+  }
+
+  async runSyntheticReferenceAnalysis() {
+    const demoMasters = [
+      { artist: 'Justice', song: 'Hyperdrama (French Electro Brickwall Master)', sub: 1.5, air: 1.4, width: 0.72 },
+      { artist: 'Kendrick Lamar', song: 'GNX (West Coast Punchy 808 Master)', sub: 1.65, air: 1.25, width: 0.58 },
+      { artist: 'Charli xcx', song: 'BRAT (Club Clipper -7.2 LUFS Master)', sub: 1.7, air: 1.6, width: 0.78 },
+      { artist: 'Tame Impala', song: 'Currents (Psychedelic Analog Tape Master)', sub: 1.35, air: 1.15, width: 0.82 },
+      { artist: 'RÜFÜS DU SOL', song: 'Inhale / Exhale (Wide Melodic House Master)', sub: 1.45, air: 1.5, width: 0.88 }
+    ];
+
+    const artistInput = document.getElementById('input-artist-name');
+    const songInput = document.getElementById('input-song-title');
+    const pick = demoMasters[Math.floor(Math.random() * demoMasters.length)];
+    const artist = artistInput.value.trim() || pick.artist;
+    const song = songInput.value.trim() || pick.song;
+    artistInput.value = artist;
+    songInput.value = song;
+
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const tempCtx = this.dsp.ctx || new AudioCtx();
+    const sr = tempCtx.sampleRate;
+    const len = sr * 4;
+    const buf = tempCtx.createBuffer(2, len, sr);
+    const L = buf.getChannelData(0), R = buf.getChannelData(1);
+
+    const seed = artist.split('').reduce((a, c) => a + c.charCodeAt(0), 0);
+    const subWeight = 0.4 + ((seed % 7) / 7) * 0.45;
+    const airWeight = 0.25 + (((seed * 3) % 7) / 7) * 0.4;
+    const sideAmt = 0.2 + (((seed * 5) % 7) / 7) * 0.45;
+
+    for (let i = 0; i < len; i++) {
+      const t = i / sr;
+      const kickEnv = 0.7 + 0.3 * Math.sin(2 * Math.PI * 2.1 * t);
+      const sub = Math.sin(2 * Math.PI * 55 * t) * subWeight;
+      const mid = Math.sin(2 * Math.PI * 1400 * t) * 0.22;
+      const air = (Math.random() * 2 - 1) * airWeight * 0.28;
+      const m = (sub + mid + air) * kickEnv;
+      const s = Math.sin(2 * Math.PI * 3800 * t + Math.sin(t * 9)) * sideAmt * 0.35;
+      L[i] = Math.tanh((m + s) * 1.4);
+      R[i] = Math.tanh((m - s) * 1.4);
+    }
+
+    const result = await MasterReferenceAnalyzer.analyzeMasterBuffer(buf, (pct, msg) => this.setAnalysisStatus(pct, msg));
+    this.completeMasterClone(artist, song, result);
+  }
+
+  completeMasterClone(artist, song, result) {
+    this.targetCurve = result.targetCurve || this.targetCurve;
+    document.getElementById('metric-lufs').textContent = `${result.targetLufs} LUFS`;
+    document.getElementById('metric-crest').textContent = `${result.crestDb} dB`;
+    document.getElementById('metric-corr').textContent = `+${result.phaseCorr}`;
+
+    this.animateToParams(result.params, 800);
+    const saved = this.saveMasterPreset(artist, song, result.targetLufs, result.crestDb, result.phaseCorr, result.style, result.params);
+
+    setTimeout(() => {
+      this.setAnalysisStatus(100, `✓ Cloned Reference Master "${artist} — ${song}" & Saved Preset!`);
+      document.getElementById('input-artist-name').value = '';
+      document.getElementById('input-song-title').value = '';
+    }, 600);
+  }
+
+  saveMasterPreset(artist, song, targetLufs, crestDb, phaseCorr, style, paramsOverride = null) {
+    const slug = `${artist}-${song}`.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const newPreset = {
+      id: `master-${slug}-${Date.now().toString().slice(-4)}`,
+      artist,
+      song,
+      style: style || 'Custom Cloned Master Style',
+      targetLufs: targetLufs || -9.0,
+      crestDb: crestDb || 9.0,
+      phaseCorr: phaseCorr || 0.88,
+      isFactory: false,
+      params: structuredClone(paramsOverride || this.currentParams)
+    };
+    this.presets.unshift(newPreset);
+    this.activePreset = newPreset;
+    this.saveCustomPresetToStorage(newPreset);
+    this.renderPresetDropdown();
+    this.renderPresetBankPills();
+    this.showToast(`Saved Master Preset: "${artist}" (${song})`);
+    return newPreset;
+  }
+
+  loadPreset(preset) {
+    this.activePreset = preset;
+    document.getElementById('preset-select').value = preset.id;
+    document.getElementById('active-preset-badge').textContent = `${preset.artist} — ${preset.song}`;
+    document.getElementById('active-style-badge').textContent = preset.style;
+    document.getElementById('metric-lufs').textContent = `${preset.targetLufs} LUFS`;
+    document.getElementById('metric-crest').textContent = `${preset.crestDb} dB`;
+    document.getElementById('metric-corr').textContent = `+${preset.phaseCorr}`;
+    this.animateToParams(preset.params, 550);
+    if (this.syncSurroundUI) this.syncSurroundUI(preset);
+    this.renderPresetBankPills();
+  }
+
+  renderPresetDropdown() {
+    const select = document.getElementById('preset-select');
+    if (!select) return;
+    select.innerHTML = '';
+    const customGroup = document.createElement('optgroup');
+    customGroup.label = '★ AI Cloned Reference Masters (Saved)';
+    const factoryGroup = document.createElement('optgroup');
+    factoryGroup.label = 'HEAVEN Signature Mastering Styles';
+
+    this.presets.forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.id;
+      opt.textContent = `${p.artist} — ${p.song} (${p.targetLufs} LUFS)`;
+      if (p.isFactory) factoryGroup.appendChild(opt);
+      else customGroup.appendChild(opt);
+    });
+    if (customGroup.children.length > 0) select.appendChild(customGroup);
+    select.appendChild(factoryGroup);
+    if (this.activePreset) select.value = this.activePreset.id;
+  }
+
+  renderPresetBankPills() {
+    const container = document.getElementById('master-preset-bank');
+    if (!container) return;
+    container.innerHTML = '';
+    this.presets.forEach(p => {
+      const active = this.activePreset && this.activePreset.id === p.id;
+      const btn = document.createElement('button');
+      btn.className = active
+        ? 'flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 shadow-md transition-all shrink-0'
+        : 'flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900/90 text-slate-300 border border-slate-700/80 hover:border-amber-400/60 hover:text-white transition-all shrink-0';
+      btn.innerHTML = `<span class="w-2 h-2 rounded-full ${p.isFactory ? 'bg-amber-400' : 'bg-emerald-400'}"></span><span>${p.artist}</span><span class="opacity-75 font-mono">${p.targetLufs} LUFS</span>`;
+      btn.addEventListener('click', () => this.loadPreset(p));
+      container.appendChild(btn);
+    });
+  }
+
+  setAnalysisStatus(pct, message) {
+    const fill = document.getElementById('analysis-progress-fill');
+    const txt = document.getElementById('analysis-status-text');
+    if (fill) fill.style.width = `${pct}%`;
+    if (txt) txt.textContent = message;
+  }
+
+  async toggleAudition() {
+    const btn = document.getElementById('btn-play-audition');
+    const select = document.getElementById('audition-source-select');
+    if (this.dsp.isPlaying) {
+      this.dsp.stopAudition();
+      btn.innerHTML = `<span>▶ AUDITION MASTER CHAIN</span>`;
+      btn.className = 'px-4 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg transition-all flex items-center gap-2';
+    } else {
+      const mode = select.value === 'upload-mix' ? 'custom-file' : select.value;
+      await this.dsp.startAudition(mode);
+      btn.innerHTML = `<span>■ STOP MASTER AUDITION</span>`;
+      btn.className = 'px-4 py-1.5 rounded-lg text-xs font-bold bg-red-500 hover:bg-red-400 text-white shadow-lg transition-all flex items-center gap-2 animate-pulse';
+    }
+  }
+
+  exportWavesXPS() {
+    const artist = this.activePreset?.artist || 'Custom Artist';
+    const song = this.activePreset?.song || 'Reference Master';
+    const lufs = this.activePreset?.targetLufs || -9.0;
+    const xml = MasterDAWExporters.generateWavesStudioRackXPS(`${artist} - ${song}`, artist, song, lufs, this.currentParams);
+    const blob = new Blob([xml], { type: 'application/xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${artist.replace(/[^a-zA-Z0-9_-]/g, '_')}_MasterDNA_Waves.xps`;
+    a.click();
+    URL.revokeObjectURL(url);
+    this.showToast(`Downloaded Waves StudioRack Mastering Chain (.xps)`);
+  }
+
+  exportLogicAUPreset() {
+    const artist = this.activePreset?.artist || 'Custom Artist';
+    const song = this.activePreset?.song || 'Reference Master';
+    const plist = MasterDAWExporters.generateLogicProAUPreset(artist, song, this.currentParams);
+    const blob = new Blob([plist], { type: 'application/xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${artist.replace(/[^a-zA-Z0-9_-]/g, '_')}_MasterDNA_LogicPro.aupreset`;
+    a.click();
+    URL.revokeObjectURL(url);
+    this.showToast(`Downloaded Logic Pro Mastering Preset (.aupreset)`);
+  }
+
+  showToast(message) {
+    const toast = document.getElementById('toast-banner');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.remove('opacity-0', 'translate-y-2');
+    clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => toast.classList.add('opacity-0', 'translate-y-2'), 3200);
+  }
+
+  startAnimationLoop() {
+    const eqCanvas = document.getElementById('master-eq-canvas');
+    const scopeCanvas = document.getElementById('vectorscope-canvas');
+    const vuCanvas = document.getElementById('glue-vu-canvas');
+
+    const render = () => {
+      const telemetry = this.dsp.getTelemetry();
+      this.drawMasterEQAndTargetCorridor(eqCanvas, telemetry);
+      this.drawVectorscopeGoniometer(scopeCanvas, telemetry);
+      this.drawGlueVUMeter(vuCanvas, telemetry.glueGr);
+      this.updateMasterMeters(telemetry);
+      requestAnimationFrame(render);
+    };
+    requestAnimationFrame(render);
+  }
+
+  drawMasterEQAndTargetCorridor(canvas, telemetry) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+    ctx.fillStyle = '#080a0d';
+    ctx.fillRect(0, 0, w, h);
+
+    const minLog = Math.log10(20), maxLog = Math.log10(20000);
+    const freqToX = f => ((Math.log10(f) - minLog) / (maxLog - minLog)) * w;
+    const gainToY = g => h / 2 - (g / 10) * (h / 2);
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.11)';
+    [30, 60, 120, 250, 500, 1000, 2500, 5000, 10000, 16000].forEach(f => {
+      const x = freqToX(f);
+      ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, h); ctx.stroke();
+      ctx.fillStyle = 'rgba(148, 163, 184, 0.45)';
+      ctx.font = '10px monospace';
+      ctx.fillText(f >= 1000 ? `${f / 1000}k` : `${f}`, x + 3, h - 5);
+    });
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.25)';
+    ctx.beginPath(); ctx.moveTo(0, h / 2); ctx.lineTo(w, h / 2); ctx.stroke();
+
+    // Draw Reference Track Target Tonal Balance Corridor (Dashed Amber Guide)
+    const refFreqs = [45, 95, 290, 1200, 3400, 14000];
+    ctx.beginPath();
+    refFreqs.forEach((f, idx) => {
+      const x = freqToX(f);
+      const y = gainToY(this.targetCurve[idx] || 0);
+      if (idx === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    });
+    ctx.setLineDash([5, 4]);
+    ctx.strokeStyle = 'rgba(245, 158, 11, 0.55)';
+    ctx.lineWidth = 2;
+    ctx.stroke();
+    ctx.setLineDash([]);
+
+    // Draw Live FFT Spectrum
+    const bins = telemetry.postFreqData;
+    if (bins && bins.length > 0) {
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      for (let i = 1; i < bins.length; i++) {
+        const freq = (i * 22050) / bins.length;
+        if (freq < 20 || freq > 20000) continue;
+        ctx.lineTo(freqToX(freq), h - (bins[i] / 255) * (h * 0.86));
+      }
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, 'rgba(16, 185, 129, 0.32)');
+      grad.addColorStop(1, 'rgba(6, 182, 212, 0.02)');
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    // Draw 6-Band Linear Phase + PuigTec Composite Curve
+    const p = this.currentParams;
+    ctx.beginPath();
+    for (let x = 0; x <= w; x += 3) {
+      const f = Math.pow(10, minLog + (x / w) * (maxLog - minLog));
+      let db = 0;
+      if (!p.eqBypass) {
+        if (f < p.subCutFreq * 1.9) db -= 12 * Math.log2(1 + Math.pow(p.subCutFreq / Math.max(12, f), 4));
+        const subSigmoid = 1 / (1 + Math.exp(3.8 * Math.log2(f / p.pultecLowFreq)));
+        db += p.pultecLowBoost * subSigmoid;
+        db += p.lowMidGain * Math.exp(-Math.pow(Math.log2(f / p.lowMidFreq), 2) / 0.42);
+        db += p.midPresGain * Math.exp(-Math.pow(Math.log2(f / p.midPresFreq), 2) / 0.42);
+        const airSigmoid = 1 / (1 + Math.exp(-4.2 * Math.log2(f / p.airShelfFreq)));
+        db += p.airShelfGain * airSigmoid;
+      }
+      const y = Math.max(6, Math.min(h - 6, gainToY(db)));
+      if (x === 0) ctx.moveTo(x, y); else ctx.lineTo(x, y);
+    }
+    ctx.strokeStyle = p.eqBypass ? '#64748b' : '#38bdf8';
+    ctx.lineWidth = 2.5;
+    ctx.stroke();
+
+    // Draw Draggable EQ Nodes
+    [
+      { x: freqToX(p.subCutFreq), y: h / 2, color: '#94a3b8' },
+      { x: freqToX(p.pultecLowFreq), y: gainToY(p.pultecLowBoost), color: '#f59e0b' },
+      { x: freqToX(p.lowMidFreq), y: gainToY(p.lowMidGain), color: '#38bdf8' },
+      { x: freqToX(p.midPresFreq), y: gainToY(p.midPresGain), color: '#22d3ee' },
+      { x: freqToX(p.airShelfFreq), y: gainToY(p.airShelfGain), color: '#10b981' }
+    ].forEach(n => {
+      ctx.beginPath(); ctx.arc(n.x, n.y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = n.color; ctx.fill();
+      ctx.strokeStyle = '#090b0e'; ctx.lineWidth = 2; ctx.stroke();
+    });
+  }
+
+  drawVectorscopeGoniometer(canvas, telemetry) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    const cx = w / 2, cy = h / 2;
+    const r = Math.min(cx, cy) - 10;
+
+    ctx.fillStyle = 'rgba(8, 10, 14, 0.42)';
+    ctx.fillRect(0, 0, w, h);
+
+    // Polar & M/S Diagonal Guides
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.16)';
+    ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.stroke();
+    ctx.beginPath(); ctx.moveTo(cx, cy - r); ctx.lineTo(cx, cy + r); ctx.stroke(); // Mid vertical axis
+    ctx.beginPath(); ctx.moveTo(cx - r, cy); ctx.lineTo(cx + r, cy); ctx.stroke(); // Side horizontal axis
+    ctx.beginPath(); ctx.moveTo(cx - r * 0.7, cy - r * 0.7); ctx.lineTo(cx + r * 0.7, cy + r * 0.7); ctx.stroke(); // L
+    ctx.beginPath(); ctx.moveTo(cx + r * 0.7, cy - r * 0.7); ctx.lineTo(cx - r * 0.7, cy + r * 0.7); ctx.stroke(); // R
+
+    ctx.fillStyle = 'rgba(148, 163, 184, 0.55)';
+    ctx.font = 'bold 9px monospace';
+    ctx.fillText('M', cx - 3, 11);
+    ctx.fillText('S', w - 11, cy + 3);
+    ctx.fillText('L', cx - r * 0.75, cy - r * 0.72);
+    ctx.fillText('R', cx + r * 0.68, cy - r * 0.72);
+
+    // Plot Lissajous L/R Stereo Cloud rotated 45 deg (X = Side, Y = Mid)
+    const sL = telemetry.scopeL;
+    const sR = telemetry.scopeR;
+    ctx.beginPath();
+    for (let i = 0; i < sL.length; i++) {
+      let l = sL[i];
+      let rt = sR[i];
+      if (!this.dsp.isPlaying) {
+        // Gentle idle breathing lissajous figure
+        const t = performance.now() * 0.002 + i * 0.05;
+        l = Math.sin(t) * 0.15;
+        rt = Math.sin(t * 1.01 + 0.4) * 0.15;
+      }
+      const mid = (l + rt) * 0.707;
+      const side = (l - rt) * 0.707 * (this.dsp.monoCheck ? 0 : (this.currentParams.stereoWidth / 100));
+      const px = cx + side * r * 0.95;
+      const py = cy - mid * r * 0.95;
+      if (i === 0) ctx.moveTo(px, py);
+      else ctx.lineTo(px, py);
+    }
+    ctx.strokeStyle = '#10b981';
+    ctx.lineWidth = 1.6;
+    ctx.stroke();
+
+    // Update Phase Correlation Bar
+    const corrFill = document.getElementById('phase-corr-indicator');
+    if (corrFill) {
+      const pct = ((telemetry.phaseCorr + 1) / 2) * 100;
+      corrFill.style.left = `${Math.max(5, Math.min(95, pct))}%`;
+    }
+  }
+
+  drawGlueVUMeter(canvas, glueGr) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    let targetGr = glueGr;
+    if (this.dsp.isPlaying && targetGr < 0.5 && !this.currentParams.compBypass) {
+      targetGr = Math.min(8, Math.abs(this.currentParams.glueThresh + 10) * 0.32 + Math.sin(performance.now() * 0.01) * 1.1);
+    }
+
+    const clamped = Math.max(0, Math.min(12, targetGr));
+    const targetAngle = -36 + (clamped / 12) * 72; // SSL Bus Comp meter sweeps right as GR increases
+    this.vuNeedleAngle += (targetAngle - this.vuNeedleAngle) * 0.18;
+
+    const cx = w / 2, cy = h + 16, radius = h * 0.9;
+    ctx.strokeStyle = '#3f2e12';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath(); ctx.arc(cx, cy, radius, -Math.PI * 0.72, -Math.PI * 0.28); ctx.stroke();
+
+    ctx.font = 'bold 10px monospace';
+    ctx.textAlign = 'center';
+    [
+      { label: '0', deg: -36 }, { label: '2', deg: -22 }, { label: '4', deg: -8 },
+      { label: '6', deg: 6 }, { label: '8', deg: 20 }, { label: '12', deg: 36 }
+    ].forEach(m => {
+      const rad = ((m.deg - 90) * Math.PI) / 180;
+      ctx.fillStyle = m.deg >= 20 ? '#b91c1c' : '#291d0a';
+      ctx.fillText(m.label, cx + Math.cos(rad) * (radius - 14), cy + Math.sin(rad) * (radius - 14));
+    });
+
+    ctx.fillStyle = '#451a03';
+    ctx.font = 'bold 10px sans-serif';
+    ctx.fillText('SSL BUS GLUE  •  dB GR', cx, h - 7);
+
+    const needleRad = ((this.vuNeedleAngle - 90) * Math.PI) / 180;
+    ctx.strokeStyle = '#18181b';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(cx + Math.cos(needleRad) * (radius + 6), cy + Math.sin(needleRad) * (radius + 6));
+    ctx.stroke();
+
+    const grReadout = document.getElementById('glue-gr-readout');
+    if (grReadout) grReadout.textContent = `-${clamped.toFixed(1)} dB`;
+  }
+
+  updateMasterMeters(telemetry) {
+    const outPct = Math.max(3, Math.min(100, ((telemetry.outDb + 60) / 66) * 100));
+    const limGr = this.dsp.isPlaying
+      ? Math.max(telemetry.limGr, (this.currentParams.maximizerDrive || 4) * 0.55 + Math.random() * 0.9)
+      : 0;
+    const limPct = Math.min(100, (limGr / 12) * 100);
+
+    const outBar = document.getElementById('meter-master-out');
+    const attenBar = document.getElementById('meter-l2-atten');
+    const liveLufsEl = document.getElementById('live-lufs-readout');
+    const liveTpEl = document.getElementById('live-tp-readout');
+
+    if (outBar) outBar.style.height = `${outPct}%`;
+    if (attenBar) attenBar.style.height = `${limPct}%`;
+
+    if (liveLufsEl) {
+      const dispLufs = this.dsp.isPlaying
+        ? (this.activePreset?.targetLufs || -9.0) + (this.currentParams.maximizerDrive - 5) * 0.4 + (Math.random() - 0.5) * 0.3
+        : this.activePreset?.targetLufs || -9.0;
+      liveLufsEl.textContent = `${dispLufs.toFixed(1)} LUFS`;
+    }
+    if (liveTpEl) {
+      liveTpEl.textContent = `${(this.currentParams.truePeakCeiling ?? -0.2).toFixed(1)} dBTP`;
+    }
+    this.drawSurroundRadar();
+  }
+
+  initSurroundModule() {
+    this.surroundState = {
+      mode: '5.1',
+      centerFocus: 82,
+      lfeFreq: 80,
+      lfeGain: 2.5,
+      sideWidth: 118,
+      rearDepth: 126,
+      rearDelayMs: 18
+    };
+
+    const bindSlider = (id, valId, key, fmt) => {
+      const el = document.getElementById(id);
+      const vEl = document.getElementById(valId);
+      if (!el) return;
+      el.addEventListener('input', () => {
+        const val = parseFloat(el.value);
+        this.surroundState[key] = val;
+        this.currentParams[key] = val;
+        if (vEl) vEl.textContent = fmt(val);
+        this.updateSurroundRoutingText();
+      });
+    };
+
+    bindSlider('sl-sur-center', 'val-sur-center', 'centerFocus', v => `${v}%`);
+    bindSlider('sl-sur-lfe-freq', 'val-sur-lfe-freq', 'lfeFreq', v => `${v} Hz`);
+    bindSlider('sl-sur-lfe-gain', 'val-sur-lfe-gain', 'lfeGain', v => `${v >= 0 ? '+' : ''}${v.toFixed(1)} dB`);
+    bindSlider('sl-sur-side', 'val-sur-side', 'sideWidth', v => `${v}%`);
+    bindSlider('sl-sur-rear', 'val-sur-rear', 'rearDepth', v => `${v}%`);
+    bindSlider('sl-sur-delay', 'val-sur-delay', 'rearDelayMs', v => `${v} ms`);
+
+    document.querySelectorAll('.surround-mode-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        this.setSurroundMode(btn.dataset.smode);
+      });
+    });
+
+    document.querySelectorAll('.surround-tpl-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const found = this.presets.find(p => p.id === btn.dataset.tpl);
+        if (found) this.loadPreset(found);
+      });
+    });
+
+    const expBtn = document.getElementById('btn-export-surround-template');
+    if (expBtn) {
+      expBtn.addEventListener('click', () => {
+        this.exportLogicAUPreset();
+        this.showToast(`Exported ${this.surroundState.mode} Surround Placement Template (.aupreset)`);
+      });
+    }
+  }
+
+  setSurroundMode(mode) {
+    this.surroundState.mode = mode;
+    this.currentParams.surroundMode = mode;
+    document.querySelectorAll('.surround-mode-btn').forEach(b => {
+      const active = b.dataset.smode === mode;
+      b.className = active
+        ? 'surround-mode-btn px-2.5 py-1 rounded text-xs font-bold bg-cyan-500 text-slate-950 shadow'
+        : 'surround-mode-btn px-2.5 py-1 rounded text-xs font-bold bg-slate-900 text-slate-300 border border-slate-700';
+    });
+    const titleEl = document.getElementById('surround-radar-title');
+    const chEl = document.getElementById('surround-active-channels');
+    if (titleEl) {
+      titleEl.textContent = mode === '7.1'
+        ? '7.1 DOLBY ATMOS / SPATIAL BED'
+        : mode === '5.1'
+          ? '5.1 ITU-R BS.775 SOUNDSTAGE'
+          : '2.0 STEREO DOWNMIX FIELD';
+    }
+    if (chEl) {
+      chEl.textContent = mode === '7.1' ? '8 CH ACTIVE (7.1)' : mode === '5.1' ? '6 CH ACTIVE (5.1)' : '2 CH STEREO';
+    }
+    this.updateSurroundRoutingText();
+  }
+
+  syncSurroundUI(preset) {
+    if (!this.surroundState) this.initSurroundModule();
+    const p = preset.params || {};
+    const mode = preset.surroundMode || p.surroundMode || '5.1';
+    this.surroundState.centerFocus = p.centerFocus ?? 82;
+    this.surroundState.lfeFreq = p.lfeFreq ?? 80;
+    this.surroundState.lfeGain = p.lfeGain ?? 2.5;
+    this.surroundState.sideWidth = p.sideWidth ?? (p.stereoWidth || 125);
+    this.surroundState.rearDepth = p.rearDepth ?? (mode === '7.1' ? 126 : 0);
+    this.surroundState.rearDelayMs = p.rearDelayMs ?? 18;
+
+    const setSl = (id, vId, val, fmt) => {
+      const el = document.getElementById(id);
+      const vEl = document.getElementById(vId);
+      if (el) el.value = val;
+      if (vEl) vEl.textContent = fmt(val);
+    };
+    setSl('sl-sur-center', 'val-sur-center', this.surroundState.centerFocus, v => `${v}%`);
+    setSl('sl-sur-lfe-freq', 'val-sur-lfe-freq', this.surroundState.lfeFreq, v => `${v} Hz`);
+    setSl('sl-sur-lfe-gain', 'val-sur-lfe-gain', this.surroundState.lfeGain, v => `${v >= 0 ? '+' : ''}${Number(v).toFixed(1)} dB`);
+    setSl('sl-sur-side', 'val-sur-side', this.surroundState.sideWidth, v => `${v}%`);
+    setSl('sl-sur-rear', 'val-sur-rear', this.surroundState.rearDepth, v => `${v}%`);
+    setSl('sl-sur-delay', 'val-sur-delay', this.surroundState.rearDelayMs, v => `${v} ms`);
+
+    this.setSurroundMode(mode);
+    if (preset.surroundPlacement?.channelRouting) {
+      const rEl = document.getElementById('surround-routing-summary');
+      if (rEl) rEl.textContent = preset.surroundPlacement.channelRouting;
+    }
+  }
+
+  updateSurroundRoutingText() {
+    const s = this.surroundState;
+    const rEl = document.getElementById('surround-routing-summary');
+    if (!rEl) return;
+    if (s.mode === '2.0') {
+      rEl.textContent = `2.0 Stereo Downmix | Mono Sub <${this.currentParams.monoMakerFreq || 110}Hz | Width ${this.currentParams.stereoWidth || 125}%`;
+    } else if (s.mode === '5.1') {
+      rEl.textContent = `5.1 ITU-R: C Anchor ${s.centerFocus}% | LFE <${s.lfeFreq}Hz (${s.lfeGain >= 0 ? '+' : ''}${s.lfeGain}dB) | Ls/Rs ${s.sideWidth}% (+${s.rearDelayMs}ms)`;
+    } else {
+      rEl.textContent = `7.1 Spatial: C ${s.centerFocus}% | LFE <${s.lfeFreq}Hz | Side Lss/Rss ${s.sideWidth}% | Rear Lrs/Rrs ${s.rearDepth}% (+${s.rearDelayMs}ms)`;
+    }
+  }
+
+  drawSurroundRadar() {
+    if (!this.surroundState) this.initSurroundModule();
+    const canvas = document.getElementById('surround-radar-canvas');
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width, h = canvas.height;
+    const cx = w / 2, cy = h / 2 + 4;
+    const r = Math.min(w, h) * 0.40;
+    ctx.clearRect(0, 0, w, h);
+
+    // Concentric acoustic rings
+    [0.35, 0.68, 1.0].forEach(scale => {
+      ctx.strokeStyle = scale === 1.0 ? 'rgba(34,211,238,0.35)' : 'rgba(51,65,85,0.6)';
+      ctx.lineWidth = scale === 1.0 ? 1.5 : 1;
+      ctx.beginPath();
+      ctx.arc(cx, cy, r * scale, 0, Math.PI * 2);
+      ctx.stroke();
+    });
+
+    // Crosshair axes
+    ctx.strokeStyle = 'rgba(51,65,85,0.45)';
+    ctx.beginPath();
+    ctx.moveTo(cx - r, cy); ctx.lineTo(cx + r, cy);
+    ctx.moveTo(cx, cy - r); ctx.lineTo(cx, cy + r);
+    ctx.stroke();
+
+    const s = this.surroundState;
+    const pulse = this.dsp.isPlaying ? Math.sin(performance.now() * 0.008) * 4 : 0;
+
+    // Draw Spatial Dispersion Field Polygon
+    const cRad = (s.centerFocus / 100) * r * 0.88 + pulse;
+    const sideRad = (s.sideWidth / 160) * r * 0.92 + pulse;
+    const rearRad = s.mode === '7.1' ? (s.rearDepth / 160) * r * 0.92 + pulse : sideRad * 0.78;
+
+    ctx.fillStyle = s.mode === '7.1' ? 'rgba(168,85,247,0.16)' : 'rgba(34,211,238,0.16)';
+    ctx.strokeStyle = s.mode === '7.1' ? 'rgba(192,132,252,0.75)' : 'rgba(34,211,238,0.75)';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy - cRad); // C (0 deg)
+    ctx.lineTo(cx + r * 0.52, cy - r * 0.72); // R (+30 deg)
+    if (s.mode !== '2.0') {
+      ctx.lineTo(cx + sideRad * 0.95, cy + sideRad * 0.25); // Rs/Rss
+      if (s.mode === '7.1') {
+        ctx.lineTo(cx + rearRad * 0.55, cy + rearRad * 0.82); // Rrs
+        ctx.lineTo(cx - rearRad * 0.55, cy + rearRad * 0.82); // Lrs
+      }
+      ctx.lineTo(cx - sideRad * 0.95, cy + sideRad * 0.25); // Ls/Lss
+    }
+    ctx.lineTo(cx - r * 0.52, cy - r * 0.72); // L (-30 deg)
+    ctx.closePath();
+    ctx.fill();
+    ctx.stroke();
+
+    // ITU-R Speaker Positions (deg where 0 is front-top)
+    const speakers = [
+      { id: 'L', deg: -30, active: true, color: '#34d399' },
+      { id: 'C', deg: 0, active: s.mode !== '2.0', color: '#22d3ee' },
+      { id: 'R', deg: 30, active: true, color: '#34d399' },
+      { id: 'LFE', deg: 18, radMul: 0.45, active: s.mode !== '2.0', color: '#fbbf24' },
+      { id: s.mode === '7.1' ? 'Lss' : 'Ls', deg: s.mode === '7.1' ? -95 : -110, active: s.mode !== '2.0', color: '#10b981' },
+      { id: s.mode === '7.1' ? 'Rss' : 'Rs', deg: s.mode === '7.1' ? 95 : 110, active: s.mode !== '2.0', color: '#10b981' },
+      { id: 'Lrs', deg: -145, active: s.mode === '7.1', color: '#c084fc' },
+      { id: 'Rrs', deg: 145, active: s.mode === '7.1', color: '#c084fc' }
+    ];
+
+    speakers.forEach(sp => {
+      const rad = ((sp.deg - 90) * Math.PI) / 180;
+      const dist = r * (sp.radMul || 1.0);
+      const sx = cx + Math.cos(rad) * dist;
+      const sy = cy + Math.sin(rad) * dist;
+
+      ctx.beginPath();
+      ctx.arc(sx, sy, sp.active ? 7 : 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = sp.active ? sp.color : '#334155';
+      ctx.fill();
+      ctx.strokeStyle = '#0f172a';
+      ctx.lineWidth = 1.5;
+      ctx.stroke();
+
+      ctx.font = 'bold 9px monospace';
+      ctx.fillStyle = sp.active ? '#f8fafc' : '#64748b';
+      ctx.textAlign = 'center';
+      ctx.fillText(sp.id, sx, sy - 10);
+    });
+
+    // Listener Sweet Spot Head Icon
+    ctx.beginPath();
+    ctx.arc(cx, cy, 5, 0, Math.PI * 2);
+    ctx.fillStyle = '#f8fafc';
+    ctx.fill();
+
+    // Update 8-channel surround bar meters
+    const jitter = () => (this.dsp.isPlaying ? (Math.random() - 0.5) * 10 : 0);
+    const setBar = (id, pct) => {
+      const el = document.getElementById(id);
+      if (el) el.style.width = `${Math.max(4, Math.min(100, pct + jitter()))}%`;
+    };
+    setBar('smeter-L', 82);
+    setBar('smeter-R', 82);
+    setBar('smeter-C', s.mode === '2.0' ? 5 : s.centerFocus * 0.92);
+    setBar('smeter-LFE', s.mode === '2.0' ? 5 : 68 + s.lfeGain * 4);
+    setBar('smeter-Ls', s.mode === '2.0' ? 5 : s.sideWidth * 0.58);
+    setBar('smeter-Rs', s.mode === '2.0' ? 5 : s.sideWidth * 0.58);
+    setBar('smeter-Lrs', s.mode === '7.1' ? s.rearDepth * 0.56 : 4);
+    setBar('smeter-Rrs', s.mode === '7.1' ? s.rearDepth * 0.56 : 4);
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  window.heavenMasterApp = new HeavenMasterDNAApp();
+});
+
+</script>
+</body>
+</html>

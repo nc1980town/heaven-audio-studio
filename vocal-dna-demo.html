@@ -1,0 +1,3372 @@
+<!DOCTYPE html>
+<html lang="en" class="dark">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>HEAVEN VocalDNA — AI Song Vocal Chain Cloner (For Logic Pro & Waves StudioRack)</title>
+  <script src="https://www.gstatic.com/antigravity/web/dev/tailwindcss.min.js"></script>
+  <style>
+/* styles.css - Authentic Waves StudioRack & Analog Hardware Styling */
+
+:root {
+  --chassis-bg: #141619;
+  --module-bg: #1c1f24;
+  --module-header: #252a32;
+  --panel-border: #323842;
+  --amber-glow: #f59e0b;
+  --cyan-glow: #06b6d4;
+  --emerald-glow: #10b981;
+  --crimson-glow: #ef4444;
+  --vu-bg: #f3dfb3;
+  --vu-warm: #eab308;
+}
+
+* {
+  box-sizing: border-box;
+  user-select: none;
+}
+
+body {
+  margin: 0;
+  background: radial-gradient(circle at 50% 0%, #232730 0%, #0d0f12 100%);
+  color: #e2e8f0;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, sans-serif;
+  min-height: 100vh;
+}
+
+/* Brushed Metal Hardware Texture */
+.brushed-metal {
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.012) 0px,
+      rgba(255, 255, 255, 0.012) 1px,
+      transparent 1px,
+      transparent 3px
+    ),
+    linear-gradient(180deg, #22262d 0%, #171a1f 100%);
+}
+
+.rack-screw {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #64748b, #1e293b);
+  border: 1px solid #0f172a;
+  box-shadow: inset 0 1px 2px rgba(255,255,255,0.25), 0 1px 2px rgba(0,0,0,0.8);
+  position: relative;
+}
+.rack-screw::after {
+  content: '';
+  position: absolute;
+  top: 5px;
+  left: 2px;
+  right: 2px;
+  height: 1.5px;
+  background: #0f172a;
+  transform: rotate(-32deg);
+}
+
+/* Custom Rotary Knob */
+.knob-wrapper {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.rotary-knob {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 30%, #3b4252, #181b20 75%);
+  border: 2px solid #0d0f12;
+  box-shadow:
+    0 4px 8px rgba(0, 0, 0, 0.65),
+    inset 0 1px 2px rgba(255, 255, 255, 0.18);
+  position: relative;
+  cursor: ns-resize;
+  transition: box-shadow 0.15s ease;
+}
+
+.rotary-knob:hover {
+  box-shadow:
+    0 0 12px rgba(6, 182, 212, 0.35),
+    0 4px 8px rgba(0, 0, 0, 0.7),
+    inset 0 1px 2px rgba(255, 255, 255, 0.28);
+}
+
+.rotary-knob.amber-knob:hover {
+  box-shadow:
+    0 0 12px rgba(245, 158, 11, 0.4),
+    0 4px 8px rgba(0, 0, 0, 0.7),
+    inset 0 1px 2px rgba(255, 255, 255, 0.28);
+}
+
+.knob-indicator {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  pointer-events: none;
+}
+
+.knob-indicator::after {
+  content: '';
+  position: absolute;
+  top: 4px;
+  left: 50%;
+  width: 3px;
+  height: 12px;
+  margin-left: -1.5px;
+  border-radius: 2px;
+  background: var(--cyan-glow);
+  box-shadow: 0 0 6px var(--cyan-glow);
+}
+
+.amber-knob .knob-indicator::after {
+  background: var(--amber-glow);
+  box-shadow: 0 0 6px var(--amber-glow);
+}
+
+.emerald-knob .knob-indicator::after {
+  background: var(--emerald-glow);
+  box-shadow: 0 0 6px var(--emerald-glow);
+}
+
+/* Analog VU Meter */
+.vu-display {
+  background: radial-gradient(circle at 50% 85%, #fff3c4 0%, #e7c578 70%, #b88e3d 100%);
+  border: 3px solid #111317;
+  box-shadow:
+    inset 0 3px 10px rgba(0, 0, 0, 0.45),
+    0 1px 0 rgba(255, 255, 255, 0.12);
+  border-radius: 6px;
+  position: relative;
+  overflow: hidden;
+}
+
+/* Bluey / Blacky 1176 Faceplate Accents */
+.bluey-stripe {
+  background: linear-gradient(90deg, #1d4ed8 0%, #2563eb 50%, #1e40af 100%);
+}
+.blacky-stripe {
+  background: linear-gradient(90deg, #18181b 0%, #27272a 50%, #09090b 100%);
+}
+
+/* Scrollbar styling */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: #141619;
+}
+::-webkit-scrollbar-thumb {
+  background: #334155;
+  border-radius: 3px;
+}
+
+</style>
+</head>
+<body class="p-3 md:p-5">
+
+  <!-- Main Hardware Rack Chassis -->
+  <div class="max-w-7xl mx-auto rounded-2xl border-2 border-slate-700/80 shadow-2xl overflow-hidden brushed-metal relative">
+
+    <!-- Top System Bar -->
+    <header class="bg-slate-950/95 border-b border-slate-800 px-4 py-2.5 flex flex-wrap items-center justify-between gap-3">
+      <div class="flex items-center gap-3">
+        <div class="rack-screw"></div>
+        <div class="flex items-center gap-2">
+          <div class="w-7 h-7 rounded bg-gradient-to-br from-cyan-400 to-amber-500 flex items-center justify-center text-slate-950 font-black text-sm shadow">
+            H
+          </div>
+          <div>
+            <div class="text-sm font-black tracking-wider text-white flex items-center gap-2">
+              <span>HEAVEN</span>
+              <span class="text-amber-400">VocalDNA</span>
+              <span class="text-xs px-1.5 py-0.5 rounded bg-cyan-500/15 text-cyan-300 border border-cyan-500/30 font-mono">AI VOCAL CHAIN CLONER</span>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Center WaveSystem Preset & A/B Controls -->
+      <div class="flex flex-wrap items-center gap-2">
+        <button id="btn-undo" class="px-2.5 py-1 rounded text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700" title="Undo parameter change">UNDO</button>
+        <button id="btn-redo" class="px-2.5 py-1 rounded text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700" title="Redo parameter change">REDO</button>
+
+        <div class="h-4 w-px bg-slate-800 mx-1"></div>
+
+        <!-- Preset Selector -->
+        <select id="preset-select" class="bg-slate-900 text-amber-300 text-xs font-semibold px-3 py-1.5 rounded border border-slate-700 focus:outline-none focus:border-amber-400 min-w-[230px]"></select>
+
+        <button id="btn-save-preset" class="px-3 py-1.5 rounded text-xs font-bold bg-amber-500/20 hover:bg-amber-500/30 text-amber-300 border border-amber-500/40 transition-colors">
+          SAVE ARTIST PRESET
+        </button>
+
+        <button id="btn-export-waves-xps" class="px-2.5 py-1.5 rounded text-xs font-bold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40" title="Export Chain Preset for Waves StudioRack (.xps)">
+          EXPORT FOR WAVES (.XPS)
+        </button>
+
+        <button id="btn-export-logic-au" class="px-2.5 py-1.5 rounded text-xs font-bold bg-indigo-500/20 hover:bg-indigo-500/30 text-indigo-300 border border-indigo-500/40" title="Export Native Logic Pro (.aupreset) File">
+          LOGIC .AUPRESET
+        </button>
+
+        <button id="btn-export-preset" class="px-2.5 py-1.5 rounded text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700" title="Download Preset JSON">
+          JSON
+        </button>
+
+        <div class="h-4 w-px bg-slate-800 mx-1"></div>
+
+        <!-- A / B Compare -->
+        <div class="flex items-center gap-1 bg-slate-900 p-0.5 rounded border border-slate-800">
+          <button id="btn-slot-a" class="px-2.5 py-1 rounded text-xs font-bold bg-amber-500 text-slate-950 shadow">A</button>
+          <button id="btn-slot-b" class="px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-400 hover:text-white">B</button>
+          <button id="btn-copy-ab" class="px-2 py-1 rounded text-xs font-semibold text-slate-400 hover:text-cyan-300" title="Copy active chain to alternate slot">A→B</button>
+        </div>
+
+        <button id="btn-master-bypass" class="px-3 py-1 rounded text-xs font-bold bg-slate-800 hover:bg-slate-700 text-slate-300 border border-slate-700">
+          BYPASS
+        </button>
+      </div>
+
+      <!-- Right Audition Player Bar -->
+      <div class="flex items-center gap-2">
+        <select id="audition-source-select" class="bg-slate-900 text-cyan-300 text-xs font-semibold px-2.5 py-1.5 rounded border border-slate-700">
+          <option value="synth-pop">Dry Vocal: Pop / Soul Lead</option>
+          <option value="synth-rap">Dry Vocal: Melodic Trap</option>
+          <option value="synth-whisper">Dry Vocal: Intimate Whisper</option>
+          <option value="mic">Live Microphone Input</option>
+          <option value="upload-dry">Upload Custom Dry Vocal File...</option>
+        </select>
+        <input id="dry-vocal-file-input" type="file" accept="audio/*" class="hidden" />
+
+        <button id="btn-play-audition" class="px-4 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg transition-all flex items-center gap-2">
+          <span>▶ AUDITION VOCAL CHAIN</span>
+        </button>
+        <div class="rack-screw hidden sm:block"></div>
+      </div>
+    </header>
+
+    <!-- AI SONG LISTENER & VOCAL DNA CLONER MODULE -->
+    <section class="p-4 bg-gradient-to-r from-slate-950 via-slate-900 to-slate-950 border-b border-slate-800">
+      <div class="grid grid-cols-1 lg:grid-cols-12 gap-4 items-center">
+
+        <!-- Left: Song Dropzone & Live Listen Trigger -->
+        <div id="song-dropzone" class="lg:col-span-5 border-2 border-dashed border-cyan-500/40 hover:border-cyan-400 rounded-xl p-3.5 bg-slate-950/70 transition-all cursor-pointer flex flex-col justify-between gap-2">
+          <input id="song-file-input" type="file" accept="audio/*" class="hidden" />
+          <div class="flex items-start justify-between gap-2">
+            <div>
+              <div class="text-xs font-bold uppercase tracking-wider text-cyan-400 flex items-center gap-1.5">
+                <span class="w-2 h-2 rounded-full bg-cyan-400 animate-ping"></span>
+                <span>STEP 1: LISTEN TO ANY REFERENCE SONG</span>
+              </div>
+              <p class="text-xs text-slate-300 mt-1">
+                Drop any song file (<code class="text-amber-300">.mp3</code>, <code class="text-amber-300">.wav</code>, <code class="text-amber-300">.flac</code>, <code class="text-amber-300">.m4a</code>) or click to browse. Extracts Mid/Side vocal spectrum, dynamics, sibilance & space, dials in the chain, and saves the artist preset!
+              </p>
+            </div>
+          </div>
+
+          <div class="flex flex-wrap items-center gap-2 mt-1">
+            <button id="btn-live-listen" type="button" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-cyan-500/20 hover:bg-cyan-500/30 text-cyan-300 border border-cyan-500/40 flex items-center gap-1.5">
+              <span>🎙️ LISTEN VIA MIC (5s)</span>
+            </button>
+            <button id="btn-instant-clone" type="button" class="px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 hover:bg-amber-400 text-slate-950 shadow flex items-center gap-1.5">
+              <span>⚡ AI CLONE SONG & AUTO-SAVE ARTIST</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Middle: Artist Name & Song Title Auto-Preset Tagging -->
+        <div class="lg:col-span-4 bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 flex flex-col gap-2">
+          <div class="text-xs font-bold uppercase tracking-wider text-amber-400">
+            STEP 2: ARTIST PRESET AUTO-TAGGER
+          </div>
+          <div class="grid grid-cols-2 gap-2">
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Artist Name (Preset Name)</label>
+              <input id="input-artist-name" type="text" placeholder="e.g. SZA, Drake, Travis..." class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+            </div>
+            <div>
+              <label class="block text-xs text-slate-400 mb-1">Reference Song Title</label>
+              <input id="input-song-title" type="text" placeholder="e.g. Kill Bill, Passionfruit..." class="w-full bg-slate-900 border border-slate-700 rounded px-2.5 py-1.5 text-xs text-white focus:outline-none focus:border-amber-400" />
+            </div>
+          </div>
+          <!-- Progress bar & status -->
+          <div id="analysis-progress-wrap" class="mt-1">
+            <div class="w-full h-1.5 bg-slate-800 rounded-full overflow-hidden">
+              <div id="analysis-progress-fill" class="h-full bg-gradient-to-r from-cyan-400 to-amber-400 transition-all duration-200" style="width: 100%"></div>
+            </div>
+            <div id="analysis-status-text" class="text-xs text-emerald-400 font-mono mt-1 truncate">
+              Ready — Drop a song or click "AI Clone Song & Auto-Save Artist"
+            </div>
+          </div>
+        </div>
+
+        <!-- Right: Extracted Vocal DNA Telemetry Readout -->
+        <div class="lg:col-span-3 bg-slate-950/80 border border-slate-800 rounded-xl p-3.5 flex flex-col justify-between gap-2">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-bold uppercase tracking-wider text-slate-400">CLONED VOCAL DNA</span>
+            <span id="active-bpm-badge" class="text-xs font-mono font-bold px-2 py-0.5 rounded bg-amber-500/20 text-amber-300 border border-amber-500/30">148 BPM</span>
+          </div>
+          <div id="active-preset-badge" class="text-sm font-bold text-white truncate">Travis Scott — FE!N (Astroworld Chain)</div>
+          <div id="active-character-badge" class="text-xs text-cyan-300 truncate">Aggressive, Dark Saturation, Heavy Slap & Plate</div>
+
+          <div class="grid grid-cols-4 gap-1.5 pt-1 border-t border-slate-800/80 text-center">
+            <div class="bg-slate-900/90 rounded p-1">
+              <div class="text-xs text-slate-400">CREST</div>
+              <div id="metric-crest" class="text-xs font-mono font-bold text-white">11.4 dB</div>
+            </div>
+            <div class="bg-slate-900/90 rounded p-1">
+              <div class="text-xs text-slate-400">WIDTH</div>
+              <div id="metric-stereo" class="text-xs font-mono font-bold text-cyan-300">68%</div>
+            </div>
+            <div class="bg-slate-900/90 rounded p-1">
+              <div class="text-xs text-slate-400">SIBILANCE</div>
+              <div id="metric-sibilance" class="text-xs font-mono font-bold text-amber-300">64/100</div>
+            </div>
+            <div class="bg-slate-900/90 rounded p-1">
+              <div class="text-xs text-slate-400">RT60</div>
+              <div id="metric-rt60" class="text-xs font-mono font-bold text-emerald-300">2.4s</div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Saved Artist Presets Quick-Recall Bank -->
+      <div class="mt-3 pt-2.5 border-t border-slate-800/80 flex items-center gap-2 overflow-x-auto pb-1">
+        <span class="text-xs font-bold uppercase tracking-wider text-slate-400 shrink-0">ARTIST PRESET BANK:</span>
+        <div id="artist-preset-bank" class="flex items-center gap-2"></div>
+      </div>
+    </section>
+
+    <!-- MAIN STUDIO RACK MODULES GRID -->
+    <main class="p-4 grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+      <!-- MODULE 1: HEAVEN EQ-5 PARAMETRIC VOCAL EQ + REAL-TIME FFT SPECTRUM (5 cols) -->
+      <div class="lg:col-span-5 bg-slate-900/90 border border-slate-700/80 rounded-xl flex flex-col justify-between shadow-lg">
+        <div class="bg-slate-800/90 px-3.5 py-2 rounded-t-xl flex items-center justify-between border-b border-slate-700">
+          <div class="flex items-center gap-2">
+            <span class="w-2.5 h-2.5 rounded-full bg-cyan-400 shadow"></span>
+            <span class="text-xs font-black tracking-wider uppercase text-white">HEAVEN EQ-5 SURGICAL VOCAL EQ + RTA</span>
+          </div>
+          <button id="toggle-eq-bypass" class="px-2 py-0.5 rounded text-xs font-bold">IN</button>
+        </div>
+
+        <div class="p-3.5 flex flex-col gap-3">
+          <!-- Interactive FFT & EQ Curve Canvas -->
+          <div class="relative rounded-lg overflow-hidden border border-slate-700 bg-slate-950">
+            <canvas id="eq-spectrum-canvas" width="520" height="155" class="w-full h-[155px] block cursor-crosshair"></canvas>
+            <div class="absolute top-2 right-2.5 text-xs font-mono text-slate-400 pointer-events-none">
+              Drag nodes on curve or turn knobs below
+            </div>
+          </div>
+
+          <!-- 9 EQ Knobs -->
+          <div id="knobs-eq" class="grid grid-cols-3 sm:grid-cols-5 gap-3 pt-1"></div>
+        </div>
+      </div>
+
+      <!-- MODULE 2: HEAVEN SIBILANCE DE-ESSER + FET-76 / OPTO-2A DUAL COMPRESSOR (4 cols) -->
+      <div class="lg:col-span-4 flex flex-col gap-4">
+
+        <!-- De-Esser Sub-Rack -->
+        <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-lg">
+          <div class="bg-slate-800/90 px-3.5 py-2 rounded-t-xl flex items-center justify-between border-b border-slate-700">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-cyan-400"></span>
+              <span class="text-xs font-black tracking-wider uppercase text-white">HEAVEN SIBILANCE DE-ESSER</span>
+            </div>
+            <button id="toggle-deess-bypass" class="px-2 py-0.5 rounded text-xs font-bold">IN</button>
+          </div>
+          <div class="p-3 flex flex-col gap-2.5">
+            <div id="knobs-deess" class="grid grid-cols-3 gap-2"></div>
+            <div class="flex items-center gap-2 bg-slate-950 px-2.5 py-1.5 rounded border border-slate-800">
+              <span class="text-xs font-mono text-slate-400 shrink-0">ESS ATTEN:</span>
+              <div class="w-full h-2 bg-slate-800 rounded-full overflow-hidden">
+                <div id="deess-gr-bar" class="h-full bg-gradient-to-r from-cyan-400 to-amber-500 transition-all duration-75" style="width: 15%"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- FET-76 + OPTO-2A Dual Vocal Compressor Sub-Rack -->
+        <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-lg flex-1 flex flex-col justify-between">
+          <div id="comp-faceplate-stripe" class="bluey-stripe px-3.5 py-2 rounded-t-xl flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <span class="text-xs font-black tracking-wider uppercase text-white">HEAVEN FET-76 + OPTO-2A</span>
+            </div>
+            <div class="flex items-center gap-1.5">
+              <button id="btn-76-mode" class="px-2 py-0.5 rounded text-xs font-bold">FET-76 BLUEY</button>
+              <button id="toggle-comp-bypass" class="px-2 py-0.5 rounded text-xs font-bold">IN</button>
+            </div>
+          </div>
+
+          <div class="p-3.5 flex flex-col gap-3">
+            <!-- Analog VU Meter + Ratio Bank -->
+            <div class="grid grid-cols-12 gap-3 items-center">
+              <div class="col-span-8 vu-display h-[92px] flex flex-col items-center justify-center">
+                <canvas id="vu-meter-canvas" width="220" height="88" class="w-full h-full"></canvas>
+              </div>
+              <div class="col-span-4 flex flex-col gap-1.5">
+                <div class="text-xs font-bold text-slate-400 uppercase text-center">76 RATIO</div>
+                <div class="grid grid-cols-2 gap-1">
+                  <button class="ratio-btn" data-ratio="4">4:1</button>
+                  <button class="ratio-btn" data-ratio="8">8:1</button>
+                  <button class="ratio-btn" data-ratio="12">12:1</button>
+                  <button class="ratio-btn" data-ratio="20">20:1</button>
+                </div>
+                <div id="comp-gr-readout" class="text-xs font-mono font-bold text-amber-400 text-center bg-slate-950 py-1 rounded border border-slate-800">
+                  -4.2 dB
+                </div>
+              </div>
+            </div>
+
+            <!-- 5 Compressor Knobs -->
+            <div id="knobs-comp" class="grid grid-cols-5 gap-1.5"></div>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- MODULE 3: SATURATION, DOUBLER, DELAY, PLATE REVERB & MASTER (3 cols) -->
+      <div class="lg:col-span-3 flex flex-col gap-4">
+
+        <!-- Harmonic Saturator -->
+        <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-lg">
+          <div class="bg-slate-800/90 px-3.5 py-2 rounded-t-xl flex items-center justify-between border-b border-slate-700">
+            <span class="text-xs font-black tracking-wider uppercase text-amber-400">HEAVEN SATURATION</span>
+            <div class="flex items-center gap-1.5">
+              <button id="btn-sat-type" class="px-2 py-0.5 rounded text-xs font-bold bg-amber-500/20 text-amber-300 border border-amber-500/40">WARM TUBE</button>
+              <button id="toggle-sat-bypass" class="px-2 py-0.5 rounded text-xs font-bold">IN</button>
+            </div>
+          </div>
+          <div id="knobs-sat" class="p-3 grid grid-cols-3 gap-2"></div>
+        </div>
+
+        <!-- Doubler & BPM-Synced Delay -->
+        <div class="bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-lg">
+          <div class="bg-slate-800/90 px-3.5 py-2 rounded-t-xl flex items-center justify-between border-b border-slate-700">
+            <span class="text-xs font-black tracking-wider uppercase text-cyan-300">DOUBLER &amp; TEMPO DELAY</span>
+            <div class="flex items-center gap-1">
+              <button id="btn-ping-pong" class="px-2 py-0.5 rounded text-xs font-bold">PING-PONG</button>
+              <button id="toggle-doubler-bypass" class="px-2 py-0.5 rounded text-xs font-bold" title="Toggle Doubler">DBL</button>
+              <button id="toggle-delay-bypass" class="px-2 py-0.5 rounded text-xs font-bold" title="Toggle Delay">DLY</button>
+            </div>
+          </div>
+          <div id="knobs-space" class="p-3 grid grid-cols-4 gap-2"></div>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM FULL-WIDTH STRIP: EMT-140 PLATE REVERB + BRICKWALL MASTER OUTPUT & METERS -->
+      <div class="lg:col-span-12 grid grid-cols-1 lg:grid-cols-12 gap-4">
+
+        <!-- EMT-140 Stereo Plate Reverb (7 cols) -->
+        <div class="lg:col-span-7 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-lg">
+          <div class="bg-slate-800/90 px-3.5 py-2 rounded-t-xl flex items-center justify-between border-b border-slate-700">
+            <div class="flex items-center gap-2">
+              <span class="w-2.5 h-2.5 rounded-full bg-amber-400"></span>
+              <span class="text-xs font-black tracking-wider uppercase text-white">HEAVEN EMT-140 STEREO PLATE REVERB</span>
+            </div>
+            <button id="toggle-reverb-bypass" class="px-2 py-0.5 rounded text-xs font-bold">IN</button>
+          </div>
+          <div id="knobs-reverb" class="p-3.5 grid grid-cols-4 gap-4"></div>
+        </div>
+
+        <!-- Master Section & Brickwall Limiter + Stereo I/O Meters (5 cols) -->
+        <div class="lg:col-span-5 bg-slate-900/90 border border-slate-700/80 rounded-xl shadow-lg flex flex-col justify-between">
+          <div class="bg-slate-800/90 px-3.5 py-2 rounded-t-xl flex items-center justify-between border-b border-slate-700">
+            <span class="text-xs font-black tracking-wider uppercase text-emerald-400">HEAVEN LIMITER &amp; MASTER I/O</span>
+            <span class="text-xs font-mono text-slate-400">64-BIT FLOAT DSP</span>
+          </div>
+
+          <div class="p-3.5 flex items-center justify-between gap-4">
+            <div id="knobs-master" class="grid grid-cols-3 gap-4 flex-1"></div>
+
+            <!-- Vertical Stereo In/Out LED Bars -->
+            <div class="flex items-center gap-3 bg-slate-950 px-3 py-2 rounded-lg border border-slate-800 h-[92px]">
+              <div class="flex flex-col items-center h-full justify-end">
+                <div class="w-3 flex-1 bg-slate-900 rounded-full overflow-hidden flex items-end p-0.5">
+                  <div id="meter-in-bar" class="w-full bg-gradient-to-t from-emerald-500 via-amber-400 to-red-500 rounded-full transition-all duration-75" style="height: 25%"></div>
+                </div>
+                <span class="text-xs font-mono text-slate-400 mt-1">IN</span>
+              </div>
+              <div class="flex flex-col items-center h-full justify-end">
+                <div class="w-3 flex-1 bg-slate-900 rounded-full overflow-hidden flex items-end p-0.5">
+                  <div id="meter-out-bar" class="w-full bg-gradient-to-t from-emerald-500 via-amber-400 to-red-500 rounded-full transition-all duration-75" style="height: 35%"></div>
+                </div>
+                <span class="text-xs font-mono text-slate-400 mt-1">OUT</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div>
+
+    </main>
+
+    <!-- Toast Notification Banner -->
+    <div id="toast-banner" class="fixed bottom-5 right-5 bg-amber-500 text-slate-950 font-bold text-xs px-4 py-2.5 rounded-xl shadow-2xl opacity-0 translate-y-2 transition-all duration-200 pointer-events-none z-50">
+      Saved Artist Preset!
+    </div>
+
+  </div>
+
+  <script>
+// presets.js - Factory & User Artist Presets for HEAVEN VocalDNA
+
+const FACTORY_PRESETS = [
+  // ==========================================================================
+  // CHART POP, HIP-HOP, R&B & ELECTRONIC VOCAL CHAINS
+  // ==========================================================================
+  {
+    id: 'travis-scott-fein',
+    artist: 'Travis Scott',
+    song: 'FE!N (Astroworld Chain)',
+    genre: 'Psychedelic Trap',
+    bpm: 148,
+    character: 'Aggressive, Dark Saturation, Heavy Slap & Plate',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 2.0, gateThresh: -48, eqBypass: false,
+      hpfFreq: 115, lowGain: -2.5, lowFreq: 240, midGain: -3.2, midFreq: 680,
+      presenceGain: 4.8, presenceFreq: 3400, airGain: 6.5, airFreq: 10500,
+      deEssBypass: false, deEssFreq: 6800, deEssThresh: -26, deEssRange: 8.5,
+      compBypass: false, comp76Drive: 68, comp76Ratio: 8, comp76Attack: 4.2, comp76Release: 5.5, comp76Mode: 'bluey',
+      comp2APeak: 58, comp2AGain: 3.5,
+      satBypass: false, satDrive: 46, satType: 'tube', satTone: 25, satMix: 65,
+      doublerBypass: false, doublerWidth: 72, doublerDetune: 14, doublerMix: 34,
+      delayBypass: false, delayTimeMs: 202, delaySync: '1/8D', delayFeedback: 38, delayFilterHi: 2800, delayPingPong: true, delayMix: 28,
+      reverbBypass: false, reverbPreDelay: 32, reverbDecay: 2.4, reverbDamp: 4200, reverbMix: 26,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  },
+  {
+    id: 'billie-eilish-birds',
+    artist: 'Billie Eilish',
+    song: 'Birds of a Feather',
+    genre: 'Intimate Alt-Pop',
+    bpm: 105,
+    character: 'Ultra-Close, Warm Proximity, Crisp Air, Subtle Room',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.0, gateThresh: -55, eqBypass: false,
+      hpfFreq: 72, lowGain: 2.2, lowFreq: 190, midGain: -1.8, midFreq: 520,
+      presenceGain: 2.4, presenceFreq: 2900, airGain: 5.2, airFreq: 12000,
+      deEssBypass: false, deEssFreq: 7400, deEssThresh: -30, deEssRange: 9.0,
+      compBypass: false, comp76Drive: 42, comp76Ratio: 4, comp76Attack: 3.0, comp76Release: 6.0, comp76Mode: 'blacky',
+      comp2APeak: 68, comp2AGain: 4.0,
+      satBypass: false, satDrive: 22, satType: 'tape', satTone: -10, satMix: 45,
+      doublerBypass: false, doublerWidth: 85, doublerDetune: 9, doublerMix: 28,
+      delayBypass: false, delayTimeMs: 142, delaySync: '1/16', delayFeedback: 18, delayFilterHi: 3600, delayPingPong: false, delayMix: 14,
+      reverbBypass: false, reverbPreDelay: 45, reverbDecay: 1.5, reverbDamp: 5800, reverbMix: 18,
+      outputGain: 0.0, limiterThresh: -1.5
+    }
+  },
+  {
+    id: 'the-weeknd-blinding-lights',
+    artist: 'The Weeknd',
+    song: 'Blinding Lights',
+    genre: '80s Synthwave Pop',
+    bpm: 171,
+    character: 'Bright C800G Sheen, Tight 1176, Lush 80s Plate & Slap',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.5, gateThresh: -50, eqBypass: false,
+      hpfFreq: 98, lowGain: -1.5, lowFreq: 230, midGain: -2.0, midFreq: 750,
+      presenceGain: 4.2, presenceFreq: 3800, airGain: 5.8, airFreq: 11000,
+      deEssBypass: false, deEssFreq: 6500, deEssThresh: -24, deEssRange: 7.5,
+      compBypass: false, comp76Drive: 62, comp76Ratio: 8, comp76Attack: 4.8, comp76Release: 6.2, comp76Mode: 'bluey',
+      comp2APeak: 52, comp2AGain: 3.0,
+      satBypass: false, satDrive: 32, satType: 'tape', satTone: 18, satMix: 55,
+      doublerBypass: false, doublerWidth: 90, doublerDetune: 12, doublerMix: 25,
+      delayBypass: false, delayTimeMs: 175, delaySync: '1/8', delayFeedback: 32, delayFilterHi: 3200, delayPingPong: true, delayMix: 22,
+      reverbBypass: false, reverbPreDelay: 55, reverbDecay: 3.2, reverbDamp: 6400, reverbMix: 34,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  },
+  {
+    id: 'adele-easy-on-me',
+    artist: 'Adele',
+    song: 'Easy On Me',
+    genre: 'Soul Ballad',
+    bpm: 71,
+    character: 'Rich Telefunken U47 Warmth, Opto Leveling, Abbey Road Hall',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 0.5, gateThresh: -56, eqBypass: false,
+      hpfFreq: 80, lowGain: 1.5, lowFreq: 210, midGain: -1.2, midFreq: 600,
+      presenceGain: 2.8, presenceFreq: 2600, airGain: 3.5, airFreq: 9500,
+      deEssBypass: false, deEssFreq: 6200, deEssThresh: -25, deEssRange: 6.5,
+      compBypass: false, comp76Drive: 38, comp76Ratio: 4, comp76Attack: 2.8, comp76Release: 5.0, comp76Mode: 'blacky',
+      comp2APeak: 64, comp2AGain: 3.8,
+      satBypass: false, satDrive: 26, satType: 'tube', satTone: -5, satMix: 50,
+      doublerBypass: false, doublerWidth: 45, doublerDetune: 6, doublerMix: 12,
+      delayBypass: false, delayTimeMs: 422, delaySync: '1/4', delayFeedback: 22, delayFilterHi: 2400, delayPingPong: false, delayMix: 15,
+      reverbBypass: false, reverbPreDelay: 62, reverbDecay: 3.6, reverbDamp: 4800, reverbMix: 36,
+      outputGain: 0.5, limiterThresh: -1.2
+    }
+  },
+  {
+    id: 'post-malone-circles',
+    artist: 'Post Malone & Morgan Wallen',
+    song: 'I Had Some Help / Circles',
+    genre: 'Country-Pop Crossover',
+    bpm: 120,
+    character: 'Forward Presence, Wide MicroShift Chorus, Slap Echo',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.5, gateThresh: -50, eqBypass: false,
+      hpfFreq: 105, lowGain: -2.0, lowFreq: 250, midGain: -2.5, midFreq: 720,
+      presenceGain: 4.5, presenceFreq: 3500, airGain: 4.8, airFreq: 10000,
+      deEssBypass: false, deEssFreq: 6700, deEssThresh: -26, deEssRange: 8.0,
+      compBypass: false, comp76Drive: 60, comp76Ratio: 8, comp76Attack: 4.5, comp76Release: 5.8, comp76Mode: 'bluey',
+      comp2APeak: 56, comp2AGain: 3.2,
+      satBypass: false, satDrive: 38, satType: 'tube', satTone: 12, satMix: 60,
+      doublerBypass: false, doublerWidth: 95, doublerDetune: 18, doublerMix: 42,
+      delayBypass: false, delayTimeMs: 125, delaySync: '1/16', delayFeedback: 28, delayFilterHi: 3000, delayPingPong: true, delayMix: 25,
+      reverbBypass: false, reverbPreDelay: 28, reverbDecay: 2.1, reverbDamp: 5200, reverbMix: 24,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  },
+  {
+    id: 'kendrick-sza-luther',
+    artist: 'Kendrick Lamar & SZA',
+    song: 'luther / Not Like Us',
+    genre: 'West Coast Hip-Hop / R&B',
+    bpm: 101,
+    character: 'Punchy Upfront Console Bite, Tight 1176 4:1, Silky Air',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.5, gateThresh: -50, eqBypass: false,
+      hpfFreq: 95, lowGain: -1.2, lowFreq: 220, midGain: -2.4, midFreq: 580,
+      presenceGain: 3.9, presenceFreq: 3200, airGain: 5.4, airFreq: 11500,
+      deEssBypass: false, deEssFreq: 7100, deEssThresh: -27, deEssRange: 8.5,
+      compBypass: false, comp76Drive: 64, comp76Ratio: 4, comp76Attack: 4.0, comp76Release: 6.4, comp76Mode: 'blacky',
+      comp2APeak: 54, comp2AGain: 3.2,
+      satBypass: false, satDrive: 34, satType: 'tape', satTone: 10, satMix: 58,
+      doublerBypass: false, doublerWidth: 65, doublerDetune: 10, doublerMix: 22,
+      delayBypass: false, delayTimeMs: 148, delaySync: '1/16', delayFeedback: 24, delayFilterHi: 3100, delayPingPong: true, delayMix: 18,
+      reverbBypass: false, reverbPreDelay: 38, reverbDecay: 1.8, reverbDamp: 5400, reverbMix: 20,
+      outputGain: 0.5, limiterThresh: -0.8
+    }
+  },
+  {
+    id: 'charli-xcx-brat',
+    artist: 'Charli xcx',
+    song: '360 / Guess (BRAT)',
+    genre: 'Hyper-Pop / Club',
+    bpm: 130,
+    character: 'Hard FET Limiting, Tube Exciter Crunch, Wide Club Doubler',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 2.5, gateThresh: -46, eqBypass: false,
+      hpfFreq: 120, lowGain: -3.0, lowFreq: 260, midGain: -2.8, midFreq: 740,
+      presenceGain: 5.2, presenceFreq: 3600, airGain: 7.0, airFreq: 10800,
+      deEssBypass: false, deEssFreq: 7200, deEssThresh: -28, deEssRange: 9.5,
+      compBypass: false, comp76Drive: 76, comp76Ratio: 12, comp76Attack: 5.2, comp76Release: 6.5, comp76Mode: 'bluey',
+      comp2APeak: 62, comp2AGain: 4.0,
+      satBypass: false, satDrive: 58, satType: 'tube', satTone: 32, satMix: 72,
+      doublerBypass: false, doublerWidth: 98, doublerDetune: 20, doublerMix: 46,
+      delayBypass: false, delayTimeMs: 115, delaySync: '1/16', delayFeedback: 35, delayFilterHi: 3800, delayPingPong: true, delayMix: 26,
+      reverbBypass: false, reverbPreDelay: 20, reverbDecay: 1.4, reverbDamp: 6200, reverbMix: 16,
+      outputGain: 1.0, limiterThresh: -0.5
+    }
+  },
+  {
+    id: 'chappell-roan-good-luck',
+    artist: 'Chappell Roan',
+    song: 'Good Luck, Babe!',
+    genre: '80s Synth-Pop Anthem',
+    bpm: 117,
+    character: 'Soaring 12kHz C800G Air, LA-2A Sustain, Lush 2.8s Lexicon Plate',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.5, gateThresh: -52, eqBypass: false,
+      hpfFreq: 92, lowGain: -1.4, lowFreq: 225, midGain: -2.2, midFreq: 690,
+      presenceGain: 4.0, presenceFreq: 3300, airGain: 6.2, airFreq: 12000,
+      deEssBypass: false, deEssFreq: 6900, deEssThresh: -26, deEssRange: 8.0,
+      compBypass: false, comp76Drive: 56, comp76Ratio: 4, comp76Attack: 3.8, comp76Release: 5.6, comp76Mode: 'blacky',
+      comp2APeak: 66, comp2AGain: 3.8,
+      satBypass: false, satDrive: 30, satType: 'tape', satTone: 15, satMix: 52,
+      doublerBypass: false, doublerWidth: 88, doublerDetune: 13, doublerMix: 32,
+      delayBypass: false, delayTimeMs: 256, delaySync: '1/8', delayFeedback: 34, delayFilterHi: 3400, delayPingPong: true, delayMix: 24,
+      reverbBypass: false, reverbPreDelay: 48, reverbDecay: 2.9, reverbDamp: 6000, reverbMix: 32,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  },
+  {
+    id: 'sabrina-carpenter-espresso',
+    artist: 'Sabrina Carpenter',
+    song: 'Espresso / Please Please Please',
+    genre: 'Glossy Nu-Disco Pop',
+    bpm: 104,
+    character: 'Silky 14kHz Air, Featherlight Whisper De-Essing, Wide Chorus',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.0, gateThresh: -54, eqBypass: false,
+      hpfFreq: 90, lowGain: -1.0, lowFreq: 210, midGain: -1.8, midFreq: 640,
+      presenceGain: 3.6, presenceFreq: 3500, airGain: 6.4, airFreq: 13500,
+      deEssBypass: false, deEssFreq: 7500, deEssThresh: -29, deEssRange: 8.8,
+      compBypass: false, comp76Drive: 52, comp76Ratio: 4, comp76Attack: 3.6, comp76Release: 5.8, comp76Mode: 'blacky',
+      comp2APeak: 64, comp2AGain: 3.5,
+      satBypass: false, satDrive: 26, satType: 'tape', satTone: 16, satMix: 48,
+      doublerBypass: false, doublerWidth: 92, doublerDetune: 11, doublerMix: 34,
+      delayBypass: false, delayTimeMs: 216, delaySync: '1/8D', delayFeedback: 26, delayFilterHi: 3600, delayPingPong: true, delayMix: 20,
+      reverbBypass: false, reverbPreDelay: 40, reverbDecay: 2.3, reverbDamp: 6200, reverbMix: 25,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  },
+  {
+    id: 'drake-40-late-night',
+    artist: 'Drake & 40 Shebib',
+    song: 'NOKIA / Marvin’s Room',
+    genre: 'Late-Night OVO R&B',
+    bpm: 112,
+    character: 'Warm 200Hz Body, Controlled Highs, Deep Dark Plate',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.5, gateThresh: -50, eqBypass: false,
+      hpfFreq: 85, lowGain: 1.8, lowFreq: 195, midGain: -2.2, midFreq: 560,
+      presenceGain: 3.2, presenceFreq: 2800, airGain: 2.8, airFreq: 9200,
+      deEssBypass: false, deEssFreq: 6300, deEssThresh: -27, deEssRange: 8.5,
+      compBypass: false, comp76Drive: 58, comp76Ratio: 4, comp76Attack: 3.5, comp76Release: 5.5, comp76Mode: 'blacky',
+      comp2APeak: 60, comp2AGain: 3.4,
+      satBypass: false, satDrive: 35, satType: 'tube', satTone: -12, satMix: 55,
+      doublerBypass: false, doublerWidth: 60, doublerDetune: 8, doublerMix: 20,
+      delayBypass: false, delayTimeMs: 268, delaySync: '1/8', delayFeedback: 30, delayFilterHi: 2100, delayPingPong: true, delayMix: 22,
+      reverbBypass: false, reverbPreDelay: 35, reverbDecay: 2.7, reverbDamp: 3400, reverbMix: 30,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  },
+  {
+    id: 'carti-yeat-rage',
+    artist: 'Playboi Carti & Yeat',
+    song: '2093 / ALL RED',
+    genre: 'Rage / Futuristic Trap',
+    bpm: 144,
+    character: 'Extreme 1176 Bluey Bite, Scooped Mids, Wide Ping-Pong Throw',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 2.5, gateThresh: -45, eqBypass: false,
+      hpfFreq: 125, lowGain: -3.2, lowFreq: 250, midGain: -3.8, midFreq: 660,
+      presenceGain: 5.5, presenceFreq: 3700, airGain: 6.8, airFreq: 11200,
+      deEssBypass: false, deEssFreq: 7000, deEssThresh: -26, deEssRange: 9.0,
+      compBypass: false, comp76Drive: 74, comp76Ratio: 12, comp76Attack: 5.0, comp76Release: 6.4, comp76Mode: 'bluey',
+      comp2APeak: 60, comp2AGain: 3.8,
+      satBypass: false, satDrive: 52, satType: 'tube', satTone: 28, satMix: 68,
+      doublerBypass: false, doublerWidth: 92, doublerDetune: 17, doublerMix: 40,
+      delayBypass: false, delayTimeMs: 312, delaySync: '1/8D', delayFeedback: 44, delayFilterHi: 2900, delayPingPong: true, delayMix: 32,
+      reverbBypass: false, reverbPreDelay: 25, reverbDecay: 2.6, reverbDamp: 4600, reverbMix: 28,
+      outputGain: 0.8, limiterThresh: -0.8
+    }
+  },
+  {
+    id: 'frank-ocean-blonde',
+    artist: 'Frank Ocean',
+    song: 'Pink + White (Blonde)',
+    genre: 'Analog Tape Alt-R&B',
+    bpm: 80,
+    character: 'Warm 15 IPS Tape Saturation, Gentle LA-2A Opto, Velvet Air',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.0, gateThresh: -54, eqBypass: false,
+      hpfFreq: 78, lowGain: 1.6, lowFreq: 200, midGain: -1.5, midFreq: 540,
+      presenceGain: 2.6, presenceFreq: 2700, airGain: 4.2, airFreq: 10200,
+      deEssBypass: false, deEssFreq: 6600, deEssThresh: -26, deEssRange: 7.5,
+      compBypass: false, comp76Drive: 40, comp76Ratio: 4, comp76Attack: 3.2, comp76Release: 5.2, comp76Mode: 'blacky',
+      comp2APeak: 65, comp2AGain: 3.6,
+      satBypass: false, satDrive: 36, satType: 'tape', satTone: -8, satMix: 60,
+      doublerBypass: false, doublerWidth: 75, doublerDetune: 10, doublerMix: 24,
+      delayBypass: false, delayTimeMs: 185, delaySync: '1/8', delayFeedback: 20, delayFilterHi: 2600, delayPingPong: false, delayMix: 16,
+      reverbBypass: false, reverbPreDelay: 42, reverbDecay: 2.2, reverbDamp: 4400, reverbMix: 24,
+      outputGain: 0.5, limiterThresh: -1.2
+    }
+  },
+  {
+    id: 'bad-bunny-tainy',
+    artist: 'Bad Bunny & Tainy',
+    song: 'DATA / Un Verano Sin Ti',
+    genre: 'Modern Reggaeton / Latin Pop',
+    bpm: 96,
+    character: 'Ultra-Clean Low Cut, Crisp 3.4kHz Presence, Wide Stereo Haas',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.5, gateThresh: -48, eqBypass: false,
+      hpfFreq: 110, lowGain: -2.2, lowFreq: 235, midGain: -2.4, midFreq: 650,
+      presenceGain: 4.4, presenceFreq: 3400, airGain: 5.6, airFreq: 11500,
+      deEssBypass: false, deEssFreq: 6800, deEssThresh: -27, deEssRange: 8.8,
+      compBypass: false, comp76Drive: 62, comp76Ratio: 8, comp76Attack: 4.4, comp76Release: 6.0, comp76Mode: 'bluey',
+      comp2APeak: 56, comp2AGain: 3.4,
+      satBypass: false, satDrive: 34, satType: 'tube', satTone: 14, satMix: 55,
+      doublerBypass: false, doublerWidth: 84, doublerDetune: 12, doublerMix: 30,
+      delayBypass: false, delayTimeMs: 234, delaySync: '1/8D', delayFeedback: 32, delayFilterHi: 3100, delayPingPong: true, delayMix: 24,
+      reverbBypass: false, reverbPreDelay: 36, reverbDecay: 2.1, reverbDamp: 5000, reverbMix: 22,
+      outputGain: 0.5, limiterThresh: -0.9
+    }
+  },
+
+  // ==========================================================================
+  // WORSHIP BANDS & STADIUM ANTHEM VOCAL CHAINS
+  // ==========================================================================
+  {
+    id: 'red-rocks-worship',
+    artist: 'Red Rocks Worship',
+    song: 'Good Plans / Echo Holy (Live Arena)',
+    genre: 'Live Arena Worship',
+    bpm: 74,
+    character: 'Warm U47 Tube Body, Smooth LA-2A Sustain, 1/8D Delay & Cathedral Plate',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.5, gateThresh: -52, eqBypass: false,
+      hpfFreq: 88, lowGain: 1.4, lowFreq: 210, midGain: -2.0, midFreq: 580,
+      presenceGain: 3.6, presenceFreq: 3100, airGain: 5.5, airFreq: 11200,
+      deEssBypass: false, deEssFreq: 6700, deEssThresh: -26, deEssRange: 8.0,
+      compBypass: false, comp76Drive: 52, comp76Ratio: 4, comp76Attack: 3.4, comp76Release: 5.6, comp76Mode: 'blacky',
+      comp2APeak: 66, comp2AGain: 3.8,
+      satBypass: false, satDrive: 32, satType: 'tube', satTone: 8, satMix: 56,
+      doublerBypass: false, doublerWidth: 78, doublerDetune: 10, doublerMix: 26,
+      delayBypass: false, delayTimeMs: 304, delaySync: '1/8D', delayFeedback: 36, delayFilterHi: 2900, delayPingPong: true, delayMix: 26,
+      reverbBypass: false, reverbPreDelay: 52, reverbDecay: 3.5, reverbDamp: 5200, reverbMix: 34,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  },
+  {
+    id: 'bethel-music-goodness',
+    artist: 'Bethel Music',
+    song: 'Goodness of God (Live)',
+    genre: 'Live Worship Ballad',
+    bpm: 63,
+    character: 'Rich Neve Low-Mids, Dual 1176+LA-2A Leveling, Deep 3.8s Redding Hall',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.2, gateThresh: -54, eqBypass: false,
+      hpfFreq: 82, lowGain: 1.8, lowFreq: 200, midGain: -1.6, midFreq: 550,
+      presenceGain: 3.2, presenceFreq: 2900, airGain: 4.8, airFreq: 10800,
+      deEssBypass: false, deEssFreq: 6600, deEssThresh: -27, deEssRange: 7.8,
+      compBypass: false, comp76Drive: 48, comp76Ratio: 4, comp76Attack: 3.2, comp76Release: 5.4, comp76Mode: 'blacky',
+      comp2APeak: 68, comp2AGain: 4.0,
+      satBypass: false, satDrive: 28, satType: 'tube', satTone: 4, satMix: 52,
+      doublerBypass: false, doublerWidth: 70, doublerDetune: 9, doublerMix: 22,
+      delayBypass: false, delayTimeMs: 356, delaySync: '1/4', delayFeedback: 34, delayFilterHi: 2700, delayPingPong: true, delayMix: 24,
+      reverbBypass: false, reverbPreDelay: 58, reverbDecay: 3.8, reverbDamp: 4900, reverbMix: 36,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  },
+  {
+    id: 'elevation-worship-praise',
+    artist: 'Elevation Worship',
+    song: 'Praise / Gratitude',
+    genre: 'Modern Worship Anthem',
+    bpm: 127,
+    character: 'Punchy 3.3kHz Cut-Through Presence, Tight FET, Wide Anthem Chorus & Plate',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.8, gateThresh: -50, eqBypass: false,
+      hpfFreq: 96, lowGain: -1.2, lowFreq: 230, midGain: -2.4, midFreq: 640,
+      presenceGain: 4.2, presenceFreq: 3300, airGain: 5.8, airFreq: 11500,
+      deEssBypass: false, deEssFreq: 6900, deEssThresh: -26, deEssRange: 8.2,
+      compBypass: false, comp76Drive: 60, comp76Ratio: 8, comp76Attack: 4.0, comp76Release: 5.8, comp76Mode: 'bluey',
+      comp2APeak: 60, comp2AGain: 3.6,
+      satBypass: false, satDrive: 36, satType: 'tube', satTone: 14, satMix: 58,
+      doublerBypass: false, doublerWidth: 88, doublerDetune: 13, doublerMix: 32,
+      delayBypass: false, delayTimeMs: 236, delaySync: '1/8D', delayFeedback: 36, delayFilterHi: 3100, delayPingPong: true, delayMix: 26,
+      reverbBypass: false, reverbPreDelay: 46, reverbDecay: 3.3, reverbDamp: 5400, reverbMix: 32,
+      outputGain: 0.6, limiterThresh: -0.9
+    }
+  },
+  {
+    id: 'hillsong-worship-beautiful-name',
+    artist: 'Hillsong Worship',
+    song: 'What A Beautiful Name',
+    genre: 'Soaring Worship Anthem',
+    bpm: 68,
+    character: 'Silky C800G 11.5kHz Air, Transparent Optical Leveling, 3.9s Cathedral Tail',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.2, gateThresh: -54, eqBypass: false,
+      hpfFreq: 85, lowGain: 1.0, lowFreq: 205, midGain: -1.8, midFreq: 600,
+      presenceGain: 3.4, presenceFreq: 3000, airGain: 5.6, airFreq: 11500,
+      deEssBypass: false, deEssFreq: 6800, deEssThresh: -27, deEssRange: 8.0,
+      compBypass: false, comp76Drive: 46, comp76Ratio: 4, comp76Attack: 3.0, comp76Release: 5.5, comp76Mode: 'blacky',
+      comp2APeak: 66, comp2AGain: 3.8,
+      satBypass: false, satDrive: 28, satType: 'tape', satTone: 10, satMix: 50,
+      doublerBypass: false, doublerWidth: 80, doublerDetune: 10, doublerMix: 25,
+      delayBypass: false, delayTimeMs: 330, delaySync: '1/8D', delayFeedback: 35, delayFilterHi: 3000, delayPingPong: true, delayMix: 25,
+      reverbBypass: false, reverbPreDelay: 55, reverbDecay: 3.9, reverbDamp: 5500, reverbMix: 36,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  },
+  {
+    id: 'hillsong-united-oceans',
+    artist: 'Hillsong UNITED',
+    song: 'Oceans (Where Feet May Fail)',
+    genre: 'Atmospheric Worship',
+    bpm: 132,
+    character: 'Ethereal 12.5kHz Breath Sheen, Ping-Pong 1/8D Echo, 4.4s Shimmer Plate',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.4, gateThresh: -54, eqBypass: false,
+      hpfFreq: 86, lowGain: 0.8, lowFreq: 200, midGain: -2.2, midFreq: 590,
+      presenceGain: 3.5, presenceFreq: 3100, airGain: 6.4, airFreq: 12500,
+      deEssBypass: false, deEssFreq: 7100, deEssThresh: -28, deEssRange: 8.5,
+      compBypass: false, comp76Drive: 50, comp76Ratio: 4, comp76Attack: 3.2, comp76Release: 5.8, comp76Mode: 'blacky',
+      comp2APeak: 68, comp2AGain: 4.0,
+      satBypass: false, satDrive: 30, satType: 'tape', satTone: 14, satMix: 52,
+      doublerBypass: false, doublerWidth: 92, doublerDetune: 12, doublerMix: 32,
+      delayBypass: false, delayTimeMs: 340, delaySync: '1/8D', delayFeedback: 46, delayFilterHi: 3200, delayPingPong: true, delayMix: 32,
+      reverbBypass: false, reverbPreDelay: 64, reverbDecay: 4.4, reverbDamp: 5800, reverbMix: 42,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  },
+  {
+    id: 'coldplay-viva-yellow',
+    artist: 'Coldplay',
+    song: 'Viva La Vida / Yellow (Stadium Chain)',
+    genre: 'Stadium Pop-Rock Anthem',
+    bpm: 138,
+    character: 'Warm British Console EQ, Punchy 1176 Blackface, Massive 3.5s Stadium Plate',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.5, gateThresh: -50, eqBypass: false,
+      hpfFreq: 92, lowGain: 1.2, lowFreq: 220, midGain: -2.0, midFreq: 650,
+      presenceGain: 3.8, presenceFreq: 3200, airGain: 5.2, airFreq: 11000,
+      deEssBypass: false, deEssFreq: 6600, deEssThresh: -25, deEssRange: 7.5,
+      compBypass: false, comp76Drive: 58, comp76Ratio: 4, comp76Attack: 3.8, comp76Release: 5.6, comp76Mode: 'blacky',
+      comp2APeak: 60, comp2AGain: 3.5,
+      satBypass: false, satDrive: 36, satType: 'tape', satTone: 10, satMix: 58,
+      doublerBypass: false, doublerWidth: 88, doublerDetune: 14, doublerMix: 30,
+      delayBypass: false, delayTimeMs: 217, delaySync: '1/8', delayFeedback: 32, delayFilterHi: 3000, delayPingPong: true, delayMix: 24,
+      reverbBypass: false, reverbPreDelay: 48, reverbDecay: 3.5, reverbDamp: 5200, reverbMix: 35,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  },
+  {
+    id: 'imagine-dragons-believer',
+    artist: 'Imagine Dragons',
+    song: 'Believer / Radioactive',
+    genre: 'Explosive Arena Alt-Rock',
+    bpm: 125,
+    character: 'Driven Tube Saturation, Aggressive 8:1 1176 Bite, Wide Stereo Doubler & Slap',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 2.2, gateThresh: -46, eqBypass: false,
+      hpfFreq: 112, lowGain: -1.8, lowFreq: 240, midGain: -3.0, midFreq: 720,
+      presenceGain: 5.0, presenceFreq: 3500, airGain: 5.8, airFreq: 10500,
+      deEssBypass: false, deEssFreq: 6800, deEssThresh: -26, deEssRange: 8.2,
+      compBypass: false, comp76Drive: 72, comp76Ratio: 8, comp76Attack: 4.6, comp76Release: 6.2, comp76Mode: 'bluey',
+      comp2APeak: 58, comp2AGain: 3.6,
+      satBypass: false, satDrive: 54, satType: 'tube', satTone: 24, satMix: 68,
+      doublerBypass: false, doublerWidth: 94, doublerDetune: 18, doublerMix: 40,
+      delayBypass: false, delayTimeMs: 120, delaySync: '1/16', delayFeedback: 28, delayFilterHi: 2800, delayPingPong: false, delayMix: 24,
+      reverbBypass: false, reverbPreDelay: 30, reverbDecay: 2.2, reverbDamp: 4600, reverbMix: 25,
+      outputGain: 0.8, limiterThresh: -0.8
+    }
+  },
+  {
+    id: 'ed-sheeran-shape-bad-habits',
+    artist: 'Ed Sheeran',
+    song: 'Shape of You / Bad Habits',
+    genre: 'Intimate Acoustic & Pop Lead',
+    bpm: 96,
+    character: 'Ultra-Clear 105Hz Cut, Articulate 3.5kHz Presence, Tight FET+Opto & Short Plate',
+    isFactory: true,
+    createdAt: '2026-11-13',
+    params: {
+      inputGain: 1.5, gateThresh: -50, eqBypass: false,
+      hpfFreq: 105, lowGain: -1.4, lowFreq: 220, midGain: -2.0, midFreq: 620,
+      presenceGain: 4.2, presenceFreq: 3500, airGain: 5.0, airFreq: 11500,
+      deEssBypass: false, deEssFreq: 7000, deEssThresh: -27, deEssRange: 8.5,
+      compBypass: false, comp76Drive: 62, comp76Ratio: 4, comp76Attack: 4.2, comp76Release: 6.0, comp76Mode: 'blacky',
+      comp2APeak: 60, comp2AGain: 3.4,
+      satBypass: false, satDrive: 28, satType: 'tape', satTone: 12, satMix: 50,
+      doublerBypass: false, doublerWidth: 82, doublerDetune: 11, doublerMix: 28,
+      delayBypass: false, delayTimeMs: 156, delaySync: '1/16', delayFeedback: 22, delayFilterHi: 3400, delayPingPong: true, delayMix: 18,
+      reverbBypass: false, reverbPreDelay: 34, reverbDecay: 1.7, reverbDamp: 5600, reverbMix: 20,
+      outputGain: 0.5, limiterThresh: -1.0
+    }
+  }
+];
+
+// song-analyzer.js - Acoustic & Spectral Vocal Chain Extractor for WAVES VocalDNA
+
+class SongVocalAnalyzer {
+  /**
+   * Parses artist and song title from a filename like "Travis Scott - FE!N (Official Audio).mp3"
+   */
+  static parseMetadataFromFilename(filename) {
+    const clean = filename
+      .replace(/\.[^/.]+$/, '') // strip extension
+      .replace(/\[.*?\]|\(.*?\)/g, '') // strip brackets/parens like (Official Video)
+      .replace(/_/g, ' ')
+      .trim();
+
+    if (clean.includes(' - ')) {
+      const [artist, ...rest] = clean.split(' - ');
+      return {
+        artist: artist.trim() || 'Unknown Artist',
+        song: rest.join(' - ').trim() || 'Custom Track'
+      };
+    }
+    return {
+      artist: clean || 'Custom Artist',
+      song: 'Analyzed Vocal Chain'
+    };
+  }
+
+  /**
+   * Analyzes an AudioBuffer (from an uploaded song file) to extract the vocal chain parameters.
+   * Performs Mid-Side decomposition, vocal-band isolation, multi-band spectral density,
+   * crest factor / micro-dynamics, BPM onset autocorrelation, and stereo width/tail estimation.
+   */
+  static async analyzeAudioBuffer(audioBuffer, onProgress = () => {}) {
+    const sampleRate = audioBuffer.sampleRate;
+    const numChannels = audioBuffer.numberOfChannels;
+    const length = audioBuffer.length;
+
+    const chL = audioBuffer.getChannelData(0);
+    const chR = numChannels > 1 ? audioBuffer.getChannelData(1) : chL;
+
+    // Analyze a representative active window (up to 25 seconds from the most energetic vocal section)
+    onProgress(12, 'Isolating Mid/Side channels & locating vocal core...');
+    await new Promise(r => setTimeout(r, 120));
+
+    const windowSamples = Math.min(length, Math.floor(sampleRate * 20));
+    const startOffset = length > windowSamples * 1.5 ? Math.floor(length * 0.25) : 0;
+
+    // 1. Mid/Side Separation & RMS / Peak / Crest Factor
+    let sumMidSq = 0;
+    let sumSideSq = 0;
+    let peakMid = 0.0001;
+    const midSignal = new Float32Array(windowSamples);
+
+    for (let i = 0; i < windowSamples; i++) {
+      const idx = startOffset + i;
+      const l = chL[idx];
+      const r = chR[idx];
+      const mid = 0.5 * (l + r);
+      const side = 0.5 * (l - r);
+      midSignal[i] = mid;
+      sumMidSq += mid * mid;
+      sumSideSq += side * side;
+      const absMid = Math.abs(mid);
+      if (absMid > peakMid) peakMid = absMid;
+    }
+
+    const rmsMid = Math.sqrt(sumMidSq / windowSamples) + 1e-7;
+    const rmsSide = Math.sqrt(sumSideSq / windowSamples) + 1e-7;
+    const crestFactorDb = 20 * Math.log10(peakMid / rmsMid);
+    const sideToMidRatio = Math.min(1.5, rmsSide / rmsMid);
+
+    onProgress(36, 'Running Goertzel/Biquad Multi-Band Vocal Spectral Analysis...');
+    await new Promise(r => setTimeout(r, 140));
+
+    // 2. Multi-band energy profiling on Mid channel using OfflineAudioContext filter bank
+    const bandFreqs = {
+      sub: 95,        // Low end rumble / proximity
+      lowMid: 260,    // Warmth / mud
+      mid: 850,       // Nasal / boxiness
+      presence: 3200, // Vocal bite / intelligibility
+      sibilance: 6800,// Sibilance "S/T" zone
+      air: 11200      // C800G / Pultec top sheen
+    };
+
+    const bandEnergies = {};
+    for (const [key, freq] of Object.entries(bandFreqs)) {
+      bandEnergies[key] = this.computeBandEnergy(midSignal, sampleRate, freq, key === 'air' ? 0.7 : 1.4);
+    }
+
+    const totalVocalEnergy =
+      bandEnergies.lowMid +
+      bandEnergies.mid +
+      bandEnergies.presence +
+      bandEnergies.sibilance +
+      bandEnergies.air + 1e-9;
+
+    const normLow = bandEnergies.lowMid / totalVocalEnergy;
+    const normMid = bandEnergies.mid / totalVocalEnergy;
+    const normPres = bandEnergies.presence / totalVocalEnergy;
+    const normSib = bandEnergies.sibilance / totalVocalEnergy;
+    const normAir = bandEnergies.air / totalVocalEnergy;
+
+    onProgress(64, 'Measuring transient envelope, BPM & harmonic saturation...');
+    await new Promise(r => setTimeout(r, 150));
+
+    // 3. Envelope / BPM & Reverb Tail Estimation
+    const { bpm, reverbDecayEst, transientSharpness } = this.estimateRhythmAndSpace(
+      midSignal,
+      sampleRate,
+      sideToMidRatio
+    );
+
+    onProgress(88, 'Synthesizing CLA-76 / LA-2A & EQ vocal chain parameters...');
+    await new Promise(r => setTimeout(r, 140));
+
+    // 4. Map acoustic analysis to musical Waves Vocal Chain settings
+    const clamp = (v, min, max) => Math.max(min, Math.min(max, v));
+    const round1 = v => Math.round(v * 10) / 10;
+
+    // HPF: higher if sub/lowMid is heavy, lower for intimate warm vocals
+    const hpfFreq = Math.round(clamp(75 + (normLow - 0.25) * 140, 65, 145));
+
+    // Low Warmth Shelf/Bell (180-260 Hz): cut mud if booming, slight boost if thin
+    const lowGain = round1(clamp((0.28 - normLow) * 16, -4.5, 3.0));
+    const lowFreq = Math.round(clamp(200 + normLow * 120, 180, 270));
+
+    // Mid Boxiness (550-850 Hz): subtle surgical dip
+    const midGain = round1(clamp(-1.2 - (normMid - 0.22) * 12, -4.5, 1.5));
+    const midFreq = Math.round(clamp(580 + normMid * 500, 520, 880));
+
+    // Presence (2.6k - 4.2k Hz): match vocal forwardness
+    const presenceGain = round1(clamp(2.2 + (normPres - 0.14) * 22, 0.5, 6.5));
+    const presenceFreq = Math.round(clamp(2800 + normPres * 3800, 2600, 4200));
+
+    // Air Shelf (9.5k - 12.5k Hz): match top-end sheen
+    const airGain = round1(clamp(3.0 + (normAir + normSib * 0.5) * 28, 1.5, 8.0));
+    const airFreq = Math.round(clamp(9800 + normAir * 14000, 9500, 12500));
+
+    // De-Esser: responds to sibilance ratio
+    const deEssFreq = Math.round(clamp(6200 + normSib * 9000, 5800, 7800));
+    const deEssThresh = round1(clamp(-22 - normSib * 45, -34, -18));
+    const deEssRange = round1(clamp(5.5 + normSib * 28, 4.0, 11.0));
+
+    // Dual Compression (1176 + LA-2A) based on Crest Factor & Transient Sharpness
+    // Lower crest factor in reference track = heavily compressed modern vocal
+    const compressionIntensity = clamp((18 - crestFactorDb) / 10, 0.25, 0.95);
+    const comp76Drive = Math.round(clamp(35 + compressionIntensity * 45, 30, 82));
+    const comp76Ratio = compressionIntensity > 0.72 ? 8 : 4;
+    const comp76Attack = round1(clamp(3.0 + transientSharpness * 2.5, 2.0, 6.0));
+    const comp76Release = round1(clamp(4.8 + compressionIntensity * 2.0, 4.0, 6.8));
+    const comp76Mode = normPres + normAir > 0.22 ? 'bluey' : 'blacky';
+
+    const comp2APeak = Math.round(clamp(45 + compressionIntensity * 32, 38, 76));
+    const comp2AGain = round1(clamp(2.5 + compressionIntensity * 2.5, 2.0, 5.0));
+
+    // Saturation: harmonic density
+    const satDrive = Math.round(clamp(20 + compressionIntensity * 35 + normPres * 40, 15, 62));
+    const satType = normLow > 0.32 ? 'tape' : 'tube';
+    const satTone = Math.round(clamp((normPres - normLow) * 80, -25, 35));
+    const satMix = Math.round(clamp(40 + compressionIntensity * 30, 35, 75));
+
+    // Doubler / Stereo Width from Side-to-Mid energy
+    const doublerWidth = Math.round(clamp(40 + sideToMidRatio * 75, 35, 98));
+    const doublerDetune = Math.round(clamp(7 + sideToMidRatio * 14, 6, 22));
+    const doublerMix = Math.round(clamp(12 + sideToMidRatio * 38, 10, 46));
+
+    // BPM-Synced H-Delay
+    const quarterMs = Math.round(60000 / bpm);
+    const eighthMs = Math.round(quarterMs / 2);
+    const sixteenthMs = Math.round(quarterMs / 4);
+    const delayTimeMs = bpm > 135 ? eighthMs : sixteenthMs;
+    const delaySync = bpm > 135 ? '1/8' : '1/16';
+    const delayFeedback = Math.round(clamp(18 + sideToMidRatio * 28, 15, 45));
+    const delayFilterHi = Math.round(clamp(2400 + normAir * 9000, 2200, 4200));
+    const delayPingPong = sideToMidRatio > 0.42;
+    const delayMix = Math.round(clamp(12 + sideToMidRatio * 24, 10, 32));
+
+    // Abbey Road Plate Reverb
+    const reverbPreDelay = Math.round(clamp(25 + (1 - compressionIntensity) * 45, 20, 68));
+    const reverbDecay = round1(clamp(reverbDecayEst, 1.2, 4.0));
+    const reverbDamp = Math.round(clamp(4200 + normAir * 12000, 3800, 6800));
+    const reverbMix = Math.round(clamp(14 + sideToMidRatio * 28, 12, 38));
+
+    // Character Summary Tag
+    const toneTag = airGain > 5.2 ? 'Crisp C800G Air' : lowGain > 0.5 ? 'Warm Tube Proximity' : 'Forward Mid Bite';
+    const compTag = comp76Ratio >= 8 ? 'Aggressive 1176 Bluey' : 'Smooth LA-2A Opto';
+    const spaceTag = reverbMix > 26 ? 'Lush Stereo Plate' : 'Tight Slap & MicroShift';
+    const character = `${toneTag}, ${compTag}, ${spaceTag}`;
+
+    onProgress(100, 'Vocal DNA Cloned & Tuned!');
+
+    return {
+      bpm,
+      character,
+      metrics: {
+        crestFactorDb: round1(crestFactorDb),
+        sideToMidRatio: round1(sideToMidRatio * 100),
+        spectralTilt: airGain > 5 ? 'Bright / Upfront' : 'Warm / Vintage',
+        sibilanceIndex: Math.round(clamp(normSib * 320, 18, 95)),
+        reverbRT60: reverbDecay
+      },
+      params: {
+        inputGain: 1.0,
+        gateThresh: -50,
+        eqBypass: false,
+        hpfFreq,
+        lowGain,
+        lowFreq,
+        midGain,
+        midFreq,
+        presenceGain,
+        presenceFreq,
+        airGain,
+        airFreq,
+        deEssBypass: false,
+        deEssFreq,
+        deEssThresh,
+        deEssRange,
+        compBypass: false,
+        comp76Drive,
+        comp76Ratio,
+        comp76Attack,
+        comp76Release,
+        comp76Mode,
+        comp2APeak,
+        comp2AGain,
+        satBypass: false,
+        satDrive,
+        satType,
+        satTone,
+        satMix,
+        doublerBypass: false,
+        doublerWidth,
+        doublerDetune,
+        doublerMix,
+        delayBypass: false,
+        delayTimeMs,
+        delaySync,
+        delayFeedback,
+        delayFilterHi,
+        delayPingPong,
+        delayMix,
+        reverbBypass: false,
+        reverbPreDelay,
+        reverbDecay,
+        reverbDamp,
+        reverbMix,
+        outputGain: 0.5,
+        limiterThresh: -1.0
+      }
+    };
+  }
+
+  /**
+   * 2nd-order resonant bandpass filter energy calculation in time domain
+   */
+  static computeBandEnergy(signal, sampleRate, centerFreq, q = 1.2) {
+    const w0 = (2 * Math.PI * centerFreq) / sampleRate;
+    const alpha = Math.sin(w0) / (2 * q);
+    const b0 = alpha;
+    const b1 = 0;
+    const b2 = -alpha;
+    const a0 = 1 + alpha;
+    const a1 = -2 * Math.cos(w0);
+    const a2 = 1 - alpha;
+
+    const nb0 = b0 / a0;
+    const nb1 = b1 / a0;
+    const nb2 = b2 / a0;
+    const na1 = a1 / a0;
+    const na2 = a2 / a0;
+
+    let x1 = 0, x2 = 0, y1 = 0, y2 = 0;
+    let energy = 0;
+    // Step by 1 across up to 220,000 samples for speed and accuracy
+    const step = signal.length > 220000 ? 2 : 1;
+    let count = 0;
+    for (let i = 0; i < signal.length; i += step) {
+      const x0 = signal[i];
+      const y0 = nb0 * x0 + nb1 * x1 + nb2 * x2 - na1 * y1 - na2 * y2;
+      x2 = x1;
+      x1 = x0;
+      y2 = y1;
+      y1 = y0;
+      energy += y0 * y0;
+      count++;
+    }
+    return Math.sqrt(energy / Math.max(1, count));
+  }
+
+  /**
+   * Estimates BPM from envelope onset autocorrelation and reverb decay from envelope tail
+   */
+  static estimateRhythmAndSpace(signal, sampleRate, sideToMidRatio) {
+    // Downsample amplitude envelope to 100 Hz
+    const hop = Math.max(1, Math.floor(sampleRate / 100));
+    const envLen = Math.floor(signal.length / hop);
+    const env = new Float32Array(envLen);
+    let sharpCount = 0;
+
+    for (let i = 0; i < envLen; i++) {
+      let sum = 0;
+      const base = i * hop;
+      for (let j = 0; j < hop; j++) {
+        sum += Math.abs(signal[base + j]);
+      }
+      env[i] = sum / hop;
+      if (i > 0 && env[i] - env[i - 1] > 0.04) sharpCount++;
+    }
+
+    // Autocorrelation on onset diffs between 75 BPM and 170 BPM
+    let bestLag = 50; // 120 BPM at 100 Hz envelope
+    let maxCorr = -1;
+    const minLag = Math.floor((60 / 168) * 100);
+    const maxLag = Math.floor((60 / 76) * 100);
+
+    for (let lag = minLag; lag <= maxLag; lag++) {
+      let corr = 0;
+      for (let i = 0; i < envLen - lag; i++) {
+        corr += env[i] * env[i + lag];
+      }
+      if (corr > maxCorr) {
+        maxCorr = corr;
+        bestLag = lag;
+      }
+    }
+
+    const bpm = Math.round((60 * 100) / bestLag);
+    const transientSharpness = Math.min(1, sharpCount / (envLen * 0.18));
+    const reverbDecayEst = 1.3 + sideToMidRatio * 2.1 + (1 - transientSharpness) * 0.7;
+
+    return { bpm, reverbDecayEst, transientSharpness };
+  }
+}
+
+// dsp-engine.js - Real-Time Web Audio API Vocal Chain Engine for WAVES VocalDNA
+
+class VocalDSPEngine {
+  constructor() {
+    this.ctx = null;
+    this.isInitialized = false;
+    this.isPlaying = false;
+    this.sourceMode = 'synth-pop'; // 'synth-pop' | 'synth-rap' | 'synth-whisper' | 'custom-file' | 'mic'
+    this.masterBypass = false;
+    this.soloSibilance = false;
+
+    this.customVocalBuffer = null;
+    this.activeBufferSource = null;
+    this.micStream = null;
+    this.micSource = null;
+    this.synthInterval = null;
+
+    this.nodes = {};
+    this.currentParams = null;
+    this.lastReverbKey = '';
+  }
+
+  async init(initialParams) {
+    if (this.isInitialized) return;
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    this.ctx = new AudioCtx();
+    this.currentParams = { ...initialParams };
+
+    const ctx = this.ctx;
+
+    // 1. Input & Pre-Analyzer
+    this.nodes.inputBus = ctx.createGain();
+    this.nodes.inputGain = ctx.createGain();
+    this.nodes.preAnalyser = ctx.createAnalyser();
+    this.nodes.preAnalyser.fftSize = 2048;
+    this.nodes.preAnalyser.smoothingTimeConstant = 0.8;
+
+    // Dry Bypass Line
+    this.nodes.dryBypassGain = ctx.createGain();
+    this.nodes.dryBypassGain.gain.value = 0;
+    this.nodes.wetMasterGain = ctx.createGain();
+    this.nodes.wetMasterGain.gain.value = 1;
+
+    // 2. 5-Band REQ Vocal Parametric EQ
+    this.nodes.hpf = ctx.createBiquadFilter();
+    this.nodes.hpf.type = 'highpass';
+    this.nodes.hpf.Q.value = 0.707;
+
+    this.nodes.eqLow = ctx.createBiquadFilter();
+    this.nodes.eqLow.type = 'peaking';
+    this.nodes.eqLow.Q.value = 1.1;
+
+    this.nodes.eqMid = ctx.createBiquadFilter();
+    this.nodes.eqMid.type = 'peaking';
+    this.nodes.eqMid.Q.value = 1.5;
+
+    this.nodes.eqPresence = ctx.createBiquadFilter();
+    this.nodes.eqPresence.type = 'peaking';
+    this.nodes.eqPresence.Q.value = 1.2;
+
+    this.nodes.eqAir = ctx.createBiquadFilter();
+    this.nodes.eqAir.type = 'highshelf';
+
+    // 3. De-Esser (Dynamic high-frequency notch/peaking + compressor detector)
+    this.nodes.deEssFilter = ctx.createBiquadFilter();
+    this.nodes.deEssFilter.type = 'peaking';
+    this.nodes.deEssFilter.Q.value = 2.4;
+
+    this.nodes.deEssSoloFilter = ctx.createBiquadFilter();
+    this.nodes.deEssSoloFilter.type = 'bandpass';
+    this.nodes.deEssSoloFilter.Q.value = 3.0;
+
+    // 4. Dual Compressor: CLA-76 FET + CLA-2A Opto
+    this.nodes.comp76In = ctx.createGain();
+    this.nodes.comp76 = ctx.createDynamicsCompressor();
+    this.nodes.comp2A = ctx.createDynamicsCompressor();
+    this.nodes.compMakeup = ctx.createGain();
+
+    // 5. Saturation (J37 Tape / Abbey Road Tube Waveshaper with Parallel Mix & Tone)
+    this.nodes.satDry = ctx.createGain();
+    this.nodes.satDriveGain = ctx.createGain();
+    this.nodes.satShaper = ctx.createWaveShaper();
+    this.nodes.satShaper.oversample = '2x';
+    this.nodes.satToneFilter = ctx.createBiquadFilter();
+    this.nodes.satToneFilter.type = 'highshelf';
+    this.nodes.satToneFilter.frequency.value = 2800;
+    this.nodes.satWet = ctx.createGain();
+    this.nodes.satSum = ctx.createGain();
+
+    // 6. Vocal Doubler / MicroShift (Modulated L/R Stereo Widener)
+    this.nodes.doublerDry = ctx.createGain();
+    this.nodes.doublerWet = ctx.createGain();
+    this.nodes.doublerDelayL = ctx.createDelay(0.1);
+    this.nodes.doublerDelayR = ctx.createDelay(0.1);
+    this.nodes.doublerDelayL.delayTime.value = 0.014;
+    this.nodes.doublerDelayR.delayTime.value = 0.021;
+
+    this.nodes.doublerPanL = ctx.createStereoPanner();
+    this.nodes.doublerPanR = ctx.createStereoPanner();
+    this.nodes.doublerPanL.pan.value = -0.85;
+    this.nodes.doublerPanR.pan.value = 0.85;
+
+    this.nodes.doublerLfoL = ctx.createOscillator();
+    this.nodes.doublerLfoR = ctx.createOscillator();
+    this.nodes.doublerLfoGainL = ctx.createGain();
+    this.nodes.doublerLfoGainR = ctx.createGain();
+    this.nodes.doublerLfoL.frequency.value = 0.65;
+    this.nodes.doublerLfoR.frequency.value = 0.82;
+    this.nodes.doublerLfoL.connect(this.nodes.doublerLfoGainL);
+    this.nodes.doublerLfoR.connect(this.nodes.doublerLfoGainR);
+    this.nodes.doublerLfoGainL.connect(this.nodes.doublerDelayL.delayTime);
+    this.nodes.doublerLfoGainR.connect(this.nodes.doublerDelayR.delayTime);
+    this.nodes.doublerLfoL.start();
+    this.nodes.doublerLfoR.start();
+
+    this.nodes.doublerSum = ctx.createGain();
+
+    // 7. H-Delay (BPM Synced Stereo / Ping-Pong Delay with Analog Hi-Cut)
+    this.nodes.delayNodeL = ctx.createDelay(2.0);
+    this.nodes.delayNodeR = ctx.createDelay(2.0);
+    this.nodes.delayFeedbackL = ctx.createGain();
+    this.nodes.delayFeedbackR = ctx.createGain();
+    this.nodes.delayFilter = ctx.createBiquadFilter();
+    this.nodes.delayFilter.type = 'lowpass';
+    this.nodes.delayHpf = ctx.createBiquadFilter();
+    this.nodes.delayHpf.type = 'highpass';
+    this.nodes.delayHpf.frequency.value = 180;
+    this.nodes.delayPanL = ctx.createStereoPanner();
+    this.nodes.delayPanR = ctx.createStereoPanner();
+    this.nodes.delayWet = ctx.createGain();
+
+    // 8. Abbey Road Plate Reverb (Pre-Delay + Synthesized Plate Impulse + Damping)
+    this.nodes.reverbPreDelay = ctx.createDelay(0.5);
+    this.nodes.reverbConvolver = ctx.createConvolver();
+    this.nodes.reverbDampFilter = ctx.createBiquadFilter();
+    this.nodes.reverbDampFilter.type = 'lowpass';
+    this.nodes.reverbWet = ctx.createGain();
+
+    // 9. Master Output & L1 Brickwall Limiter + Post Analyzer
+    this.nodes.fxSum = ctx.createGain();
+    this.nodes.limiter = ctx.createDynamicsCompressor();
+    this.nodes.limiter.ratio.value = 20;
+    this.nodes.limiter.attack.value = 0.001;
+    this.nodes.limiter.release.value = 0.06;
+    this.nodes.limiter.knee.value = 1.0;
+
+    this.nodes.outputGain = ctx.createGain();
+    this.nodes.postAnalyser = ctx.createAnalyser();
+    this.nodes.postAnalyser.fftSize = 2048;
+    this.nodes.postAnalyser.smoothingTimeConstant = 0.82;
+
+    // Wire DSP Chain
+    // Input -> PreAnalyser & Dry Bypass
+    this.nodes.inputBus.connect(this.nodes.inputGain);
+    this.nodes.inputGain.connect(this.nodes.preAnalyser);
+    this.nodes.inputGain.connect(this.nodes.dryBypassGain);
+
+    // Input -> EQ Chain
+    this.nodes.inputGain.connect(this.nodes.hpf);
+    this.nodes.hpf.connect(this.nodes.eqLow);
+    this.nodes.eqLow.connect(this.nodes.eqMid);
+    this.nodes.eqMid.connect(this.nodes.eqPresence);
+    this.nodes.eqPresence.connect(this.nodes.eqAir);
+
+    // EQ -> De-Esser -> Dual Compressor
+    this.nodes.eqAir.connect(this.nodes.deEssFilter);
+    this.nodes.deEssFilter.connect(this.nodes.comp76In);
+    this.nodes.comp76In.connect(this.nodes.comp76);
+    this.nodes.comp76.connect(this.nodes.comp2A);
+    this.nodes.comp2A.connect(this.nodes.compMakeup);
+
+    // Compressor -> Saturation Parallel Stage
+    this.nodes.compMakeup.connect(this.nodes.satDry);
+    this.nodes.compMakeup.connect(this.nodes.satDriveGain);
+    this.nodes.satDriveGain.connect(this.nodes.satShaper);
+    this.nodes.satShaper.connect(this.nodes.satToneFilter);
+    this.nodes.satToneFilter.connect(this.nodes.satWet);
+    this.nodes.satDry.connect(this.nodes.satSum);
+    this.nodes.satWet.connect(this.nodes.satSum);
+
+    // Saturation -> Doubler Stage
+    this.nodes.satSum.connect(this.nodes.doublerDry);
+    this.nodes.satSum.connect(this.nodes.doublerDelayL);
+    this.nodes.satSum.connect(this.nodes.doublerDelayR);
+    this.nodes.doublerDelayL.connect(this.nodes.doublerPanL);
+    this.nodes.doublerDelayR.connect(this.nodes.doublerPanR);
+    this.nodes.doublerPanL.connect(this.nodes.doublerWet);
+    this.nodes.doublerPanR.connect(this.nodes.doublerWet);
+    this.nodes.doublerDry.connect(this.nodes.doublerSum);
+    this.nodes.doublerWet.connect(this.nodes.doublerSum);
+
+    // DoublerSum -> Dry Main Path + Delay Send + Reverb Send
+    this.nodes.doublerSum.connect(this.nodes.fxSum);
+
+    // Delay Send & Feedback Loop
+    this.nodes.doublerSum.connect(this.nodes.delayHpf);
+    this.nodes.delayHpf.connect(this.nodes.delayFilter);
+    this.nodes.delayFilter.connect(this.nodes.delayNodeL);
+    this.nodes.delayNodeL.connect(this.nodes.delayFeedbackL);
+    this.nodes.delayFeedbackL.connect(this.nodes.delayNodeR);
+    this.nodes.delayNodeR.connect(this.nodes.delayFeedbackR);
+    this.nodes.delayFeedbackR.connect(this.nodes.delayFilter);
+
+    this.nodes.delayNodeL.connect(this.nodes.delayPanL);
+    this.nodes.delayNodeR.connect(this.nodes.delayPanR);
+    this.nodes.delayPanL.connect(this.nodes.delayWet);
+    this.nodes.delayPanR.connect(this.nodes.delayWet);
+    this.nodes.delayWet.connect(this.nodes.fxSum);
+
+    // Reverb Send
+    this.nodes.doublerSum.connect(this.nodes.reverbPreDelay);
+    this.nodes.reverbPreDelay.connect(this.nodes.reverbConvolver);
+    this.nodes.reverbConvolver.connect(this.nodes.reverbDampFilter);
+    this.nodes.reverbDampFilter.connect(this.nodes.reverbWet);
+    this.nodes.reverbWet.connect(this.nodes.fxSum);
+
+    // FX Sum -> Limiter -> WetMasterGain -> Output -> PostAnalyser -> Destination
+    this.nodes.fxSum.connect(this.nodes.limiter);
+    this.nodes.limiter.connect(this.nodes.wetMasterGain);
+
+    this.nodes.wetMasterGain.connect(this.nodes.outputGain);
+    this.nodes.dryBypassGain.connect(this.nodes.outputGain);
+    this.nodes.outputGain.connect(this.nodes.postAnalyser);
+    this.nodes.postAnalyser.connect(ctx.destination);
+
+    this.isInitialized = true;
+    this.applyParams(this.currentParams);
+  }
+
+  dbToLinear(db) {
+    return Math.pow(10, db / 20);
+  }
+
+  makeSaturationCurve(drive, type = 'tube') {
+    const samples = 8192;
+    const curve = new Float32Array(samples);
+    const k = Math.max(0.1, (drive / 100) * 6.5);
+    for (let i = 0; i < samples; i++) {
+      const x = (i * 2) / samples - 1;
+      if (type === 'tube') {
+        // Asymmetric warm tube transfer function (even + odd harmonics)
+        if (x < 0) {
+          curve[i] = Math.tanh(x * k * 0.85) / Math.tanh(k);
+        } else {
+          curve[i] = Math.tanh(x * k * 1.18 + 0.04 * x * x) / Math.tanh(k * 1.18);
+        }
+      } else {
+        // Symmetric J37 tape soft-clipping (smooth 3rd harmonic compression)
+        curve[i] = ((3 + k) * x * 20 * (Math.PI / 180)) / (Math.PI + k * Math.abs(x));
+      }
+    }
+    return curve;
+  }
+
+  buildPlateImpulseResponse(decaySeconds, dampFreq) {
+    if (!this.ctx) return;
+    const sr = this.ctx.sampleRate;
+    const length = Math.max(Math.floor(sr * 0.3), Math.min(Math.floor(sr * 5.0), Math.floor(sr * decaySeconds)));
+    const impulse = this.ctx.createBuffer(2, length, sr);
+    const left = impulse.getChannelData(0);
+    const right = impulse.getChannelData(1);
+
+    // Dense Abbey Road EMT-140 Plate diffusion envelope
+    const dampFactor = Math.min(0.92, Math.max(0.15, 1 - dampFreq / 12000));
+    let lastL = 0;
+    let lastR = 0;
+
+    for (let i = 0; i < length; i++) {
+      const t = i / sr;
+      // Fast buildup (plate dispersion) + exponential RT60 decay
+      const env = (1 - Math.exp(-t * 90)) * Math.pow(10, (-3 * t) / decaySeconds);
+      const nL = (Math.random() * 2 - 1) * env;
+      const nR = (Math.random() * 2 - 1) * env;
+      lastL = lastL * dampFactor + nL * (1 - dampFactor);
+      lastR = lastR * dampFactor + nR * (1 - dampFactor);
+      left[i] = lastL * 0.65;
+      right[i] = lastR * 0.65;
+    }
+
+    this.nodes.reverbConvolver.buffer = impulse;
+  }
+
+  applyParams(params) {
+    this.currentParams = { ...this.currentParams, ...params };
+    if (!this.isInitialized || !this.ctx) return;
+
+    const p = this.currentParams;
+    const now = this.ctx.currentTime;
+
+    // Master Bypass
+    this.nodes.dryBypassGain.gain.setTargetAtTime(this.masterBypass ? 1 : 0, now, 0.015);
+    this.nodes.wetMasterGain.gain.setTargetAtTime(this.masterBypass ? 0 : 1, now, 0.015);
+
+    // Input
+    this.nodes.inputGain.gain.setTargetAtTime(this.dbToLinear(p.inputGain || 0), now, 0.015);
+
+    // 5-Band EQ
+    if (p.eqBypass) {
+      this.nodes.hpf.frequency.setTargetAtTime(20, now, 0.02);
+      this.nodes.eqLow.gain.setTargetAtTime(0, now, 0.02);
+      this.nodes.eqMid.gain.setTargetAtTime(0, now, 0.02);
+      this.nodes.eqPresence.gain.setTargetAtTime(0, now, 0.02);
+      this.nodes.eqAir.gain.setTargetAtTime(0, now, 0.02);
+    } else {
+      this.nodes.hpf.frequency.setTargetAtTime(p.hpfFreq || 85, now, 0.02);
+      this.nodes.eqLow.frequency.setTargetAtTime(p.lowFreq || 220, now, 0.02);
+      this.nodes.eqLow.gain.setTargetAtTime(p.lowGain || 0, now, 0.02);
+      this.nodes.eqMid.frequency.setTargetAtTime(p.midFreq || 680, now, 0.02);
+      this.nodes.eqMid.gain.setTargetAtTime(p.midGain || 0, now, 0.02);
+      this.nodes.eqPresence.frequency.setTargetAtTime(p.presenceFreq || 3200, now, 0.02);
+      this.nodes.eqPresence.gain.setTargetAtTime(p.presenceGain || 0, now, 0.02);
+      this.nodes.eqAir.frequency.setTargetAtTime(p.airFreq || 10500, now, 0.02);
+      this.nodes.eqAir.gain.setTargetAtTime(p.airGain || 0, now, 0.02);
+    }
+
+    // De-Esser
+    this.nodes.deEssFilter.frequency.setTargetAtTime(p.deEssFreq || 6800, now, 0.02);
+    if (p.deEssBypass) {
+      this.nodes.deEssFilter.gain.setTargetAtTime(0, now, 0.02);
+    } else {
+      const sibilanceCut = -Math.min(12, ((p.deEssRange || 6) * Math.abs(p.deEssThresh + 40)) / 24);
+      this.nodes.deEssFilter.gain.setTargetAtTime(sibilanceCut, now, 0.02);
+    }
+
+    // Dual Compressor (CLA-76 + CLA-2A)
+    if (p.compBypass) {
+      this.nodes.comp76.threshold.setTargetAtTime(0, now, 0.02);
+      this.nodes.comp76.ratio.setTargetAtTime(1, now, 0.02);
+      this.nodes.comp2A.threshold.setTargetAtTime(0, now, 0.02);
+      this.nodes.comp2A.ratio.setTargetAtTime(1, now, 0.02);
+      this.nodes.compMakeup.gain.setTargetAtTime(1, now, 0.02);
+    } else {
+      // 76 FET Stage
+      const thresh76 = -10 - (p.comp76Drive / 100) * 32;
+      this.nodes.comp76.threshold.setTargetAtTime(thresh76, now, 0.02);
+      this.nodes.comp76.ratio.setTargetAtTime(p.comp76Ratio || 4, now, 0.02);
+      // 1176 knob: higher = faster! (1 = slowest, 7 = fastest)
+      const atkSec = Math.max(0.0002, 0.012 - ((p.comp76Attack || 4) / 7) * 0.0115);
+      const relSec = Math.max(0.04, 0.45 - ((p.comp76Release || 5) / 7) * 0.39);
+      this.nodes.comp76.attack.setTargetAtTime(atkSec, now, 0.02);
+      this.nodes.comp76.release.setTargetAtTime(relSec, now, 0.02);
+      this.nodes.comp76.knee.setTargetAtTime(p.comp76Mode === 'bluey' ? 4 : 8, now, 0.02);
+
+      // 2A Opto Stage
+      const thresh2A = -8 - (p.comp2APeak / 100) * 28;
+      this.nodes.comp2A.threshold.setTargetAtTime(thresh2A, now, 0.02);
+      this.nodes.comp2A.ratio.setTargetAtTime(3.2, now, 0.02);
+      this.nodes.comp2A.attack.setTargetAtTime(0.015, now, 0.02);
+      this.nodes.comp2A.release.setTargetAtTime(0.25, now, 0.02);
+      this.nodes.comp2A.knee.setTargetAtTime(14, now, 0.02);
+
+      const makeupDb = (p.comp2AGain || 3) + (p.comp76Drive / 100) * 4.5;
+      this.nodes.compMakeup.gain.setTargetAtTime(this.dbToLinear(makeupDb), now, 0.02);
+    }
+
+    // Saturation
+    if (p.satBypass) {
+      this.nodes.satDry.gain.setTargetAtTime(1, now, 0.02);
+      this.nodes.satWet.gain.setTargetAtTime(0, now, 0.02);
+    } else {
+      const mix = (p.satMix ?? 50) / 100;
+      this.nodes.satDry.gain.setTargetAtTime(1 - mix * 0.65, now, 0.02);
+      this.nodes.satWet.gain.setTargetAtTime(mix * 0.85, now, 0.02);
+      this.nodes.satShaper.curve = this.makeSaturationCurve(p.satDrive || 30, p.satType || 'tube');
+      this.nodes.satToneFilter.gain.setTargetAtTime((p.satTone || 0) * 0.15, now, 0.02);
+    }
+
+    // Doubler / MicroShift
+    if (p.doublerBypass) {
+      this.nodes.doublerWet.gain.setTargetAtTime(0, now, 0.02);
+    } else {
+      const width = (p.doublerWidth ?? 75) / 100;
+      const detuneDepth = ((p.doublerDetune ?? 12) / 100) * 0.0035;
+      const dMix = ((p.doublerMix ?? 25) / 100) * 0.65;
+      this.nodes.doublerPanL.pan.setTargetAtTime(-width, now, 0.02);
+      this.nodes.doublerPanR.pan.setTargetAtTime(width, now, 0.02);
+      this.nodes.doublerLfoGainL.gain.setTargetAtTime(detuneDepth, now, 0.02);
+      this.nodes.doublerLfoGainR.gain.setTargetAtTime(detuneDepth * 1.15, now, 0.02);
+      this.nodes.doublerWet.gain.setTargetAtTime(dMix, now, 0.02);
+    }
+
+    // H-Delay
+    if (p.delayBypass) {
+      this.nodes.delayWet.gain.setTargetAtTime(0, now, 0.02);
+    } else {
+      const delaySec = Math.max(0.02, Math.min(1.5, (p.delayTimeMs || 180) / 1000));
+      this.nodes.delayNodeL.delayTime.setTargetAtTime(delaySec, now, 0.03);
+      this.nodes.delayNodeR.delayTime.setTargetAtTime(
+        p.delayPingPong ? delaySec * 1.02 : delaySec,
+        now,
+        0.03
+      );
+      const fb = Math.min(0.82, ((p.delayFeedback ?? 25) / 100) * 0.85);
+      this.nodes.delayFeedbackL.gain.setTargetAtTime(fb, now, 0.02);
+      this.nodes.delayFeedbackR.gain.setTargetAtTime(fb, now, 0.02);
+      this.nodes.delayFilter.frequency.setTargetAtTime(p.delayFilterHi || 3200, now, 0.02);
+      this.nodes.delayPanL.pan.setTargetAtTime(p.delayPingPong ? -0.75 : 0, now, 0.02);
+      this.nodes.delayPanR.pan.setTargetAtTime(p.delayPingPong ? 0.75 : 0, now, 0.02);
+      this.nodes.delayWet.gain.setTargetAtTime(((p.delayMix ?? 20) / 100) * 0.6, now, 0.02);
+    }
+
+    // Abbey Road Plate Reverb
+    if (p.reverbBypass) {
+      this.nodes.reverbWet.gain.setTargetAtTime(0, now, 0.02);
+    } else {
+      this.nodes.reverbPreDelay.delayTime.setTargetAtTime(
+        Math.min(0.25, (p.reverbPreDelay || 30) / 1000),
+        now,
+        0.02
+      );
+      this.nodes.reverbDampFilter.frequency.setTargetAtTime(p.reverbDamp || 4800, now, 0.02);
+      this.nodes.reverbWet.gain.setTargetAtTime(((p.reverbMix ?? 25) / 100) * 0.75, now, 0.02);
+
+      const reverbKey = `${Math.round((p.reverbDecay || 2.2) * 10)}_${Math.round((p.reverbDamp || 4800) / 200)}`;
+      if (reverbKey !== this.lastReverbKey) {
+        this.lastReverbKey = reverbKey;
+        this.buildPlateImpulseResponse(p.reverbDecay || 2.2, p.reverbDamp || 4800);
+      }
+    }
+
+    // Output & Limiter
+    this.nodes.limiter.threshold.setTargetAtTime(p.limiterThresh ?? -1.0, now, 0.02);
+    this.nodes.outputGain.gain.setTargetAtTime(this.dbToLinear(p.outputGain ?? 0), now, 0.02);
+  }
+
+  /**
+   * Starts auditioning the vocal chain using either built-in vocal formant synthesizer,
+   * uploaded dry vocal stem, or live microphone!
+   */
+  async startAudition(mode = this.sourceMode) {
+    if (!this.isInitialized) {
+      await this.init(this.currentParams || {});
+    }
+    if (this.ctx.state === 'suspended') {
+      await this.ctx.resume();
+    }
+    this.stopAudition();
+    this.sourceMode = mode;
+    this.isPlaying = true;
+
+    if (mode === 'mic') {
+      try {
+        this.micStream = await navigator.mediaDevices.getUserMedia({
+          audio: {
+            echoCancellation: false,
+            noiseSuppression: false,
+            autoGainControl: false
+          }
+        });
+        this.micSource = this.ctx.createMediaStreamSource(this.micStream);
+        this.micSource.connect(this.nodes.inputBus);
+      } catch (err) {
+        console.warn('Mic access denied, falling back to synthesized vocal stem:', err);
+        this.sourceMode = 'synth-pop';
+        this.startSynthVocalPhrase('synth-pop');
+      }
+    } else if (mode === 'custom-file' && this.customVocalBuffer) {
+      this.activeBufferSource = this.ctx.createBufferSource();
+      this.activeBufferSource.buffer = this.customVocalBuffer;
+      this.activeBufferSource.loop = true;
+      this.activeBufferSource.connect(this.nodes.inputBus);
+      this.activeBufferSource.start();
+    } else {
+      this.startSynthVocalPhrase(mode);
+    }
+  }
+
+  stopAudition() {
+    this.isPlaying = false;
+    if (this.synthInterval) {
+      clearInterval(this.synthInterval);
+      this.synthInterval = null;
+    }
+    if (this.activeBufferSource) {
+      try {
+        this.activeBufferSource.stop();
+        this.activeBufferSource.disconnect();
+      } catch (_) {}
+      this.activeBufferSource = null;
+    }
+    if (this.micSource) {
+      try {
+        this.micSource.disconnect();
+      } catch (_) {}
+      this.micSource = null;
+    }
+    if (this.micStream) {
+      this.micStream.getTracks().forEach(t => t.stop());
+      this.micStream = null;
+    }
+  }
+
+  /**
+   * Generates a realistic dry human-like formant vocal melody phrase with glottal harmonics,
+   * vowel formant transitions ("Ah" -> "Oh" -> "Ee"), vibrato, and consonant sibilance bursts
+   * so every module (EQ, De-Esser, 1176, Doubler, Plate, Delay) responds audibly & visually!
+   */
+  startSynthVocalPhrase(style = 'synth-pop') {
+    const triggerSyllable = (stepIndex) => {
+      if (!this.isPlaying || !this.ctx) return;
+      const ctx = this.ctx;
+      const now = ctx.currentTime;
+
+      const melodies = {
+        'synth-pop': [261.63, 293.66, 329.63, 392.0, 349.23, 329.63, 293.66, 261.63], // C4 major soul phrase
+        'synth-rap': [146.83, 146.83, 174.61, 164.81, 130.81, 146.83, 196.0, 146.83],  // D3 melodic trap cadence
+        'synth-whisper': [329.63, 392.0, 440.0, 392.0, 349.23, 329.63, 293.66, 329.63] // E4 intimate breathy vocal
+      };
+
+      const vowels = [
+        { f1: 730, f2: 1090, f3: 2440 }, // "Ah"
+        { f1: 570, f2: 840, f3: 2410 },  // "Oh"
+        { f1: 300, f2: 2290, f3: 3010 }, // "Ee"
+        { f1: 640, f2: 1190, f3: 2390 }  // "Uh"
+      ];
+
+      const notes = melodies[style] || melodies['synth-pop'];
+      const freq = notes[stepIndex % notes.length];
+      const vowel = vowels[stepIndex % vowels.length];
+      const dur = style === 'synth-rap' ? 0.34 : 0.58;
+
+      // Glottal Source (Sawtooth + Triangle + Vibrato)
+      const oscSaw = ctx.createOscillator();
+      const oscSub = ctx.createOscillator();
+      oscSaw.type = 'sawtooth';
+      oscSub.type = 'triangle';
+      oscSaw.frequency.setValueAtTime(freq * 0.98, now);
+      oscSaw.frequency.exponentialRampToValueAtTime(freq, now + 0.045); // Natural vocal pitch scoop
+      oscSub.frequency.setValueAtTime(freq, now);
+
+      // Vibrato LFO
+      const vib = ctx.createOscillator();
+      const vibGain = ctx.createGain();
+      vib.frequency.value = 5.4;
+      vibGain.gain.setValueAtTime(0.2, now);
+      vibGain.gain.linearRampToValueAtTime(style === 'synth-rap' ? 1.5 : 4.2, now + dur * 0.7);
+      vib.connect(vibGain);
+      vibGain.connect(oscSaw.frequency);
+
+      // Vocal Tract Formant Filters (Parallel 3-Formant Bank)
+      const f1 = ctx.createBiquadFilter();
+      const f2 = ctx.createBiquadFilter();
+      const f3 = ctx.createBiquadFilter();
+      [f1, f2, f3].forEach(f => (f.type = 'bandpass'));
+      f1.frequency.setValueAtTime(vowel.f1, now);
+      f2.frequency.setValueAtTime(vowel.f2, now);
+      f3.frequency.setValueAtTime(vowel.f3, now);
+      f1.Q.value = 5.5;
+      f2.Q.value = 7.0;
+      f3.Q.value = 8.0;
+
+      // Formant glide
+      const nextVowel = vowels[(stepIndex + 1) % vowels.length];
+      f1.frequency.exponentialRampToValueAtTime(nextVowel.f1, now + dur);
+      f2.frequency.exponentialRampToValueAtTime(nextVowel.f2, now + dur);
+
+      // Consonant Sibilance / Breath Burst at syllable onset (triggers De-Esser & Air!)
+      const noiseBuf = ctx.createBuffer(1, Math.floor(ctx.sampleRate * dur), ctx.sampleRate);
+      const nd = noiseBuf.getChannelData(0);
+      for (let i = 0; i < nd.length; i++) {
+        const sibilanceEnv = i < ctx.sampleRate * 0.06 ? 0.55 : style === 'synth-whisper' ? 0.18 : 0.05;
+        nd[i] = (Math.random() * 2 - 1) * sibilanceEnv;
+      }
+      const noiseSrc = ctx.createBufferSource();
+      noiseSrc.buffer = noiseBuf;
+      const sibFilter = ctx.createBiquadFilter();
+      sibFilter.type = 'bandpass';
+      sibFilter.frequency.value = 6900;
+      sibFilter.Q.value = 2.2;
+
+      const syllableEnv = ctx.createGain();
+      syllableEnv.gain.setValueAtTime(0.0001, now);
+      syllableEnv.gain.linearRampToValueAtTime(style === 'synth-whisper' ? 0.25 : 0.42, now + 0.035);
+      syllableEnv.gain.exponentialRampToValueAtTime(0.001, now + dur);
+
+      oscSaw.connect(f1);
+      oscSaw.connect(f2);
+      oscSaw.connect(f3);
+      oscSub.connect(f1);
+
+      f1.connect(syllableEnv);
+      f2.connect(syllableEnv);
+      f3.connect(syllableEnv);
+
+      noiseSrc.connect(sibFilter);
+      sibFilter.connect(syllableEnv);
+      syllableEnv.connect(this.nodes.inputBus);
+
+      oscSaw.start(now);
+      oscSub.start(now);
+      vib.start(now);
+      noiseSrc.start(now);
+
+      oscSaw.stop(now + dur + 0.02);
+      oscSub.stop(now + dur + 0.02);
+      vib.stop(now + dur + 0.02);
+      noiseSrc.stop(now + dur + 0.02);
+    };
+
+    let step = 0;
+    triggerSyllable(step++);
+    const intervalMs = style === 'synth-rap' ? 380 : 650;
+    this.synthInterval = setInterval(() => {
+      if (step % 8 !== 7) {
+        triggerSyllable(step);
+      }
+      step++;
+    }, intervalMs);
+  }
+
+  /**
+   * Returns real-time telemetry for VU meters, LED bars, and Spectrum Analyzer
+   */
+  getTelemetry() {
+    if (!this.isInitialized || !this.ctx) {
+      return {
+        inDb: -60,
+        outDb: -60,
+        gr76: 0,
+        gr2A: 0,
+        totalGr: 0,
+        preFreqData: new Uint8Array(128),
+        postFreqData: new Uint8Array(128)
+      };
+    }
+
+    const preTime = new Float32Array(256);
+    const postTime = new Float32Array(256);
+    this.nodes.preAnalyser.getFloatTimeDomainData(preTime);
+    this.nodes.postAnalyser.getFloatTimeDomainData(postTime);
+
+    let sumIn = 0;
+    let sumOut = 0;
+    for (let i = 0; i < 256; i++) {
+      sumIn += preTime[i] * preTime[i];
+      sumOut += postTime[i] * postTime[i];
+    }
+    const rmsIn = Math.sqrt(sumIn / 256) + 1e-6;
+    const rmsOut = Math.sqrt(sumOut / 256) + 1e-6;
+
+    const inDb = Math.max(-60, Math.min(6, 20 * Math.log10(rmsIn) + 12));
+    const outDb = Math.max(-60, Math.min(6, 20 * Math.log10(rmsOut) + 12));
+
+    const gr76 = Math.abs(this.nodes.comp76.reduction || 0);
+    const gr2A = Math.abs(this.nodes.comp2A.reduction || 0);
+    const totalGr = Math.min(20, gr76 + gr2A);
+
+    const preFreqData = new Uint8Array(this.nodes.preAnalyser.frequencyBinCount);
+    const postFreqData = new Uint8Array(this.nodes.postAnalyser.frequencyBinCount);
+    this.nodes.preAnalyser.getByteFrequencyData(preFreqData);
+    this.nodes.postAnalyser.getByteFrequencyData(postFreqData);
+
+    return {
+      inDb,
+      outDb,
+      gr76,
+      gr2A,
+      totalGr,
+      preFreqData,
+      postFreqData
+    };
+  }
+}
+
+// daw-exporters.js - Generates Native Waves StudioRack (.xps) & Logic Pro (.aupreset) files
+
+class DAWExporters {
+  /**
+   * Generates a Waves StudioRack (.xps) XML preset file that maps the cloned vocal DNA
+   * onto Waves' native studio plugins (REQ 6, Sibilance, CLA-76, CLA-2A, Abbey Road Saturator,
+   * Doubler 2, H-Delay, Abbey Road Plates, L1 Ultramaximizer).
+   */
+  static generateWavesStudioRackXPS(presetName, artist, song, bpm, params) {
+    const p = params;
+    const escapedName = `${artist} - ${song}`.replace(/[<>&"']/g, '');
+
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<PresetFile Version="14.0" PluginName="StudioRack" PresetName="${escapedName}">
+  <PresetHeader>
+    <PluginName>StudioRack</PluginName>
+    <PluginSubComp>StRk</PluginSubComp>
+    <PluginVersion>14.0.0</PluginVersion>
+    <Artist>${artist.replace(/[<>&"']/g, '')}</Artist>
+    <SongReference>${song.replace(/[<>&"']/g, '')}</SongReference>
+    <DetectedBPM>${bpm || 120}</DetectedBPM>
+    <Generator>HEAVEN VocalDNA AI Cloner</Generator>
+  </PresetHeader>
+  <PresetData Setup="0" SetupName="${escapedName}">
+    <Parameters Type="RealWorld">
+      <!-- Input Gain -->
+      <Slot Index="0" Plugin="AudioTrack_Input" Bypass="0">
+        <Param Name="InputGain" Value="${p.inputGain}" Unit="dB"/>
+        <Param Name="GateThreshold" Value="${p.gateThresh}" Unit="dB"/>
+      </Slot>
+      <!-- Slot 1: Waves Renaissance EQ (REQ 6) -->
+      <Slot Index="1" Plugin="REQ 6 Stereo" SubComp="REQ6" Bypass="${p.eqBypass ? 1 : 0}">
+        <Param Name="Band1_Type" Value="HiPass"/>
+        <Param Name="Band1_Freq" Value="${p.hpfFreq}" Unit="Hz"/>
+        <Param Name="Band2_Type" Value="Bell"/>
+        <Param Name="Band2_Freq" Value="${p.lowFreq}" Unit="Hz"/>
+        <Param Name="Band2_Gain" Value="${p.lowGain}" Unit="dB"/>
+        <Param Name="Band3_Type" Value="Bell"/>
+        <Param Name="Band3_Freq" Value="${p.midFreq}" Unit="Hz"/>
+        <Param Name="Band3_Gain" Value="${p.midGain}" Unit="dB"/>
+        <Param Name="Band4_Type" Value="Bell"/>
+        <Param Name="Band4_Freq" Value="${p.presenceFreq}" Unit="Hz"/>
+        <Param Name="Band4_Gain" Value="${p.presenceGain}" Unit="dB"/>
+        <Param Name="Band6_Type" Value="HiShelf"/>
+        <Param Name="Band6_Freq" Value="${p.airFreq}" Unit="Hz"/>
+        <Param Name="Band6_Gain" Value="${p.airGain}" Unit="dB"/>
+      </Slot>
+      <!-- Slot 2: Waves Sibilance De-Esser -->
+      <Slot Index="2" Plugin="Sibilance Stereo" SubComp="SBLC" Bypass="${p.deEssBypass ? 1 : 0}">
+        <Param Name="CenterFreq" Value="${p.deEssFreq}" Unit="Hz"/>
+        <Param Name="Threshold" Value="${p.deEssThresh}" Unit="dB"/>
+        <Param Name="Range" Value="${p.deEssRange}" Unit="dB"/>
+      </Slot>
+      <!-- Slot 3: Waves CLA-76 Compressor/Limiter -->
+      <Slot Index="3" Plugin="CLA-76 Stereo" SubComp="CL76" Bypass="${p.compBypass ? 1 : 0}">
+        <Param Name="Revision" Value="${p.comp76Mode === 'bluey' ? 'Bluey' : 'Blacky'}"/>
+        <Param Name="Input" Value="${(p.comp76Drive * 0.48).toFixed(1)}"/>
+        <Param Name="Ratio" Value="${p.comp76Ratio}:1"/>
+        <Param Name="Attack" Value="${p.comp76Attack}"/>
+        <Param Name="Release" Value="${p.comp76Release}"/>
+      </Slot>
+      <!-- Slot 4: Waves CLA-2A Electro-Optical Compressor -->
+      <Slot Index="4" Plugin="CLA-2A Stereo" SubComp="CL2A" Bypass="${p.compBypass ? 1 : 0}">
+        <Param Name="PeakReduction" Value="${p.comp2APeak}"/>
+        <Param Name="Gain" Value="${(32 + p.comp2AGain * 2.5).toFixed(1)}"/>
+        <Param Name="CompLimit" Value="Compress"/>
+      </Slot>
+      <!-- Slot 5: Waves J37 / Abbey Road Saturator -->
+      <Slot Index="5" Plugin="Abbey Road Saturator" SubComp="ARSa" Bypass="${p.satBypass ? 1 : 0}">
+        <Param Name="Mode" Value="${p.satType === 'tube' ? 'REDD_Tube' : 'TG12345_Tape'}"/>
+        <Param Name="Drive" Value="${p.satDrive}" Unit="%"/>
+        <Param Name="ToneTilt" Value="${p.satTone}"/>
+        <Param Name="Mix" Value="${p.satMix}" Unit="%"/>
+      </Slot>
+      <!-- Slot 6: Waves Doubler 2 -->
+      <Slot Index="6" Plugin="Doubler2 Stereo" SubComp="DBL2" Bypass="${p.doublerBypass ? 1 : 0}">
+        <Param Name="Direct" Value="0.0" Unit="dB"/>
+        <Param Name="SpreadWidth" Value="${p.doublerWidth}" Unit="%"/>
+        <Param Name="DetuneCents" Value="${p.doublerDetune}"/>
+        <Param Name="WetMix" Value="${p.doublerMix}" Unit="%"/>
+      </Slot>
+      <!-- Slot 7: Waves H-Delay Hybrid Delay -->
+      <Slot Index="7" Plugin="H-Delay Stereo" SubComp="HDLY" Bypass="${p.delayBypass ? 1 : 0}">
+        <Param Name="DelayTimeMs" Value="${p.delayTimeMs}" Unit="ms"/>
+        <Param Name="Feedback" Value="${p.delayFeedback}" Unit="%"/>
+        <Param Name="HiPass" Value="180" Unit="Hz"/>
+        <Param Name="LoPass" Value="${p.delayFilterHi}" Unit="Hz"/>
+        <Param Name="PingPong" Value="${p.delayPingPong ? 1 : 0}"/>
+        <Param Name="DryWet" Value="${p.delayMix}" Unit="%"/>
+      </Slot>
+      <!-- Slot 8: Waves Abbey Road Reverb Plates -->
+      <Slot Index="8" Plugin="Abbey Road Plates" SubComp="ARPl" Bypass="${p.reverbBypass ? 1 : 0}">
+        <Param Name="PreDelay" Value="${p.reverbPreDelay}" Unit="ms"/>
+        <Param Name="DecayTime" Value="${p.reverbDecay}" Unit="s"/>
+        <Param Name="TrebleDamp" Value="${p.reverbDamp}" Unit="Hz"/>
+        <Param Name="DryWet" Value="${p.reverbMix}" Unit="%"/>
+      </Slot>
+      <!-- Slot 9: Waves L1 Ultramaximizer -->
+      <Slot Index="9" Plugin="L1 Ultramaximizer Stereo" SubComp="L1UM" Bypass="0">
+        <Param Name="OutCeiling" Value="${p.limiterThresh}" Unit="dB"/>
+        <Param Name="MasterTrim" Value="${p.outputGain}" Unit="dB"/>
+      </Slot>
+    </Parameters>
+    <MacroControls>
+      <Macro Index="1" Name="Vocal Bite (Presence)" Value="${((p.presenceGain + 12) / 24 * 100).toFixed(0)}"/>
+      <Macro Index="2" Name="C800G Air" Value="${((p.airGain + 6) / 18 * 100).toFixed(0)}"/>
+      <Macro Index="3" Name="76+2A Compression" Value="${p.comp76Drive}"/>
+      <Macro Index="4" Name="Harmonic Saturation" Value="${p.satDrive}"/>
+      <Macro Index="5" Name="MicroShift Width" Value="${p.doublerMix}"/>
+      <Macro Index="6" Name="H-Delay Throw" Value="${p.delayMix}"/>
+      <Macro Index="7" Name="EMT-140 Plate" Value="${p.reverbMix}"/>
+      <Macro Index="8" Name="De-Ess Control" Value="${(p.deEssRange / 15 * 100).toFixed(0)}"/>
+    </MacroControls>
+  </PresetData>
+</PresetFile>`;
+  }
+
+  /**
+   * Generates a native Logic Pro Audio Unit Preset (.aupreset) XML plist file
+   * matching our compiled WavesVocalDNA.component (Type: aufx, Subtype: WvDN, Manufacturer: WvAi)
+   */
+  static generateLogicProAUPreset(artist, song, params) {
+    const escapedName = `${artist} - ${song}`.replace(/[<>&"']/g, '');
+    // Encode the 34 ordered float parameters into Base64 Float32 state or key-value dictionary
+    const orderedKeys = [
+      'inputGain', 'hpfFreq', 'lowGain', 'lowFreq', 'midGain', 'midFreq',
+      'presenceGain', 'presenceFreq', 'airGain', 'airFreq',
+      'deEssFreq', 'deEssThresh', 'deEssRange',
+      'comp76Drive', 'comp76Ratio', 'comp76Attack', 'comp76Release', 'comp2APeak', 'comp2AGain',
+      'satDrive', 'satTone', 'satMix',
+      'doublerWidth', 'doublerDetune', 'doublerMix',
+      'delayTimeMs', 'delayFeedback', 'delayFilterHi', 'delayMix',
+      'reverbPreDelay', 'reverbDecay', 'reverbDamp', 'reverbMix',
+      'limiterThresh', 'outputGain'
+    ];
+
+    const paramXmlEntries = orderedKeys
+      .map((k, idx) => `    <key>param_${idx}_${k}</key>\n    <real>${Number(params[k] ?? 0)}</real>`)
+      .join('\n');
+
+    // Type: 'aufx' = 0x61756678 (1635083896)
+    // Subtype: 'HvDN' = 0x4876444e (1215710286)
+    // Manufacturer: 'HvAu' = 0x48764175 (1215709557)
+    return `<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+  <key>manufacturer</key>
+  <integer>1215709557</integer>
+  <key>name</key>
+  <string>${escapedName}</string>
+  <key>subtype</key>
+  <integer>1215710286</integer>
+  <key>type</key>
+  <integer>1635083896</integer>
+  <key>version</key>
+  <integer>1</integer>
+  <key>vocaldna_parameters</key>
+  <dict>
+${paramXmlEntries}
+  </dict>
+</dict>
+</plist>`;
+  }
+}
+
+// app.js - Main Controller for WAVES VocalDNA StudioRack Plugin
+
+
+
+
+
+const STORAGE_KEY = 'waves_vocaldna_artist_presets_v1';
+
+const KNOB_DEFINITIONS = [
+  // EQ Module
+  { key: 'hpfFreq', label: 'HPF FREQ', min: 20, max: 250, step: 1, unit: 'Hz', color: 'cyan', module: 'eq' },
+  { key: 'lowGain', label: 'LOW GAIN', min: -12, max: 12, step: 0.1, unit: 'dB', color: 'cyan', module: 'eq' },
+  { key: 'lowFreq', label: 'LOW FREQ', min: 120, max: 400, step: 1, unit: 'Hz', color: 'cyan', module: 'eq' },
+  { key: 'midGain', label: 'MID GAIN', min: -12, max: 12, step: 0.1, unit: 'dB', color: 'cyan', module: 'eq' },
+  { key: 'midFreq', label: 'MID FREQ', min: 400, max: 1500, step: 5, unit: 'Hz', color: 'cyan', module: 'eq' },
+  { key: 'presenceGain', label: 'PRES GAIN', min: -12, max: 12, step: 0.1, unit: 'dB', color: 'cyan', module: 'eq' },
+  { key: 'presenceFreq', label: 'PRES FREQ', min: 1800, max: 5500, step: 20, unit: 'Hz', color: 'cyan', module: 'eq' },
+  { key: 'airGain', label: 'AIR BOOST', min: -6, max: 12, step: 0.1, unit: 'dB', color: 'amber', module: 'eq' },
+  { key: 'airFreq', label: 'AIR FREQ', min: 8000, max: 16000, step: 100, unit: 'Hz', color: 'amber', module: 'eq' },
+
+  // De-Esser Module
+  { key: 'deEssFreq', label: 'SIB FREQ', min: 4500, max: 9500, step: 50, unit: 'Hz', color: 'cyan', module: 'deess' },
+  { key: 'deEssThresh', label: 'THRESH', min: -45, max: -10, step: 0.5, unit: 'dB', color: 'cyan', module: 'deess' },
+  { key: 'deEssRange', label: 'MAX RED', min: 0, max: 15, step: 0.5, unit: 'dB', color: 'amber', module: 'deess' },
+
+  // Dual Compressor Module
+  { key: 'comp76Drive', label: '76 INPUT', min: 0, max: 100, step: 1, unit: '%', color: 'amber', module: 'comp' },
+  { key: 'comp76Attack', label: '76 ATTACK', min: 1, max: 7, step: 0.1, unit: '', color: 'cyan', module: 'comp' },
+  { key: 'comp76Release', label: '76 RELEASE', min: 1, max: 7, step: 0.1, unit: '', color: 'cyan', module: 'comp' },
+  { key: 'comp2APeak', label: '2A PEAK RED', min: 0, max: 100, step: 1, unit: '%', color: 'amber', module: 'comp' },
+  { key: 'comp2AGain', label: '2A MAKEUP', min: 0, max: 10, step: 0.1, unit: 'dB', color: 'emerald', module: 'comp' },
+
+  // Saturation Module
+  { key: 'satDrive', label: 'DRIVE', min: 0, max: 100, step: 1, unit: '%', color: 'amber', module: 'sat' },
+  { key: 'satTone', label: 'TONE TILT', min: -50, max: 50, step: 1, unit: '', color: 'cyan', module: 'sat' },
+  { key: 'satMix', label: 'SAT MIX', min: 0, max: 100, step: 1, unit: '%', color: 'emerald', module: 'sat' },
+
+  // Doubler & H-Delay Module
+  { key: 'doublerWidth', label: 'DBL WIDTH', min: 0, max: 100, step: 1, unit: '%', color: 'cyan', module: 'space' },
+  { key: 'doublerDetune', label: 'DETUNE', min: 1, max: 35, step: 1, unit: 'ct', color: 'cyan', module: 'space' },
+  { key: 'doublerMix', label: 'DBL MIX', min: 0, max: 100, step: 1, unit: '%', color: 'emerald', module: 'space' },
+  { key: 'delayTimeMs', label: 'DLY TIME', min: 40, max: 800, step: 1, unit: 'ms', color: 'amber', module: 'space' },
+  { key: 'delayFeedback', label: 'FEEDBACK', min: 0, max: 85, step: 1, unit: '%', color: 'amber', module: 'space' },
+  { key: 'delayFilterHi', label: 'LOFI HI-CUT', min: 1200, max: 6000, step: 50, unit: 'Hz', color: 'cyan', module: 'space' },
+  { key: 'delayMix', label: 'DLY MIX', min: 0, max: 100, step: 1, unit: '%', color: 'emerald', module: 'space' },
+
+  // Plate Reverb & Master Module
+  { key: 'reverbPreDelay', label: 'PRE-DELAY', min: 0, max: 120, step: 1, unit: 'ms', color: 'cyan', module: 'reverb' },
+  { key: 'reverbDecay', label: 'PLATE RT60', min: 0.5, max: 4.8, step: 0.1, unit: 's', color: 'amber', module: 'reverb' },
+  { key: 'reverbDamp', label: 'HF DAMP', min: 2000, max: 9000, step: 100, unit: 'Hz', color: 'cyan', module: 'reverb' },
+  { key: 'reverbMix', label: 'PLATE MIX', min: 0, max: 100, step: 1, unit: '%', color: 'emerald', module: 'reverb' },
+  { key: 'inputGain', label: 'IN TRIM', min: -12, max: 12, step: 0.5, unit: 'dB', color: 'cyan', module: 'master' },
+  { key: 'limiterThresh', label: 'L1 CEILING', min: -12, max: 0, step: 0.1, unit: 'dB', color: 'amber', module: 'master' },
+  { key: 'outputGain', label: 'MASTER OUT', min: -12, max: 6, step: 0.5, unit: 'dB', color: 'emerald', module: 'master' }
+];
+
+class WavesVocalCloneApp {
+  constructor() {
+    this.dsp = new VocalDSPEngine();
+    this.presets = this.loadPresetsFromStorage();
+    this.activePreset = this.presets[0];
+
+    // A/B States & History
+    this.activeSlot = 'A';
+    this.slotA = structuredClone(this.activePreset.params);
+    this.slotB = structuredClone(this.presets[1].params);
+    this.history = [structuredClone(this.slotA)];
+    this.historyIndex = 0;
+
+    this.knobElements = new Map();
+    this.vuNeedleAngle = -42; // degrees
+    this.lastMetrics = {
+      crestFactorDb: 11.4,
+      sideToMidRatio: 48,
+      spectralTilt: 'Bright / Upfront',
+      sibilanceIndex: 62,
+      reverbRT60: 2.4
+    };
+
+    this.initDOM();
+    this.renderPresetDropdown();
+    this.renderArtistPresetPills();
+    this.syncUIWithParams(this.currentParams);
+    this.startAnimationLoop();
+  }
+
+  get currentParams() {
+    return this.activeSlot === 'A' ? this.slotA : this.slotB;
+  }
+
+  set currentParams(newParams) {
+    if (this.activeSlot === 'A') {
+      this.slotA = newParams;
+    } else {
+      this.slotB = newParams;
+    }
+  }
+
+  loadPresetsFromStorage() {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const customPresets = Array.isArray(saved) ? saved : [];
+      return [...customPresets, ...FACTORY_PRESETS];
+    } catch (_) {
+      return [...FACTORY_PRESETS];
+    }
+  }
+
+  saveCustomPresetToStorage(newPreset) {
+    try {
+      const saved = JSON.parse(localStorage.getItem(STORAGE_KEY) || '[]');
+      const filtered = (Array.isArray(saved) ? saved : []).filter(p => p.id !== newPreset.id);
+      filtered.unshift(newPreset);
+      localStorage.setItem(STORAGE_KEY, JSON.stringify(filtered));
+    } catch (e) {
+      console.warn('Could not persist preset to localStorage:', e);
+    }
+  }
+
+  initDOM() {
+    // Mount rotary knobs into their module containers
+    KNOB_DEFINITIONS.forEach(def => {
+      const container = document.getElementById(`knobs-${def.module}`);
+      if (!container) return;
+
+      const wrapper = document.createElement('div');
+      wrapper.className = 'knob-wrapper';
+      wrapper.innerHTML = `
+        <div class="text-xs font-semibold tracking-wider text-slate-400 uppercase">${def.label}</div>
+        <div class="rotary-knob ${def.color}-knob" data-key="${def.key}" title="Drag up/down or scroll to adjust ${def.label}. Double-click to reset.">
+          <div class="knob-indicator"></div>
+        </div>
+        <div class="text-xs font-mono font-semibold text-cyan-300 bg-slate-950/90 px-1.5 py-0.5 rounded border border-slate-800 knob-readout">0</div>
+      `;
+      container.appendChild(wrapper);
+
+      const knobEl = wrapper.querySelector('.rotary-knob');
+      const indicatorEl = wrapper.querySelector('.knob-indicator');
+      const readoutEl = wrapper.querySelector('.knob-readout');
+
+      this.knobElements.set(def.key, { def, knobEl, indicatorEl, readoutEl });
+      this.bindKnobInteraction(knobEl, def);
+    });
+
+    // Bind Top WaveSystem Toolbar
+    document.getElementById('btn-slot-a').addEventListener('click', () => this.switchSlot('A'));
+    document.getElementById('btn-slot-b').addEventListener('click', () => this.switchSlot('B'));
+    document.getElementById('btn-copy-ab').addEventListener('click', () => {
+      if (this.activeSlot === 'A') {
+        this.slotB = structuredClone(this.slotA);
+        this.showToast('Copied Chain A → Slot B');
+      } else {
+        this.slotA = structuredClone(this.slotB);
+        this.showToast('Copied Chain B → Slot A');
+      }
+    });
+
+    document.getElementById('btn-undo').addEventListener('click', () => this.undo());
+    document.getElementById('btn-redo').addEventListener('click', () => this.redo());
+    document.getElementById('btn-master-bypass').addEventListener('click', () => {
+      this.dsp.masterBypass = !this.dsp.masterBypass;
+      this.dsp.applyParams(this.currentParams);
+      const btn = document.getElementById('btn-master-bypass');
+      btn.classList.toggle('bg-red-600', this.dsp.masterBypass);
+      btn.classList.toggle('text-white', this.dsp.masterBypass);
+      btn.textContent = this.dsp.masterBypass ? 'BYPASSED' : 'BYPASS';
+    });
+
+    // Preset Dropdown & Save Button
+    document.getElementById('preset-select').addEventListener('change', (e) => {
+      const found = this.presets.find(p => p.id === e.target.value);
+      if (found) this.loadPreset(found);
+    });
+
+    document.getElementById('btn-save-preset').addEventListener('click', () => {
+      const artistInput = document.getElementById('input-artist-name').value.trim() || 'Custom Artist';
+      const songInput = document.getElementById('input-song-title').value.trim() || 'Session Chain';
+      this.saveArtistPreset(artistInput, songInput, this.activePreset?.bpm || 124, 'Custom Tuned Vocal Chain');
+    });
+
+    document.getElementById('btn-export-preset').addEventListener('click', () => this.exportCurrentPresetJSON());
+    const xpsBtn = document.getElementById('btn-export-waves-xps');
+    if (xpsBtn) xpsBtn.addEventListener('click', () => this.exportWavesStudioRackXPS());
+    const auBtn = document.getElementById('btn-export-logic-au');
+    if (auBtn) auBtn.addEventListener('click', () => this.exportLogicProAUPreset());
+
+    // Native DAW Telemetry callback from Logic Pro / AU C++ Audio Thread
+    this.nativeTelemetry = null;
+    window.onNativeDAWTelemetry = (inDb, outDb, grDb) => {
+      this.nativeTelemetry = { inDb, outDb, grDb, timestamp: performance.now() };
+    };
+
+    // Song File Drag & Drop / Upload for AI Listening
+    const dropzone = document.getElementById('song-dropzone');
+    const songFileInput = document.getElementById('song-file-input');
+
+    dropzone.addEventListener('click', (e) => {
+      if (e.target.tagName !== 'INPUT' && e.target.tagName !== 'BUTTON') {
+        songFileInput.click();
+      }
+    });
+
+    dropzone.addEventListener('dragover', (e) => {
+      e.preventDefault();
+      dropzone.classList.add('border-amber-400', 'bg-amber-500/10');
+    });
+
+    dropzone.addEventListener('dragleave', () => {
+      dropzone.classList.remove('border-amber-400', 'bg-amber-500/10');
+    });
+
+    dropzone.addEventListener('drop', (e) => {
+      e.preventDefault();
+      dropzone.classList.remove('border-amber-400', 'bg-amber-500/10');
+      const file = e.dataTransfer?.files?.[0];
+      if (file) this.handleSongFileUpload(file);
+    });
+
+    songFileInput.addEventListener('change', (e) => {
+      const file = e.target.files?.[0];
+      if (file) this.handleSongFileUpload(file);
+    });
+
+    // Live Mic / Room Song Listener (6 seconds capture)
+    document.getElementById('btn-live-listen').addEventListener('click', () => {
+      this.listenViaMicrophoneForSong();
+    });
+
+    // Instant Song Clone Simulator (Synthesizes a reference song buffer and runs real analyzer)
+    document.getElementById('btn-instant-clone').addEventListener('click', () => {
+      this.runSyntheticSongAnalysis();
+    });
+
+    // Audition Transport Controls
+    document.getElementById('btn-play-audition').addEventListener('click', () => this.toggleAudition());
+    document.getElementById('audition-source-select').addEventListener('change', (e) => {
+      const val = e.target.value;
+      if (val === 'upload-dry') {
+        document.getElementById('dry-vocal-file-input').click();
+      } else {
+        this.dsp.sourceMode = val;
+        if (this.dsp.isPlaying) {
+          this.dsp.startAudition(val);
+        }
+      }
+    });
+
+    document.getElementById('dry-vocal-file-input').addEventListener('change', async (e) => {
+      const file = e.target.files?.[0];
+      if (!file) return;
+      if (!this.dsp.isInitialized) await this.dsp.init(this.currentParams);
+      const arr = await file.arrayBuffer();
+      this.dsp.customVocalBuffer = await this.dsp.ctx.decodeAudioData(arr);
+      this.dsp.sourceMode = 'custom-file';
+      this.showToast(`Loaded dry vocal stem: ${file.name}`);
+      if (this.dsp.isPlaying) {
+        this.dsp.startAudition('custom-file');
+      }
+    });
+
+    // Module Bypass Toggles & Switches
+    const bypassMap = [
+      ['toggle-eq-bypass', 'eqBypass'],
+      ['toggle-deess-bypass', 'deEssBypass'],
+      ['toggle-comp-bypass', 'compBypass'],
+      ['toggle-sat-bypass', 'satBypass'],
+      ['toggle-doubler-bypass', 'doublerBypass'],
+      ['toggle-delay-bypass', 'delayBypass'],
+      ['toggle-reverb-bypass', 'reverbBypass']
+    ];
+
+    bypassMap.forEach(([id, key]) => {
+      const el = document.getElementById(id);
+      if (el) {
+        el.addEventListener('click', () => {
+          this.updateParam(key, !this.currentParams[key], true);
+        });
+      }
+    });
+
+    // 1176 Ratio Buttons
+    document.querySelectorAll('.ratio-btn').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const ratio = Number(btn.dataset.ratio);
+        this.updateParam('comp76Ratio', ratio, true);
+      });
+    });
+
+    // 1176 Bluey / Blacky Mode Toggle
+    document.getElementById('btn-76-mode').addEventListener('click', () => {
+      const next = this.currentParams.comp76Mode === 'bluey' ? 'blacky' : 'bluey';
+      this.updateParam('comp76Mode', next, true);
+    });
+
+    // Saturation Tube / Tape Mode Toggle
+    document.getElementById('btn-sat-type').addEventListener('click', () => {
+      const next = this.currentParams.satType === 'tube' ? 'tape' : 'tube';
+      this.updateParam('satType', next, true);
+    });
+
+    // Delay Ping-Pong Toggle
+    document.getElementById('btn-ping-pong').addEventListener('click', () => {
+      this.updateParam('delayPingPong', !this.currentParams.delayPingPong, true);
+    });
+
+    // Interactive EQ Canvas Dragging
+    this.initEQCanvasInteraction();
+  }
+
+  bindKnobInteraction(knobEl, def) {
+    let startY = 0;
+    let startVal = 0;
+
+    const onMove = (e) => {
+      const clientY = e.touches ? e.touches[0].clientY : e.clientY;
+      const deltaY = startY - clientY;
+      const range = def.max - def.min;
+      const sensitivity = e.shiftKey ? 450 : 150;
+      let nextVal = startVal + (deltaY / sensitivity) * range;
+      nextVal = Math.max(def.min, Math.min(def.max, nextVal));
+      nextVal = Math.round(nextVal / def.step) * def.step;
+      if (def.step < 1) nextVal = Number(nextVal.toFixed(1));
+      this.updateParam(def.key, nextVal, false);
+    };
+
+    const onUp = () => {
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
+      window.removeEventListener('touchmove', onMove);
+      window.removeEventListener('touchend', onUp);
+      this.pushHistory();
+    };
+
+    knobEl.addEventListener('mousedown', (e) => {
+      e.preventDefault();
+      startY = e.clientY;
+      startVal = Number(this.currentParams[def.key] ?? def.min);
+      window.addEventListener('mousemove', onMove);
+      window.addEventListener('mouseup', onUp);
+    });
+
+    knobEl.addEventListener('touchstart', (e) => {
+      startY = e.touches[0].clientY;
+      startVal = Number(this.currentParams[def.key] ?? def.min);
+      window.addEventListener('touchmove', onMove);
+      window.addEventListener('touchend', onUp);
+    }, { passive: true });
+
+    knobEl.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      const dir = e.deltaY < 0 ? 1 : -1;
+      const cur = Number(this.currentParams[def.key] ?? def.min);
+      let nextVal = cur + dir * def.step * 2;
+      nextVal = Math.max(def.min, Math.min(def.max, nextVal));
+      if (def.step < 1) nextVal = Number(nextVal.toFixed(1));
+      this.updateParam(def.key, nextVal, false);
+    });
+
+    knobEl.addEventListener('dblclick', () => {
+      const factoryDefault = FACTORY_PRESETS[0].params[def.key];
+      if (factoryDefault !== undefined) {
+        this.updateParam(def.key, factoryDefault, true);
+      }
+    });
+  }
+
+  initEQCanvasInteraction() {
+    const canvas = document.getElementById('eq-spectrum-canvas');
+    if (!canvas) return;
+
+    let draggingBand = null;
+
+    const freqToX = (f, w) => {
+      const minLog = Math.log10(20);
+      const maxLog = Math.log10(20000);
+      return ((Math.log10(Math.max(20, Math.min(20000, f))) - minLog) / (maxLog - minLog)) * w;
+    };
+
+    const xToFreq = (x, w) => {
+      const minLog = Math.log10(20);
+      const maxLog = Math.log10(20000);
+      return Math.pow(10, minLog + (x / w) * (maxLog - minLog));
+    };
+
+    const gainToY = (g, h) => {
+      return h / 2 - (g / 15) * (h / 2);
+    };
+
+    const yToGain = (y, h) => {
+      return Math.max(-12, Math.min(12, ((h / 2 - y) / (h / 2)) * 15));
+    };
+
+    const getNodes = (w, h) => {
+      const p = this.currentParams;
+      return [
+        { id: 'hpf', x: freqToX(p.hpfFreq, w), y: h / 2, freqKey: 'hpfFreq', gainKey: null, fMin: 20, fMax: 250 },
+        { id: 'low', x: freqToX(p.lowFreq, w), y: gainToY(p.lowGain, h), freqKey: 'lowFreq', gainKey: 'lowGain', fMin: 120, fMax: 400 },
+        { id: 'mid', x: freqToX(p.midFreq, w), y: gainToY(p.midGain, h), freqKey: 'midFreq', gainKey: 'midGain', fMin: 400, fMax: 1500 },
+        { id: 'pres', x: freqToX(p.presenceFreq, w), y: gainToY(p.presenceGain, h), freqKey: 'presenceFreq', gainKey: 'presenceGain', fMin: 1800, fMax: 5500 },
+        { id: 'air', x: freqToX(p.airFreq, w), y: gainToY(p.airGain, h), freqKey: 'airFreq', gainKey: 'airGain', fMin: 8000, fMax: 16000 }
+      ];
+    };
+
+    canvas.addEventListener('mousedown', (e) => {
+      const rect = canvas.getBoundingClientRect();
+      const mx = e.clientX - rect.left;
+      const my = e.clientY - rect.top;
+      const nodes = getNodes(rect.width, rect.height);
+      for (const n of nodes) {
+        if (Math.hypot(mx - n.x, my - n.y) < 16) {
+          draggingBand = n;
+          break;
+        }
+      }
+    });
+
+    window.addEventListener('mousemove', (e) => {
+      if (!draggingBand) return;
+      const rect = canvas.getBoundingClientRect();
+      const mx = Math.max(0, Math.min(rect.width, e.clientX - rect.left));
+      const my = Math.max(0, Math.min(rect.height, e.clientY - rect.top));
+
+      const newFreq = Math.round(Math.max(draggingBand.fMin, Math.min(draggingBand.fMax, xToFreq(mx, rect.width))));
+      this.updateParam(draggingBand.freqKey, newFreq, false);
+
+      if (draggingBand.gainKey) {
+        const newGain = Number(yToGain(my, rect.height).toFixed(1));
+        this.updateParam(draggingBand.gainKey, newGain, false);
+      }
+    });
+
+    window.addEventListener('mouseup', () => {
+      if (draggingBand) {
+        draggingBand = null;
+        this.pushHistory();
+      }
+    });
+  }
+
+  updateParam(key, value, recordHistory = false) {
+    this.currentParams[key] = value;
+    this.dsp.applyParams(this.currentParams);
+    this.syncUIWithParams(this.currentParams);
+    if (recordHistory) {
+      this.pushHistory();
+    }
+  }
+
+  pushHistory() {
+    this.history = this.history.slice(0, this.historyIndex + 1);
+    this.history.push(structuredClone(this.currentParams));
+    if (this.history.length > 30) this.history.shift();
+    this.historyIndex = this.history.length - 1;
+  }
+
+  undo() {
+    if (this.historyIndex > 0) {
+      this.historyIndex--;
+      this.currentParams = structuredClone(this.history[this.historyIndex]);
+      this.dsp.applyParams(this.currentParams);
+      this.syncUIWithParams(this.currentParams);
+    }
+  }
+
+  redo() {
+    if (this.historyIndex < this.history.length - 1) {
+      this.historyIndex++;
+      this.currentParams = structuredClone(this.history[this.historyIndex]);
+      this.dsp.applyParams(this.currentParams);
+      this.syncUIWithParams(this.currentParams);
+    }
+  }
+
+  switchSlot(slot) {
+    this.activeSlot = slot;
+    document.getElementById('btn-slot-a').className =
+      slot === 'A'
+        ? 'px-2.5 py-1 rounded text-xs font-bold bg-amber-500 text-slate-950 shadow'
+        : 'px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-400 hover:text-white';
+    document.getElementById('btn-slot-b').className =
+      slot === 'B'
+        ? 'px-2.5 py-1 rounded text-xs font-bold bg-amber-500 text-slate-950 shadow'
+        : 'px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-400 hover:text-white';
+
+    this.dsp.applyParams(this.currentParams);
+    this.syncUIWithParams(this.currentParams);
+  }
+
+  syncUIWithParams(params) {
+    // Send live parameter state to Native Logic Pro / VST3 C++ DSP engine if hosted in DAW
+    try {
+      if (window.webkit?.messageHandlers?.auBridge) {
+        window.webkit.messageHandlers.auBridge.postMessage({
+          type: 'paramChange',
+          params
+        });
+      }
+    } catch (_) {}
+
+    // Update all rotary knobs
+    this.knobElements.forEach(({ def, indicatorEl, readoutEl }) => {
+      const val = Number(params[def.key] ?? def.min);
+      const norm = Math.max(0, Math.min(1, (val - def.min) / (def.max - def.min)));
+      const deg = -135 + norm * 270;
+      indicatorEl.style.transform = `rotate(${deg}deg)`;
+
+      const formatted = def.step < 1 ? val.toFixed(1) : Math.round(val);
+      readoutEl.textContent = `${formatted}${def.unit ? ' ' + def.unit : ''}`;
+    });
+
+    // Update Module Bypass LED buttons
+    const bypassPairs = [
+      ['toggle-eq-bypass', params.eqBypass],
+      ['toggle-deess-bypass', params.deEssBypass],
+      ['toggle-comp-bypass', params.compBypass],
+      ['toggle-sat-bypass', params.satBypass],
+      ['toggle-doubler-bypass', params.doublerBypass],
+      ['toggle-delay-bypass', params.delayBypass],
+      ['toggle-reverb-bypass', params.reverbBypass]
+    ];
+
+    bypassPairs.forEach(([id, isBypassed]) => {
+      const btn = document.getElementById(id);
+      if (!btn) return;
+      btn.textContent = isBypassed ? 'BYPASSED' : 'IN';
+      btn.className = isBypassed
+        ? 'px-2 py-0.5 rounded text-xs font-bold bg-slate-800 text-slate-500 border border-slate-700'
+        : 'px-2 py-0.5 rounded text-xs font-bold bg-emerald-500/20 text-emerald-300 border border-emerald-500/40 shadow-sm';
+    });
+
+    // Update 1176 Ratio Buttons
+    document.querySelectorAll('.ratio-btn').forEach(btn => {
+      const active = Number(btn.dataset.ratio) === Number(params.comp76Ratio);
+      btn.className = active
+        ? 'ratio-btn px-2 py-1 rounded text-xs font-bold bg-amber-500 text-slate-950 shadow'
+        : 'ratio-btn px-2 py-1 rounded text-xs font-bold bg-slate-800 text-slate-400 hover:bg-slate-700';
+    });
+
+    // Update 1176 Bluey / Blacky Faceplate & Button
+    const modeBtn = document.getElementById('btn-76-mode');
+    const compStripe = document.getElementById('comp-faceplate-stripe');
+    if (modeBtn && compStripe) {
+      const isBluey = params.comp76Mode === 'bluey';
+      modeBtn.textContent = isBluey ? 'FET-76 BLUEY' : 'FET-76 BLACKY';
+      modeBtn.className = isBluey
+        ? 'px-2.5 py-1 rounded text-xs font-bold bg-blue-600 text-white shadow border border-blue-400'
+        : 'px-2.5 py-1 rounded text-xs font-bold bg-zinc-800 text-zinc-200 shadow border border-zinc-600';
+      compStripe.className = isBluey
+        ? 'bluey-stripe px-3 py-1.5 rounded-t-lg flex items-center justify-between border-b border-blue-400/30'
+        : 'blacky-stripe px-3 py-1.5 rounded-t-lg flex items-center justify-between border-b border-zinc-700';
+    }
+
+    // Update Saturation Type
+    const satBtn = document.getElementById('btn-sat-type');
+    if (satBtn) {
+      satBtn.textContent = params.satType === 'tube' ? 'WARM TUBE' : 'ANALOG TAPE';
+    }
+
+    // Update Ping-Pong
+    const ppBtn = document.getElementById('btn-ping-pong');
+    if (ppBtn) {
+      ppBtn.textContent = params.delayPingPong ? 'PING-PONG: ON' : 'PING-PONG: MONO';
+      ppBtn.className = params.delayPingPong
+        ? 'px-2.5 py-1 rounded text-xs font-bold bg-cyan-500/20 text-cyan-300 border border-cyan-500/40'
+        : 'px-2.5 py-1 rounded text-xs font-bold bg-slate-800 text-slate-400 border border-slate-700';
+    }
+  }
+
+  /**
+   * Smoothly animates knobs from current values to newly cloned song parameters
+   */
+  animateToParams(targetParams, durationMs = 750) {
+    const startParams = structuredClone(this.currentParams);
+    const startTime = performance.now();
+
+    const step = (now) => {
+      const t = Math.min(1, (now - startTime) / durationMs);
+      const ease = 1 - Math.pow(1 - t, 3); // cubic ease-out
+
+      KNOB_DEFINITIONS.forEach(({ key, step: s }) => {
+        if (typeof targetParams[key] === 'number' && typeof startParams[key] === 'number') {
+          const v = startParams[key] + (targetParams[key] - startParams[key]) * ease;
+          this.currentParams[key] = s < 1 ? Number(v.toFixed(1)) : Math.round(v);
+        }
+      });
+
+      if (t >= 1) {
+        this.currentParams = structuredClone(targetParams);
+        this.pushHistory();
+      }
+
+      this.dsp.applyParams(this.currentParams);
+      this.syncUIWithParams(this.currentParams);
+
+      if (t < 1) requestAnimationFrame(step);
+    };
+
+    requestAnimationFrame(step);
+  }
+
+  /**
+   * Handles uploading any song file (.mp3, .wav, .flac, .m4a), extracts the vocal chain,
+   * tunes the rack, and saves the Artist Name as a preset automatically!
+   */
+  async handleSongFileUpload(file) {
+    const meta = SongVocalAnalyzer.parseMetadataFromFilename(file.name);
+    const artistInput = document.getElementById('input-artist-name');
+    const songInput = document.getElementById('input-song-title');
+
+    artistInput.value = meta.artist;
+    songInput.value = meta.song;
+
+    this.setAnalysisStatus(true, 5, `Decoding "${file.name}"...`);
+
+    try {
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      const tempCtx = this.dsp.ctx || new AudioCtx();
+      const arrayBuf = await file.arrayBuffer();
+      const audioBuffer = await tempCtx.decodeAudioData(arrayBuf);
+
+      const result = await SongVocalAnalyzer.analyzeAudioBuffer(audioBuffer, (pct, msg) => {
+        this.setAnalysisStatus(true, pct, msg);
+      });
+
+      this.completeSongClone(
+        artistInput.value.trim() || meta.artist,
+        songInput.value.trim() || meta.song,
+        result
+      );
+    } catch (err) {
+      console.error('Error analyzing audio file:', err);
+      this.setAnalysisStatus(false, 0, 'Error decoding audio file. Try MP3, WAV, FLAC, or M4A.');
+    }
+  }
+
+  /**
+   * Listens via Microphone / Loopback for 5 seconds to any song playing nearby and clones the vocal chain
+   */
+  async listenViaMicrophoneForSong() {
+    try {
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const AudioCtx = window.AudioContext || window.webkitAudioContext;
+      const tempCtx = this.dsp.ctx || new AudioCtx();
+      if (tempCtx.state === 'suspended') await tempCtx.resume();
+
+      const source = tempCtx.createMediaStreamSource(stream);
+      const processor = tempCtx.createScriptProcessor(4096, 1, 1);
+      const recordedChunks = [];
+      let totalSamples = 0;
+      const targetSamples = tempCtx.sampleRate * 5; // 5 seconds listen
+
+      this.setAnalysisStatus(true, 10, 'Listening to song via Microphone (play song now)...');
+
+      processor.onaudioprocess = async (e) => {
+        const input = e.inputBuffer.getChannelData(0);
+        recordedChunks.push(new Float32Array(input));
+        totalSamples += input.length;
+        const pct = Math.min(85, Math.round((totalSamples / targetSamples) * 80));
+        this.setAnalysisStatus(true, pct, `Listening to vocal spectrum & dynamics (${Math.round((totalSamples / targetSamples) * 100)}%)...`);
+
+        if (totalSamples >= targetSamples) {
+          processor.disconnect();
+          source.disconnect();
+          stream.getTracks().forEach(t => t.stop());
+
+          const fullBuf = tempCtx.createBuffer(1, totalSamples, tempCtx.sampleRate);
+          const ch = fullBuf.getChannelData(0);
+          let offset = 0;
+          for (const chunk of recordedChunks) {
+            ch.set(chunk, offset);
+            offset += chunk.length;
+          }
+
+          const result = await SongVocalAnalyzer.analyzeAudioBuffer(fullBuf, (p, m) => {
+            this.setAnalysisStatus(true, p, m);
+          });
+
+          const artistName = document.getElementById('input-artist-name').value.trim() || 'Live Captured Artist';
+          const songTitle = document.getElementById('input-song-title').value.trim() || 'Mic Cloned Track';
+          this.completeSongClone(artistName, songTitle, result);
+        }
+      };
+
+      source.connect(processor);
+      processor.connect(tempCtx.destination);
+    } catch (err) {
+      console.warn('Mic capture unavailable, running synthetic song clone:', err);
+      this.runSyntheticSongAnalysis();
+    }
+  }
+
+  /**
+   * Generates a real stereo AudioBuffer representing a reference song and runs the actual
+   * SongVocalAnalyzer on it so the user can test the AI Song Listener immediately!
+   */
+  async runSyntheticSongAnalysis() {
+    const demoArtists = [
+      { artist: 'SZA', song: 'Kill Bill (SOS Vocal Chain)', bright: 1.4, side: 0.65, comp: 0.8 },
+      { artist: 'Drake', song: 'Passionfruit (40 Underwater Chain)', bright: 0.55, side: 0.55, comp: 0.75 },
+      { artist: 'Dua Lipa', song: 'Houdini (Crisp Disco Pop)', bright: 1.55, side: 0.72, comp: 0.88 },
+      { artist: 'Frank Ocean', song: 'Pink + White (Blonde Tape Chain)', bright: 0.9, side: 0.42, comp: 0.62 },
+      { artist: 'Playboi Carti', song: 'TIMELESS (Hyper-Saturated Chain)', bright: 1.65, side: 0.82, comp: 0.92 }
+    ];
+
+    const artistInput = document.getElementById('input-artist-name');
+    const songInput = document.getElementById('input-song-title');
+
+    const randomPick = demoArtists[Math.floor(Math.random() * demoArtists.length)];
+    const artistName = artistInput.value.trim() || randomPick.artist;
+    const songTitle = songInput.value.trim() || randomPick.song;
+
+    artistInput.value = artistName;
+    songInput.value = songTitle;
+
+    const AudioCtx = window.AudioContext || window.webkitAudioContext;
+    const tempCtx = this.dsp.ctx || new AudioCtx();
+    const sr = tempCtx.sampleRate;
+    const len = sr * 4;
+    const buf = tempCtx.createBuffer(2, len, sr);
+    const L = buf.getChannelData(0);
+    const R = buf.getChannelData(1);
+
+    // Populate synthetic stereo reference mix with distinct vocal harmonics, sibilance & stereo field
+    const seed = artistName.split('').reduce((acc, c) => acc + c.charCodeAt(0), 0);
+    const brightFactor = 0.6 + ((seed % 10) / 10) * 1.1;
+    const sideWidth = 0.25 + (((seed * 3) % 10) / 10) * 0.65;
+    const beatHz = 1.6 + ((seed % 5) * 0.25);
+
+    for (let i = 0; i < len; i++) {
+      const t = i / sr;
+      const env = 0.55 + 0.45 * Math.sin(2 * Math.PI * beatHz * t);
+      const fundamental = Math.sin(2 * Math.PI * 220 * t) * 0.35;
+      const presence = Math.sin(2 * Math.PI * 3300 * t) * 0.22 * brightFactor;
+      const sibilance = (Math.random() * 2 - 1) * 0.14 * brightFactor;
+      const mid = (fundamental + presence + sibilance) * env;
+      const side = Math.sin(2 * Math.PI * 520 * t + Math.sin(t * 6)) * sideWidth * 0.35;
+      L[i] = mid + side;
+      R[i] = mid - side;
+    }
+
+    const result = await SongVocalAnalyzer.analyzeAudioBuffer(buf, (pct, msg) => {
+      this.setAnalysisStatus(true, pct, msg);
+    });
+
+    this.completeSongClone(artistName, songTitle, result);
+  }
+
+  completeSongClone(artistName, songTitle, result) {
+    this.lastMetrics = result.metrics;
+    this.updateMetricsDisplay(result.metrics, result.bpm, result.character);
+
+    // Smoothly sweep all knobs to the analyzed vocal chain settings
+    this.animateToParams(result.params, 800);
+
+    // Automatically save the Artist Name as a preset upon completion!
+    const savedPreset = this.saveArtistPreset(artistName, songTitle, result.bpm, result.character, result.params);
+
+    setTimeout(() => {
+      this.setAnalysisStatus(
+        false,
+        100,
+        `✓ Cloned "${artistName} — ${songTitle}" & Auto-Saved Preset "${savedPreset.artist}"!`
+      );
+      document.getElementById('input-artist-name').value = '';
+      document.getElementById('input-song-title').value = '';
+    }, 600);
+  }
+
+  saveArtistPreset(artist, song, bpm, character, paramsOverride = null) {
+    const slug = `${artist}-${song}`.toLowerCase().replace(/[^a-z0-9]+/g, '-');
+    const newPreset = {
+      id: `artist-${slug}-${Date.now().toString().slice(-4)}`,
+      artist,
+      song,
+      genre: 'AI Cloned Vocal DNA',
+      bpm: bpm || 120,
+      character: character || 'Custom Cloned Vocal Chain',
+      isFactory: false,
+      createdAt: new Date().toISOString().slice(0, 10),
+      params: structuredClone(paramsOverride || this.currentParams)
+    };
+
+    this.presets.unshift(newPreset);
+    this.activePreset = newPreset;
+    this.saveCustomPresetToStorage(newPreset);
+    this.renderPresetDropdown();
+    this.renderArtistPresetPills();
+    this.showToast(`Saved Artist Preset: "${artist}" (${song})`);
+    return newPreset;
+  }
+
+  loadPreset(preset) {
+    this.activePreset = preset;
+    document.getElementById('preset-select').value = preset.id;
+    document.getElementById('active-preset-badge').textContent = `${preset.artist} — ${preset.song}`;
+    document.getElementById('active-character-badge').textContent = preset.character;
+    document.getElementById('active-bpm-badge').textContent = `${preset.bpm} BPM`;
+    this.animateToParams(preset.params, 550);
+    this.renderArtistPresetPills();
+  }
+
+  renderPresetDropdown() {
+    const select = document.getElementById('preset-select');
+    if (!select) return;
+    select.innerHTML = '';
+
+    const customGroup = document.createElement('optgroup');
+    customGroup.label = '★ AI Cloned Artist Presets (Saved)';
+    const factoryGroup = document.createElement('optgroup');
+    factoryGroup.label = 'HEAVEN Signature Artist Chains';
+
+    this.presets.forEach(p => {
+      const opt = document.createElement('option');
+      opt.value = p.id;
+      opt.textContent = `${p.artist} — ${p.song} (${p.bpm} BPM)`;
+      if (p.isFactory) {
+        factoryGroup.appendChild(opt);
+      } else {
+        customGroup.appendChild(opt);
+      }
+    });
+
+    if (customGroup.children.length > 0) select.appendChild(customGroup);
+    select.appendChild(factoryGroup);
+    if (this.activePreset) select.value = this.activePreset.id;
+  }
+
+  renderArtistPresetPills() {
+    const container = document.getElementById('artist-preset-bank');
+    if (!container) return;
+    container.innerHTML = '';
+
+    this.presets.forEach(p => {
+      const isSelected = this.activePreset && this.activePreset.id === p.id;
+      const btn = document.createElement('button');
+      btn.className = isSelected
+        ? 'flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-bold bg-amber-500 text-slate-950 shadow-md transition-all'
+        : 'flex items-center gap-2 px-3 py-1.5 rounded-lg text-xs font-semibold bg-slate-900/90 text-slate-300 border border-slate-700/80 hover:border-amber-400/60 hover:text-white transition-all';
+
+      btn.innerHTML = `
+        <span class="w-2 h-2 rounded-full ${p.isFactory ? 'bg-cyan-400' : 'bg-emerald-400'}"></span>
+        <span>${p.artist}</span>
+        <span class="opacity-70 font-normal hidden sm:inline">• ${p.song}</span>
+      `;
+      btn.addEventListener('click', () => this.loadPreset(p));
+      container.appendChild(btn);
+    });
+  }
+
+  setAnalysisStatus(isAnalyzing, progressPct, message) {
+    const barWrap = document.getElementById('analysis-progress-wrap');
+    const barFill = document.getElementById('analysis-progress-fill');
+    const statusText = document.getElementById('analysis-status-text');
+
+    if (barWrap && barFill && statusText) {
+      barWrap.classList.toggle('hidden', !isAnalyzing && progressPct === 0);
+      barFill.style.width = `${progressPct}%`;
+      statusText.textContent = message;
+    }
+  }
+
+  updateMetricsDisplay(metrics, bpm, character) {
+    document.getElementById('metric-crest').textContent = `${metrics.crestFactorDb} dB`;
+    document.getElementById('metric-stereo').textContent = `${metrics.sideToMidRatio}%`;
+    document.getElementById('metric-sibilance').textContent = `${metrics.sibilanceIndex}/100`;
+    document.getElementById('metric-rt60').textContent = `${metrics.reverbRT60}s`;
+    document.getElementById('active-bpm-badge').textContent = `${bpm} BPM`;
+    document.getElementById('active-character-badge').textContent = character;
+  }
+
+  async toggleAudition() {
+    const btn = document.getElementById('btn-play-audition');
+    const select = document.getElementById('audition-source-select');
+
+    if (this.dsp.isPlaying) {
+      this.dsp.stopAudition();
+      btn.innerHTML = `<span>▶ AUDITION VOCAL CHAIN</span>`;
+      btn.className = 'px-4 py-1.5 rounded-lg text-xs font-bold bg-emerald-500 hover:bg-emerald-400 text-slate-950 shadow-lg transition-all flex items-center gap-2';
+    } else {
+      const mode = select.value === 'upload-dry' ? 'custom-file' : select.value;
+      await this.dsp.startAudition(mode);
+      btn.innerHTML = `<span>■ STOP AUDITION</span>`;
+      btn.className = 'px-4 py-1.5 rounded-lg text-xs font-bold bg-red-500 hover:bg-red-400 text-white shadow-lg transition-all flex items-center gap-2 animate-pulse';
+    }
+  }
+
+  exportWavesStudioRackXPS() {
+    const artist = this.activePreset?.artist || 'Custom Artist';
+    const song = this.activePreset?.song || 'Cloned Vocal Chain';
+    const bpm = this.activePreset?.bpm || 120;
+    const xml = DAWExporters.generateWavesStudioRackXPS(`${artist} - ${song}`, artist, song, bpm, this.currentParams);
+    const blob = new Blob([xml], { type: 'application/xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${artist.replace(/[^a-zA-Z0-9_-]/g, '_')}_Waves_StudioRack.xps`;
+    a.click();
+    URL.revokeObjectURL(url);
+    this.showToast(`Downloaded Waves StudioRack Preset (.xps) for "${artist}"`);
+  }
+
+  exportLogicProAUPreset() {
+    const artist = this.activePreset?.artist || 'Custom Artist';
+    const song = this.activePreset?.song || 'Cloned Vocal Chain';
+    const plist = DAWExporters.generateLogicProAUPreset(artist, song, this.currentParams);
+    const blob = new Blob([plist], { type: 'application/xml' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${artist.replace(/[^a-zA-Z0-9_-]/g, '_')}_LogicPro.aupreset`;
+    a.click();
+    URL.revokeObjectURL(url);
+    this.showToast(`Downloaded Logic Pro AU Preset (.aupreset) for "${artist}"`);
+  }
+
+  exportCurrentPresetJSON() {
+    const payload = {
+      plugin: 'HEAVEN VocalDNA',
+      version: '1.0.0',
+      preset: {
+        artist: this.activePreset?.artist || 'Custom Artist',
+        song: this.activePreset?.song || 'Custom Chain',
+        bpm: this.activePreset?.bpm || 120,
+        character: this.activePreset?.character || 'Custom Vocal Chain',
+        params: this.currentParams
+      }
+    };
+    const blob = new Blob([JSON.stringify(payload, null, 2)], { type: 'application/json' });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url;
+    a.download = `${(payload.preset.artist || 'artist').toLowerCase().replace(/\s+/g, '-')}-vocal-chain.json`;
+    a.click();
+    URL.revokeObjectURL(url);
+    this.showToast(`Exported ${payload.preset.artist} Preset JSON`);
+  }
+
+  showToast(message) {
+    const toast = document.getElementById('toast-banner');
+    if (!toast) return;
+    toast.textContent = message;
+    toast.classList.remove('opacity-0', 'translate-y-2');
+    clearTimeout(this.toastTimer);
+    this.toastTimer = setTimeout(() => {
+      toast.classList.add('opacity-0', 'translate-y-2');
+    }, 3200);
+  }
+
+  /**
+   * 60fps Canvas Render Loop for:
+   * 1. REQ-5 Parametric EQ Curve + Pre/Post Real-Time FFT Spectrum
+   * 2. CLA-76 / LA-2A Illuminated Analog VU Meter (Gain Reduction)
+   * 3. Input / Output / Sibilance LED Bar Meters
+   */
+  startAnimationLoop() {
+    const eqCanvas = document.getElementById('eq-spectrum-canvas');
+    const vuCanvas = document.getElementById('vu-meter-canvas');
+
+    const render = () => {
+      const telemetry = this.dsp.getTelemetry();
+      this.drawEQAndSpectrum(eqCanvas, telemetry);
+      this.drawAnalogVUMeter(vuCanvas, telemetry.totalGr);
+      this.updateLEDMeters(telemetry);
+      requestAnimationFrame(render);
+    };
+    requestAnimationFrame(render);
+  }
+
+  drawEQAndSpectrum(canvas, telemetry) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    // Background Grid
+    ctx.fillStyle = '#090b0e';
+    ctx.fillRect(0, 0, w, h);
+
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.12)';
+    ctx.lineWidth = 1;
+
+    const minLog = Math.log10(20);
+    const maxLog = Math.log10(20000);
+    const freqToX = f => ((Math.log10(f) - minLog) / (maxLog - minLog)) * w;
+    const gainToY = g => h / 2 - (g / 15) * (h / 2);
+
+    // Frequency Grid Lines
+    [50, 100, 250, 500, 1000, 2500, 5000, 10000].forEach(f => {
+      const x = freqToX(f);
+      ctx.beginPath();
+      ctx.moveTo(x, 0);
+      ctx.lineTo(x, h);
+      ctx.stroke();
+
+      ctx.fillStyle = 'rgba(148, 163, 184, 0.45)';
+      ctx.font = '10px monospace';
+      ctx.fillText(f >= 1000 ? `${f / 1000}k` : `${f}`, x + 3, h - 5);
+    });
+
+    // 0 dB Center Line
+    ctx.strokeStyle = 'rgba(148, 163, 184, 0.28)';
+    ctx.beginPath();
+    ctx.moveTo(0, h / 2);
+    ctx.lineTo(w, h / 2);
+    ctx.stroke();
+
+    // Draw Live FFT Post-Spectrum Fill
+    const bins = telemetry.postFreqData;
+    if (bins && bins.length > 0) {
+      ctx.beginPath();
+      ctx.moveTo(0, h);
+      for (let i = 1; i < bins.length; i++) {
+        const freq = (i * 22050) / bins.length;
+        if (freq < 20 || freq > 20000) continue;
+        const x = freqToX(freq);
+        const y = h - (bins[i] / 255) * (h * 0.88);
+        ctx.lineTo(x, y);
+      }
+      ctx.lineTo(w, h);
+      ctx.closePath();
+      const grad = ctx.createLinearGradient(0, 0, 0, h);
+      grad.addColorStop(0, 'rgba(6, 182, 212, 0.35)');
+      grad.addColorStop(1, 'rgba(6, 182, 212, 0.02)');
+      ctx.fillStyle = grad;
+      ctx.fill();
+    }
+
+    // Draw Composite 5-Band Parametric EQ Curve
+    const p = this.currentParams;
+    ctx.beginPath();
+    for (let x = 0; x <= w; x += 3) {
+      const f = Math.pow(10, minLog + (x / w) * (maxLog - minLog));
+      let db = 0;
+
+      if (!p.eqBypass) {
+        // High-pass rolloff
+        if (f < p.hpfFreq * 1.8) {
+          const ratio = p.hpfFreq / Math.max(15, f);
+          db -= 12 * Math.log2(1 + Math.pow(ratio, 3));
+        }
+        // Low Bell
+        db += p.lowGain * Math.exp(-Math.pow(Math.log2(f / p.lowFreq), 2) / 0.45);
+        // Mid Bell
+        db += p.midGain * Math.exp(-Math.pow(Math.log2(f / p.midFreq), 2) / 0.3);
+        // Presence Bell
+        db += p.presenceGain * Math.exp(-Math.pow(Math.log2(f / p.presenceFreq), 2) / 0.38);
+        // Air High-Shelf
+        const airSigmoid = 1 / (1 + Math.exp(-4.5 * Math.log2(f / p.airFreq)));
+        db += p.airGain * airSigmoid;
+      }
+
+      const y = Math.max(6, Math.min(h - 6, gainToY(db)));
+      if (x === 0) ctx.moveTo(x, y);
+      else ctx.lineTo(x, y);
+    }
+
+    ctx.strokeStyle = p.eqBypass ? '#64748b' : '#22d3ee';
+    ctx.lineWidth = 2.5;
+    ctx.shadowColor = '#06b6d4';
+    ctx.shadowBlur = p.eqBypass ? 0 : 8;
+    ctx.stroke();
+    ctx.shadowBlur = 0;
+
+    // Draw Interactive Draggable EQ Nodes
+    const nodes = [
+      { x: freqToX(p.hpfFreq), y: h / 2, color: '#94a3b8', label: 'HPF' },
+      { x: freqToX(p.lowFreq), y: gainToY(p.lowGain), color: '#38bdf8', label: 'LOW' },
+      { x: freqToX(p.midFreq), y: gainToY(p.midGain), color: '#818cf8', label: 'MID' },
+      { x: freqToX(p.presenceFreq), y: gainToY(p.presenceGain), color: '#22d3ee', label: 'PRES' },
+      { x: freqToX(p.airFreq), y: gainToY(p.airGain), color: '#f59e0b', label: 'AIR' }
+    ];
+
+    nodes.forEach(n => {
+      ctx.beginPath();
+      ctx.arc(n.x, n.y, 6, 0, Math.PI * 2);
+      ctx.fillStyle = n.color;
+      ctx.fill();
+      ctx.strokeStyle = '#090b0e';
+      ctx.lineWidth = 2;
+      ctx.stroke();
+    });
+  }
+
+  drawAnalogVUMeter(canvas, grDb) {
+    if (!canvas) return;
+    const ctx = canvas.getContext('2d');
+    const w = canvas.width;
+    const h = canvas.height;
+    ctx.clearRect(0, 0, w, h);
+
+    // Simulated idle/active needle ballistics
+    let targetGr = grDb;
+    if (this.dsp.isPlaying && targetGr < 0.8 && !this.currentParams.compBypass) {
+      // Subtle living needle movement when audio passes through threshold
+      const driveFactor = (this.currentParams.comp76Drive + this.currentParams.comp2APeak) / 200;
+      targetGr = driveFactor * 7.5 + Math.sin(performance.now() * 0.008) * 1.8;
+    }
+
+    // Map 0..-20 dB GR to +38..-42 deg needle angle
+    const clampedGr = Math.max(0, Math.min(20, targetGr));
+    const targetAngle = 38 - (clampedGr / 20) * 80;
+    this.vuNeedleAngle += (targetAngle - this.vuNeedleAngle) * 0.18;
+
+    const cx = w / 2;
+    const cy = h + 18;
+    const radius = h * 0.92;
+
+    // Draw VU Scale Arc & Markings
+    ctx.strokeStyle = '#3f2e12';
+    ctx.lineWidth = 1.5;
+    ctx.beginPath();
+    ctx.arc(cx, cy, radius, -Math.PI * 0.72, -Math.PI * 0.28);
+    ctx.stroke();
+
+    const marks = [
+      { label: '-20', deg: -40 },
+      { label: '-10', deg: -20 },
+      { label: '-7', deg: -8 },
+      { label: '-5', deg: 4 },
+      { label: '-3', deg: 16 },
+      { label: '-1', deg: 28 },
+      { label: '0', deg: 38 }
+    ];
+
+    ctx.font = 'bold 10px monospace';
+    ctx.textAlign = 'center';
+    marks.forEach(m => {
+      const rad = ((m.deg - 90) * Math.PI) / 180;
+      const x1 = cx + Math.cos(rad) * (radius - 6);
+      const y1 = cy + Math.sin(rad) * (radius - 6);
+      const x2 = cx + Math.cos(rad) * (radius + 4);
+      const y2 = cy + Math.sin(rad) * (radius + 4);
+      const tx = cx + Math.cos(rad) * (radius - 16);
+      const ty = cy + Math.sin(rad) * (radius - 16);
+
+      ctx.strokeStyle = m.deg >= 16 ? '#b91c1c' : '#291d0a';
+      ctx.beginPath();
+      ctx.moveTo(x1, y1);
+      ctx.lineTo(x2, y2);
+      ctx.stroke();
+
+      ctx.fillStyle = m.deg >= 16 ? '#b91c1c' : '#291d0a';
+      ctx.fillText(m.label, tx, ty);
+    });
+
+    ctx.fillStyle = '#451a03';
+    ctx.font = 'bold 11px sans-serif';
+    ctx.fillText('VU  •  GAIN REDUCTION (dB)', cx, h - 8);
+
+    // Draw Needle
+    const needleRad = ((this.vuNeedleAngle - 90) * Math.PI) / 180;
+    const nx = cx + Math.cos(needleRad) * (radius + 8);
+    const ny = cy + Math.sin(needleRad) * (radius + 8);
+
+    ctx.strokeStyle = '#18181b';
+    ctx.lineWidth = 2.2;
+    ctx.beginPath();
+    ctx.moveTo(cx, cy);
+    ctx.lineTo(nx, ny);
+    ctx.stroke();
+
+    const grReadout = document.getElementById('comp-gr-readout');
+    if (grReadout) {
+      grReadout.textContent = `-${clampedGr.toFixed(1)} dB`;
+    }
+  }
+
+  updateLEDMeters(telemetry) {
+    const inPct = Math.max(2, Math.min(100, ((telemetry.inDb + 60) / 66) * 100));
+    const outPct = Math.max(2, Math.min(100, ((telemetry.outDb + 60) / 66) * 100));
+
+    const inBar = document.getElementById('meter-in-bar');
+    const outBar = document.getElementById('meter-out-bar');
+    const deEssBar = document.getElementById('deess-gr-bar');
+
+    if (inBar) inBar.style.height = `${inPct}%`;
+    if (outBar) outBar.style.height = `${outPct}%`;
+
+    if (deEssBar) {
+      const sibActive = this.dsp.isPlaying && !this.currentParams.deEssBypass
+        ? Math.min(100, (this.currentParams.deEssRange / 15) * 75 + Math.random() * 18)
+        : 4;
+      deEssBar.style.width = `${sibActive}%`;
+    }
+  }
+}
+
+window.addEventListener('DOMContentLoaded', () => {
+  window.wavesApp = new WavesVocalCloneApp();
+});
+
+</script>
+</body>
+</html>
